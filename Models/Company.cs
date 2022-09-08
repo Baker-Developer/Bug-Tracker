@@ -16,5 +16,7 @@ namespace BugTracker.Models
         // Navigation Properties
         public virtual ICollection<BugTrackerUser> Members { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
+
+        // Create Relationship To Invites
     }
 }
