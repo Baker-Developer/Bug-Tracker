@@ -56,19 +56,22 @@ namespace BugTracker.Services
             return result;
         }
 
-        public Task<bool> IsUserInRoleAsync(BugTrackerUser user, string roleName)
+        public async Task<bool> IsUserInRoleAsync(BugTrackerUser user, string roleName)
         {
-            throw new System.NotImplementedException();
+            bool result = await _userManager.IsInRoleAsync(user, roleName);
+            return result;
         }
 
-        public Task<bool> RemoveUserFromRoleAsync(BugTrackerUser user, string roleName)
+        public async Task<bool> RemoveUserFromRoleAsync(BugTrackerUser user, string roleName)
         {
-            throw new System.NotImplementedException();
+            bool result = (await _userManager.RemoveFromRoleAsync(user, roleName)).Succeeded;
+            return result;
         }
 
-        public Task<bool> RemoveUserFromRolesAsync(BugTrackerUser user, IEnumerable<string> roles)
+        public async Task<bool> RemoveUserFromRolesAsync(BugTrackerUser user, IEnumerable<string> roles)
         {
-            throw new System.NotImplementedException();
+            bool result = (await _userManager.RemoveFromRolesAsync(user, roles)).Succeeded;
+            return result;
         }
     }
 }
