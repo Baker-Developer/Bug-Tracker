@@ -1,11 +1,12 @@
 ﻿using BugTracker.Data;
 using BugTracker.Models;
+using BugTracker.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BugTracker.Services.Interfaces
+namespace BugTracker.Services
 {
     public class BugTrackerCompanyInfoService : IBugTrackerInfoService
     {
@@ -31,6 +32,16 @@ namespace BugTracker.Services.Interfaces
                 .Include(p => p.Tickets)
                     .ThenInclude(t => t.Comments)
                 .Include(p => p.Tickets)
+                    .ThenInclude(t => t.Attachments)
+                .Include(p => p.Tickets)
+                    .ThenInclude(t => t.History)
+                .Include(p => p.Tickets)
+                    .ThenInclude(t => t.Notifications)
+                .Include(p => p.Tickets)
+                    .ThenInclude(t => t.DeveloperUser)
+                 .Include(p => p.Tickets)
+                    .ThenInclude(t => t.OwnerUser)
+                .Include(p => p.Tickets)
                     .ThenInclude(t => t.TicketStatus)
                 .Include(p => p.Tickets)
                     .ThenInclude(t => t.TicketPriority)
@@ -41,14 +52,33 @@ namespace BugTracker.Services.Interfaces
             return result;
         }
 
-        public Task<List<Ticket>> GetAllTicketsAsync(int companyId)
+        public async Task<List<Ticket>> GetAllTicketsAsync(int companyId)
         {
-            throw new System.NotImplementedException();
+            List<Ticket> result = new();
+            List<Project> projects = new();
+
+            projects = await GetAllProjectsAsync(companyId);
+
+            result = projects.SelectMany(p => p.Tickets).ToList();
+
+
+            return result;
         }
 
-        public Task<Company> GetCompanyInfoByIdAsync(int? companyId)
+        public async Task<Company> GetCompanyInfoByIdAsync(int? companyId)
         {
-            throw new System.NotImplementedException();
+            Company result = new();
+
+            if (companyId != null)
+            {
+                result = await _context.Companies
+                                .Include(c => c.Members)
+                                .Include(c => c.Projects)
+                                .Include(c => c.Invites)
+                                .FirstOrDefaultAsync(c => c.Id == companyId);
+            }
+         
+            return result;
         }
     }
 }
