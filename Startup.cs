@@ -42,10 +42,12 @@ namespace BugTracker
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
-           
+            // Custom Services
             services.AddScoped<IBugTrackerRolesService, BugTrackerRoleService>();
 
             services.AddScoped<IBugTrackerInfoService, BugTrackerCompanyInfoService>();
+
+            services.AddScoped<IBugTrackerProjectService, BugTrackerProjectService>();
 
             services.AddControllersWithViews();
         }
