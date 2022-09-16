@@ -1,10 +1,13 @@
 using BugTracker.Data;
 using BugTracker.Models;
+using BugTracker.Services;
+using BugTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +42,26 @@ namespace BugTracker
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+
+            // Custom Services
+            services.AddScoped<IBugTrackerRolesService, BugTrackerRoleService>();
+
+            services.AddScoped<IBugTrackerInfoService, BugTrackerCompanyInfoService>();
+
+            services.AddScoped<IBugTrackerProjectService, BugTrackerProjectService>();
+
+            services.AddScoped<IBugTrackerTicketService, BugTrackerTicketService>();
+
+            services.AddScoped<IBugTrackerHistoryService, BugTrackerTicketHistoryService>();
+
+            services.AddScoped<IBugTrackerNotificationService, BugTrackerNotificationService>();
+
+            services.AddScoped<IBugTrackerInviteService, BugTrackerInviteService>();
+
+            services.AddScoped<IBugTrackerFileService, BugTrackerFileService>();
+
+            services.AddScoped<IEmailSender, BugTrackerEmailService>();
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
             services.AddControllersWithViews();
         }

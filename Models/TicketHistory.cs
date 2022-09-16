@@ -4,19 +4,20 @@ namespace BugTracker.Models
 {
     public class TicketHistory
     {
+        // Note This Was Scaffold With Potential Bugs In Property, OldValue And NewValue
         public int Id { get; set; }
 
         [DisplayName("Ticket")]
         public int TicketId { get; set; }
 
         [DisplayName("Updated Item")]
-        public int Property { get; set; }
+        public string Property { get; set; }
 
         [DisplayName("Previous")]
-        public int OldValue { get; set; }
+        public string OldValue { get; set; }
 
         [DisplayName("Current")]
-        public int NewValue { get; set; }
+        public string NewValue { get; set; }
 
         [DisplayName("Date Modified")]
         public DateTimeOffset Created { get; set; }
