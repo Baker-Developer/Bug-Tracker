@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Services
 {
-    public class BugTrackerCompanyInfoService : IBugTrackerInfoService
+    public class BugTrackerCompanyInfoService : IBugTrackerCompanyInfoService
     {
         private readonly ApplicationDbContext _context;
 

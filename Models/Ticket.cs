@@ -39,7 +39,8 @@ namespace BugTracker.Models
         [DisplayName("Ticket Type")]
         public int TicketTypeId { get; set; }
 
-        [DisplayName("Ticket Prioity")]
+        [DisplayName("Ticket Priority")]
+        // This is mis-spelled fix this later
         public int TicketPrioityId { get; set; }
 
         [DisplayName("Ticket Status")]

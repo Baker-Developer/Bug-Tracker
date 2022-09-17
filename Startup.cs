@@ -1,6 +1,7 @@
 using BugTracker.Data;
 using BugTracker.Models;
 using BugTracker.Services;
+using BugTracker.Services.Factories;
 using BugTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,21 +33,21 @@ namespace BugTracker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
-
+                  options.UseNpgsql(DataUtility.GetConnectionString(Configuration),
+                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddIdentity<BugTrackerUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddClaimsPrincipalFactory<BugTrackerUserClaimsPrincipalFactory>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
             // Custom Services
             services.AddScoped<IBugTrackerRolesService, BugTrackerRoleService>();
 
-            services.AddScoped<IBugTrackerInfoService, BugTrackerCompanyInfoService>();
+            services.AddScoped<IBugTrackerCompanyInfoService, BugTrackerCompanyInfoService>();
 
             services.AddScoped<IBugTrackerProjectService, BugTrackerProjectService>();
 
