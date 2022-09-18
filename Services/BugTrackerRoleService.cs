@@ -2,6 +2,7 @@
 using BugTracker.Models;
 using BugTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +35,24 @@ namespace BugTracker.Services
             string result = await _roleManager.GetRoleNameAsync(role);
             return result;
         }
+
+        public async Task<List<IdentityRole>> GetRolesAsync()
+        {
+            try
+            {
+                List<IdentityRole> result = new();
+
+                result = await _context.Roles.ToListAsync();
+
+                return result;
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+
 
         public async Task<IEnumerable<string>> GetUserRolesAsync(BugTrackerUser user)
         {

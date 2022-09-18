@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Services.Interfaces
 {
-    public interface IBugTrackerInfoService
+    public interface IBugTrackerCompanyInfoService
     {
         public Task<Company> GetCompanyInfoByIdAsync(int? companyId);
         public Task<List<BugTrackerUser>> GetAllMembersAsync(int companyId);
