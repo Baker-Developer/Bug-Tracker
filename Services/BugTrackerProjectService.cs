@@ -48,8 +48,8 @@ namespace BugTracker.Services
             // ADD THE NEW PROJECT MANAGER
             try
             {
-                //await AddUserToProjectAsync(userId, projectId);
-                await AddProjectManagerAsync(userId, projectId);
+                await AddUserToProjectAsync(userId, projectId);
+                //await AddProjectManagerAsync(userId, projectId);
                 return true;
             }
             catch (Exception ex)
