@@ -61,6 +61,8 @@ namespace BugTracker
 
             services.AddScoped<IBugTrackerFileService, BugTrackerFileService>();
 
+            services.AddScoped<IBugTrackerLookupService, BugTrackerLookupService>();
+
             services.AddScoped<IEmailSender, BugTrackerEmailService>();
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 

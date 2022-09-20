@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BugTracker.Models
 {
@@ -25,9 +24,11 @@ namespace BugTracker.Models
         public string Description { get; set; }
 
         [DisplayName("Start Date")]
+        [DataType(DataType.Date)]
         public DateTimeOffset StartDate { get; set; }
 
         [DisplayName("End Date")]
+        [DataType(DataType.Date)]
         public DateTimeOffset? EndDate { get; set; }
 
         [DisplayName("Priority")]
