@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BugTracker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220907214654_Data Models")]
-    partial class DataModels
+    [Migration("20220920205034_FixedDatabase")]
+    partial class FixedDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -294,6 +294,9 @@ namespace BugTracker.Data.Migrations
                     b.Property<bool>("Archived")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("ArchivedByProject")
+                        .HasColumnType("boolean");
+
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("timestamp with time zone");
 
@@ -310,10 +313,7 @@ namespace BugTracker.Data.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TicketPrioityId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("TicketPriorityId")
+                    b.Property<int>("TicketPriorityId")
                         .HasColumnType("integer");
 
                     b.Property<int>("TicketStatusId")
@@ -428,14 +428,14 @@ namespace BugTracker.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int>("NewValue")
-                        .HasColumnType("integer");
+                    b.Property<string>("NewValue")
+                        .HasColumnType("text");
 
-                    b.Property<int>("OldValue")
-                        .HasColumnType("integer");
+                    b.Property<string>("OldValue")
+                        .HasColumnType("text");
 
-                    b.Property<int>("Property")
-                        .HasColumnType("integer");
+                    b.Property<string>("Property")
+                        .HasColumnType("text");
 
                     b.Property<int>("TicketId")
                         .HasColumnType("integer");
@@ -654,7 +654,7 @@ namespace BugTracker.Data.Migrations
             modelBuilder.Entity("BugTracker.Models.Invite", b =>
                 {
                     b.HasOne("BugTracker.Models.Company", "Company")
-                        .WithMany()
+                        .WithMany("Invites")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -742,7 +742,9 @@ namespace BugTracker.Data.Migrations
 
                     b.HasOne("BugTracker.Models.TicketPriority", "TicketPriority")
                         .WithMany()
-                        .HasForeignKey("TicketPriorityId");
+                        .HasForeignKey("TicketPriorityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugTracker.Models.TicketStatus", "TicketStatus")
                         .WithMany()
@@ -886,6 +888,8 @@ namespace BugTracker.Data.Migrations
 
             modelBuilder.Entity("BugTracker.Models.Company", b =>
                 {
+                    b.Navigation("Invites");
+
                     b.Navigation("Members");
 
                     b.Navigation("Projects");

@@ -11,6 +11,7 @@ using BugTracker.Extentions;
 using BugTracker.Models.ViewModels;
 using BugTracker.Services.Interfaces;
 using BugTracker.Models.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Controllers
 {
@@ -21,14 +22,19 @@ namespace BugTracker.Controllers
         private readonly IBugTrackerLookupService _lookupService;
         private readonly IBugTrackerFileService _fileService;
         private readonly IBugTrackerProjectService _projectService;
+        private readonly UserManager<BugTrackerUser> _userManager;
+        private readonly IBugTrackerCompanyInfoService _companyInfoService;
 
-        public ProjectsController(ApplicationDbContext context, IBugTrackerRolesService roleService, IBugTrackerLookupService lookupService, IBugTrackerFileService fileService, IBugTrackerProjectService projectService)
+
+        public ProjectsController(ApplicationDbContext context, IBugTrackerRolesService roleService, IBugTrackerLookupService lookupService, IBugTrackerFileService fileService, IBugTrackerProjectService projectService, UserManager<BugTrackerUser> userManager, IBugTrackerCompanyInfoService companyInfoService)
         {
             _context = context;
             _rolesService = roleService;
             _lookupService = lookupService;
             _fileService = fileService;
             _projectService = projectService;
+            _userManager = userManager;
+            _companyInfoService = companyInfoService;
         }
 
         // GET: Projects
@@ -37,6 +43,48 @@ namespace BugTracker.Controllers
             var applicationDbContext = _context.Projects.Include(p => p.Company).Include(p => p.ProjectPriority);
             return View(await applicationDbContext.ToListAsync());
         }
+
+
+        // GET: MyProjects
+        public async Task<IActionResult> MyProjects()
+        {
+            string userId = _userManager.GetUserId(User);
+
+            List<Project> projects = await _projectService.GetUserProjectsAsync(userId);
+
+            return View(projects);
+        }
+
+        // GET: AllProjects
+        public async Task<IActionResult> AllProjects()
+        {
+            List<Project> projects = new();
+
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+            {
+                projects = await _companyInfoService.GetAllProjectsAsync(companyId);
+            }
+            else
+            {
+                projects = await _projectService.GetAllProjectsByCompany(companyId);
+            }
+
+            return View(projects);
+        }
+
+
+        // GET: ArchivedProjects
+        public async Task<IActionResult> ArchivedProjects()
+        {
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            List<Project> projects = await _projectService.GetAllProjectsByCompany(companyId);
+
+            return View(projects);
+        }
+
 
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -50,6 +98,8 @@ namespace BugTracker.Controllers
                 .Include(p => p.Company)
                 .Include(p => p.ProjectPriority)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+
             if (project == null)
             {
                 return NotFound();
@@ -92,7 +142,7 @@ namespace BugTracker.Controllers
                     model.Project.CompanyId = companyId;
 
                     await _projectService.AddNewProjectAsync(model.Project);
-                    
+
                     // Add Project Manager If One Was Chosen
                     if (!string.IsNullOrEmpty(model.ProjectManagerId))
                     {
@@ -136,7 +186,7 @@ namespace BugTracker.Controllers
         {
             if (model != null)
             {
-               
+
                 try
                 {
                     if (model.Project.ImageFormFile != null)
@@ -146,7 +196,7 @@ namespace BugTracker.Controllers
                         model.Project.ImageContentType = model.Project.ImageFormFile.ContentType;
                     }
 
-                    
+
                     await _projectService.UpdateProjectAsync(model.Project);
 
                     // Add Project Manager If One Was Chosen
@@ -167,18 +217,19 @@ namespace BugTracker.Controllers
             return RedirectToAction("Edit");
         }
 
-        // GET: Projects/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Projects/Archive/5
+        public async Task<IActionResult> Archive(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var project = await _context.Projects
-                .Include(p => p.Company)
-                .Include(p => p.ProjectPriority)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            var project = await _projectService.GetProjectByIdAsync(id.Value, companyId);
+
+
             if (project == null)
             {
                 return NotFound();
@@ -187,16 +238,57 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
-        // POST: Projects/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Projects/Archive/5
+        [HttpPost, ActionName("Archive")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> ArchiveConfirmed(int id)
         {
-            var project = await _context.Projects.FindAsync(id);
-            _context.Projects.Remove(project);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            var project = await _projectService.GetProjectByIdAsync(id, companyId);
+
+            await _projectService.ArchiveProjectAsync(project);
+
+            return RedirectToAction("Index");
         }
+
+
+        // GET: Projects/Restore/5
+        public async Task<IActionResult> Restore(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            var project = await _projectService.GetProjectByIdAsync(id.Value, companyId);
+
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            return View(project);
+        }
+
+        // POST: Projects/Restore/5
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RestoreConfirmed(int id)
+        {
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            var project = await _projectService.GetProjectByIdAsync(id, companyId);
+
+            await _projectService.RestoreProjectAsync(project);
+
+            return RedirectToAction("Index");
+        }
+
+
 
         private bool ProjectExists(int id)
         {

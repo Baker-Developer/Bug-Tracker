@@ -33,6 +33,9 @@ namespace BugTracker.Models
         [DisplayName("Archived")]
         public bool Archived { get; set; }
 
+        [DisplayName("Archived By Project")]
+        public bool ArchivedByProject { get; set; }
+
         [DisplayName("Project")]
         public int ProjectId { get; set; }
 
@@ -41,8 +44,8 @@ namespace BugTracker.Models
 
         [DisplayName("Ticket Priority")]
 
-        //TODO: This is TicketPrioityId mis-spelled fix this later
-        public int TicketPrioityId { get; set; }
+        //TODO: This is TicketPrioityId mis-spelled Priority fix this later
+        public int TicketPriorityId { get; set; }
 
         [DisplayName("Ticket Status")]
         public int TicketStatusId { get; set; }
@@ -52,6 +55,7 @@ namespace BugTracker.Models
 
         [DisplayName("Ticket Developer")]
         public string DeveloperUserId { get; set; }
+
 
         // Navigation Properties
         public virtual Project Project { get; set; }
