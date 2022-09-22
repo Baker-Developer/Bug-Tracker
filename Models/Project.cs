@@ -29,7 +29,9 @@ namespace BugTracker.Models
 
         [DisplayName("End Date")]
         [DataType(DataType.Date)]
-        public DateTimeOffset? EndDate { get; set; }
+        // This has been updated
+        //TODO: Fix Use The Update-Database Command
+        public DateTimeOffset EndDate { get; set; }
 
         [DisplayName("Priority")]
         public int? ProjectPriorityId { get; set; }
