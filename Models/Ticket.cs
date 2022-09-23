@@ -44,7 +44,7 @@ namespace BugTracker.Models
 
         [DisplayName("Ticket Priority")]
 
-        //TODO: This is TicketPrioityId mis-spelled Priority fix this later
+        
         public int TicketPriorityId { get; set; }
 
         [DisplayName("Ticket Status")]
