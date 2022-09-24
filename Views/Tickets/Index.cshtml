@@ -37,7 +37,7 @@
                 @Html.DisplayNameFor(model => model.TicketType.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TicketStatus)
+                @Html.DisplayNameFor(model => model.TicketStatus.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OwnerUser.FullName)
@@ -86,7 +86,7 @@
                     @Html.DisplayFor(modelItem => item.OwnerUser.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DeveloperUser.Id)
+                    @Html.DisplayFor(modelItem => item.DeveloperUser)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -231,7 +231,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Tickets/Archived/5
-        public async Task<IActionResult> Archived(int? id)
+        public async Task<IActionResult> Archive(int? id)
         {
 
             if (id == null)
@@ -274,7 +274,7 @@ namespace BugTracker.Controllers
 
 
         // POST: Tickets/Restore/5
-        [HttpPost, ActionName("Archived")]
+        [HttpPost, ActionName("Restore")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RestoreConfirmed(int id)
         {
@@ -288,7 +288,7 @@ namespace BugTracker.Controllers
 
 
         // POST: Tickets/Archived/5
-        [HttpPost, ActionName("Archived")]
+        [HttpPost, ActionName("Archive")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ArchivedConfirmed(int id)
         {
