@@ -1,14 +1,19 @@
 ﻿@model IEnumerable<BugTracker.Models.Ticket>
+@using Microsoft.AspNetCore.Identity
+@using BugTracker.Services.Interfaces
+@using BugTracker.Models.Enums
+
+@inject UserManager<BugTrackerUser> UserManager
+@inject IBugTrackerProjectService ProjectService
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Archived Tickets";
+    BugTrackerUser bugTrackerUser = await UserManager.GetUserAsync(User);
 }
 
-<h1>Index</h1>
+<h1>Archived Tickets</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -37,13 +42,13 @@
                 @Html.DisplayNameFor(model => model.TicketType.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TicketStatus)
+                @Html.DisplayNameFor(model => model.TicketStatus.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OwnerUser.FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DeveloperUser.Id)
+                @Html.DisplayNameFor(model => model.DeveloperUser.FullName)
             </th>
             <th></th>
         </tr>
@@ -86,19 +91,24 @@
                     @Html.DisplayFor(modelItem => item.OwnerUser.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DeveloperUser.Id)
+                    @Html.DisplayFor(modelItem => item.DeveloperUser.FullName)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    @if (item.Archived)
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+
+                    @if (User.IsInRole(nameof(Roles.Admin)) || await ProjectService.IsAssignedProjectMangerAsync(bugTrackerUser.Id, item.ProjectId))
                     {
-                        <a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
+                        <span>|</span>
+                        if (item.Archived)
+                        {
+                            <a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Archive" asp-route-id="@item.Id">Archive</a>
+                        }
                     }
-                    else
-                    {
-                        <a asp-action="Archive" asp-route-id="@item.Id">Archive</a>
-                    }
+
 
                 </td>
             </tr>
