@@ -77,18 +77,16 @@ namespace BugTracker.Controllers
         // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var ticket = await _context.Tickets
-                .Include(t => t.DeveloperUser)
-                .Include(t => t.OwnerUser)
-                .Include(t => t.Project)
-                .Include(t => t.TicketStatus)
-                .Include(t => t.TicketType)
-                .FirstOrDefaultAsync(m => m.Id == id);
+
+            Ticket ticket = await _ticketService.GetTicketByIdAsync(id.Value);
+
+
             if (ticket == null)
             {
                 return NotFound();
@@ -230,7 +228,37 @@ namespace BugTracker.Controllers
             return View(ticket);
         }
 
-        // GET: Tickets/Archived/5
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddTicketComment([Bind("Id,TicketId,Comment")] TicketComment ticketComment)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ticketComment.UserId = _userManager.GetUserId(User);
+                    ticketComment.Created = DateTimeOffset.Now;
+
+                    await _ticketService.AddTicketCommentAsync(ticketComment);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction("Details", new {id = ticketComment.TicketId});
+        }
+
+
+
+
+
+
+        // GET: Tickets/Archive/5
         public async Task<IActionResult> Archive(int? id)
         {
 
