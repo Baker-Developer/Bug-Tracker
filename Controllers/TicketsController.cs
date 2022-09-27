@@ -12,6 +12,9 @@ using BugTracker.Extentions;
 using BugTracker.Models.Enums;
 using BugTracker.Services.Interfaces;
 using System.ComponentModel.Design;
+using System.IO;
+using Microsoft.AspNetCore.Authorization;
+using BugTracker.Models.ViewModels;
 
 namespace BugTracker.Controllers
 {
@@ -22,14 +25,16 @@ namespace BugTracker.Controllers
         private readonly IBugTrackerProjectService _projectService;
         private readonly IBugTrackerLookupService _lookupService;
         private readonly IBugTrackerTicketService _ticketService;
+        private readonly IBugTrackerFileService _fileService;
 
-        public TicketsController(ApplicationDbContext context, UserManager<BugTrackerUser> userManager, IBugTrackerProjectService projectService, IBugTrackerLookupService lookupService, IBugTrackerTicketService ticketService)
+        public TicketsController(ApplicationDbContext context, UserManager<BugTrackerUser> userManager, IBugTrackerProjectService projectService, IBugTrackerLookupService lookupService, IBugTrackerTicketService ticketService, IBugTrackerFileService fileService)
         {
             _context = context;
             _userManager = userManager;
             _projectService = projectService;
             _lookupService = lookupService;
             _ticketService = ticketService;
+            _fileService = fileService;
         }
 
         // GET: Tickets
@@ -73,6 +78,68 @@ namespace BugTracker.Controllers
 
             return View(tickets);
         }
+
+
+
+        [Authorize(Roles = "Admin,ProjectManager")]
+        public async Task<IActionResult> UnassignedTickets()
+        {
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            string bugTrackerUserId = _userManager.GetUserId(User);
+
+            List<Ticket> tickets = await _ticketService.GetUnassignedTicketsAsync(companyId);
+
+            if (User.IsInRole(nameof(Roles.Admin)))
+            {
+                return View(tickets);
+            }
+            else
+            {
+                List<Ticket> projectManagerTickets = new();
+
+                foreach (Ticket ticket in tickets)
+                {
+                    if (await _projectService.IsAssignedProjectMangerAsync(bugTrackerUserId, ticket.ProjectId))
+                    {
+                        projectManagerTickets.Add(ticket);
+                    }
+                }
+
+                return View(projectManagerTickets);
+            }
+
+
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> AssignDeveloper(int id)
+        {
+            AssignDeveloperViewModel model = new();
+
+            model.Ticket = await _ticketService.GetTicketByIdAsync(id);
+            model.Developers = new SelectList(await _projectService.GetProjectMembersByRoleAsync(model.Ticket.ProjectId, nameof(Roles.Developer)),
+                                                                 "Id", "FullName");
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignDeveloper(AssignDeveloperViewModel model)
+        {
+            if (model.DeveloperId != null)
+            {
+                await _ticketService.AssignTicketAsync(model.Ticket.Id, model.DeveloperId);
+                return RedirectToAction(nameof(Details), new { id = model.Ticket.Id });
+            }
+
+            return RedirectToAction(nameof(AssignDeveloper), new {id = model.Ticket.Id});
+        }
+
+
 
         // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -250,9 +317,38 @@ namespace BugTracker.Controllers
                 }
             }
 
-            return RedirectToAction("Details", new {id = ticketComment.TicketId});
+            return RedirectToAction("Details", new { id = ticketComment.TicketId });
         }
 
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddTicketAttachment([Bind("Id,FormFile,Description,TicketId")] TicketAttachment ticketAttachment)
+        {
+            string statusMessage;
+
+            if (ModelState.IsValid && ticketAttachment.FormFile != null)
+            {
+                ticketAttachment.FileData = await _fileService.ConvertFileToByteArrayAsync(ticketAttachment.FormFile);
+                ticketAttachment.FileName = ticketAttachment.FormFile.FileName;
+                ticketAttachment.FileContentType = ticketAttachment.FormFile.ContentType;
+
+                ticketAttachment.Created = DateTimeOffset.Now;
+                ticketAttachment.UserId = _userManager.GetUserId(User);
+
+                await _ticketService.AddTicketAttachmentAsync(ticketAttachment);
+                statusMessage = "Success: New attachment added to Ticket.";
+            }
+            else
+            {
+                statusMessage = "Error: Invalid data.";
+
+            }
+
+            return RedirectToAction("Details", new { id = ticketAttachment.TicketId, message = statusMessage });
+        }
 
 
 
@@ -333,5 +429,19 @@ namespace BugTracker.Controllers
 
             return (await _ticketService.GetAllTicketsByCompanyAsync(companyId)).Any(t => t.Id == id);
         }
+
+
+        public async Task<IActionResult> ShowFile(int id)
+        {
+            TicketAttachment ticketAttachment = await _ticketService.GetTicketAttachmentByIdAsync(id);
+            string fileName = ticketAttachment.FileName;
+            byte[] fileData = ticketAttachment.FileData;
+            string ext = Path.GetExtension(fileName).Replace(".", "");
+
+            Response.Headers.Add("Content-Disposition", $"inline; filename={fileName}");
+            return File(fileData, $"application/{ext}");
+        }
+
+
     }
 }

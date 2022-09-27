@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BugTracker.Extentions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -23,7 +24,10 @@ namespace BugTracker.Models
         public string Description { get; set; }
 
         [NotMapped]
+        [DisplayName("Select a file")]
         [DataType(DataType.Upload)]
+        [MaxFileSize(1024 * 1024)]
+        [AllowedExtensions(new string[] { ".jpg", ".png", ".doc", ".docx", ".xls", ".xlsx", ".pdf", ".ppt", ".pptx", ".html" })]
         public IFormFile FormFile { get; set; }
 
         [DisplayName("File Name")]

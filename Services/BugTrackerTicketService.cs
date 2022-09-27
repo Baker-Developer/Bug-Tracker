@@ -2,7 +2,9 @@
 using BugTracker.Models;
 using BugTracker.Models.Enums;
 using BugTracker.Services.Interfaces;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -34,6 +36,20 @@ namespace BugTracker.Services
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        public async Task AddTicketAttachmentAsync(TicketAttachment ticketAttachment)
+        {
+            try
+            {
+                await _context.AddAsync(ticketAttachment);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }
@@ -277,6 +293,23 @@ namespace BugTracker.Services
             }
         }
 
+
+        public async Task<TicketAttachment> GetTicketAttachmentByIdAsync(int ticketAttachmentId)
+        {
+            try
+            {
+                TicketAttachment ticketAttachment = await _context.TicketAttachments
+                                                                  .Include(t => t.User)
+                                                                  .FirstOrDefaultAsync(t => t.Id == ticketAttachmentId);
+                return ticketAttachment;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<Ticket> GetTicketByIdAsync(int ticketId)
         {
             try
@@ -386,6 +419,23 @@ namespace BugTracker.Services
                 throw;
             }
         }
+
+
+        public async Task<List<Ticket>> GetUnassignedTicketsAsync(int companyId)
+        {
+            List<Ticket> tickets = new();
+
+            try
+            {
+                tickets = (await GetAllTicketsByCompanyAsync(companyId)).Where(t => string .IsNullOrEmpty(t.DeveloperUserId)).ToList();
+                return tickets;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
         public async Task<int?> LookupTicketPriorityIdAsync(string priorityName)
         {
