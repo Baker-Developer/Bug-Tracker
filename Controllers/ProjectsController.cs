@@ -112,6 +112,9 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignProjectManager(AssignProjectManagerViewModel model)
@@ -145,6 +148,37 @@ namespace BugTracker.Controllers
 
             return View(model);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignMembers(ProjectMembersViewModel model)
+        {
+            if (model.SelectedUsers != null)
+            {
+                List<string> memberIds = (await _projectService.GetAllProjectMembersExceptPMAsync(model.Project.Id))
+                                                                                      .Select(m => m.Id).ToList();
+                // Remove Current Members
+                foreach (string member in memberIds)
+                {
+                    await _projectService.RemoveUserFromProjectAsync(member, model.Project.Id);
+                }
+
+                //Add Selected Members
+                foreach (string member in model.SelectedUsers)
+                {
+                    await _projectService.AddUserToProjectAsync(member, model.Project.Id);
+                }
+
+                //Goto Project Details
+                return RedirectToAction("Details", "Projects", new { id = model.Project.Id });
+            }
+
+
+            return RedirectToAction(nameof(AssignMembers), new { id = model.Project.Id });
+
+        }
+
 
 
         // GET: Projects/Details/5
