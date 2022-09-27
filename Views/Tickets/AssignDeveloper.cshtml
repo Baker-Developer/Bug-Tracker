@@ -1,0 +1,40 @@
+﻿@model BugTracker.Models.ViewModels.AssignDeveloperViewModel
+
+@using BugTracker.Models.Enums
+
+
+<div class="container">
+    <h3>Assign Developer For</h3>
+    <div class="row">
+        <div class="col-6">
+
+            <h3>@Model.Ticket.Title</h3>
+            <a style="font-size:small;" asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Ticket.ProjectId">@Model.Ticket.Project.Name</a>
+
+            <div class="card">
+                <div class="card-header">
+                    <label class="control-label">Assign Developer</label>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="AssignDeveloper" asp-controller="Tickets">
+                        <input asp-for="Ticket.Id" hidden />
+                        <p>Description: @Model.Ticket.Description</p>
+
+                        <div class="form-group">
+                            <label class="col-form-label">Select Developers</label>
+                            <select required asp-for="DeveloperId" class="form-control" asp-items="@Model.Developers">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-4">
+                            <input type="submit" value="Assign" class="btn btn-primary"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a asp-action="UnassignedTickets" asp-controller="Tickets">Unassigned Tickets</a>
+    </div>
+</div>
