@@ -96,7 +96,7 @@
                                         <p class="font-weight-lighter p-3">Project Manager</p>
                                         @if (User.IsInRole(nameof(Roles.Admin)) || (bugTrackerUser.Id == projectManager.Id))
                                         {
-                                            <span><a class="btn btn-success" asp-action="AssignUsers" asp-controller="Projects" asp-route-id="@Model.Id">Manage Team</a></span>
+                                            <span><a class="btn btn-success" asp-action="AssignMembers" asp-controller="Projects" asp-route-id="@Model.Id">Manage Team</a></span>
                                         }
                                     </div>
 
