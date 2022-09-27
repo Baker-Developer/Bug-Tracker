@@ -75,6 +75,9 @@ namespace BugTracker.Controllers
         }
 
 
+
+
+
         // GET: ArchivedProjects
         public async Task<IActionResult> ArchivedProjects()
         {
@@ -84,6 +87,98 @@ namespace BugTracker.Controllers
 
             return View(projects);
         }
+
+        public async Task<IActionResult> UnassignedProjects()
+        {
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            List<Project> projects = new();
+
+            projects = await _projectService.GetUnassignedProjectsAsync(companyId);
+
+            return View(projects);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AssignProjectManager(int projectId)
+        {
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            AssignProjectManagerViewModel model = new();
+
+            model.Project = await _projectService.GetProjectByIdAsync(projectId, companyId);
+            model.ProjectManagerList = new SelectList(await _rolesService.GetUsersInRoleAsync(nameof(Roles.ProjectManager), companyId), "Id", "FullName");
+
+            return View(model);
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignProjectManager(AssignProjectManagerViewModel model)
+        {
+            if (!string.IsNullOrEmpty(model.ProjectManagerId))
+            {
+                await _projectService.AddProjectManagerAsync(model.ProjectManagerId, model.Project.Id);
+
+                return RedirectToAction(nameof(Details), new { id = model.Project.Id });
+            }
+            return RedirectToAction(nameof(AssignProjectManager), new { projectId = model.Project.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AssignMembers(int id)
+        {
+            ProjectMembersViewModel model = new();
+
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            model.Project = await _projectService.GetProjectByIdAsync(id, companyId);
+
+            List<BugTrackerUser> developers = await _rolesService.GetUsersInRoleAsync(nameof(Roles.Developer), companyId);
+            List<BugTrackerUser> submitters = await _rolesService.GetUsersInRoleAsync(nameof(Roles.Submitter), companyId);
+
+            List<BugTrackerUser> companyMembers = developers.Concat(submitters).ToList();
+
+            List<string> projectMembers = model.Project.Members.Select(m => m.Id).ToList();
+
+            model.Users = new MultiSelectList(companyMembers, "Id", "FullName", projectMembers);
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignMembers(ProjectMembersViewModel model)
+        {
+            if (model.SelectedUsers != null)
+            {
+                List<string> memberIds = (await _projectService.GetAllProjectMembersExceptPMAsync(model.Project.Id))
+                                                                                      .Select(m => m.Id).ToList();
+                // Remove Current Members
+                foreach (string member in memberIds)
+                {
+                    await _projectService.RemoveUserFromProjectAsync(member, model.Project.Id);
+                }
+
+                //Add Selected Members
+                foreach (string member in model.SelectedUsers)
+                {
+                    await _projectService.AddUserToProjectAsync(member, model.Project.Id);
+                }
+
+                //Goto Project Details
+                return RedirectToAction("Details", "Projects", new { id = model.Project.Id });
+            }
+
+
+            return RedirectToAction(nameof(AssignMembers), new { id = model.Project.Id });
+
+        }
+
 
 
         // GET: Projects/Details/5
@@ -98,7 +193,7 @@ namespace BugTracker.Controllers
 
             Project project = await _projectService.GetProjectByIdAsync(id.Value, companyId);
 
-            
+
 
             if (project == null)
             {

@@ -23,11 +23,13 @@ namespace BugTracker.Models
         [DisplayName("File Description")]
         public string Description { get; set; }
 
+
+
         [NotMapped]
         [DisplayName("Select a file")]
         [DataType(DataType.Upload)]
         [MaxFileSize(1024 * 1024)]
-        [AllowedExtensions(new string[] { ".jpg", ".png", ".doc", ".docx", ".xls", ".xlsx", ".pdf", ".ppt", ".pptx", ".html" })]
+        [AllowedExtensions(new string[] { ".jpg", ".png", ".doc", ".docx", ".xls", ".xlsx", ".pdf" })]
         public IFormFile FormFile { get; set; }
 
         [DisplayName("File Name")]
