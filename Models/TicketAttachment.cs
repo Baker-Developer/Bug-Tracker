@@ -12,6 +12,7 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         [DisplayName("Ticket")]
+        // Note: This Was Changed From String To A Int
         public string TicketId { get; set; }
 
         [DisplayName("File Data")]
@@ -22,8 +23,6 @@ namespace BugTracker.Models
 
         [DisplayName("File Description")]
         public string Description { get; set; }
-
-
 
         [NotMapped]
         [DisplayName("Select a file")]
