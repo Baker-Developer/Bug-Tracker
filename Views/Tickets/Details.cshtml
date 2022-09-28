@@ -7,7 +7,7 @@
 @inject UserManager<BugTrackerUser> UserManager
 @inject IBugTrackerProjectService ProjectService
 @inject IBugTrackerHistoryService HistoryService
-@inject IBugTrackerFileService FileService
+@inject IBugTrackerFileService BugTrackerFileService
 
 @{
     ViewData["Title"] = "Details";
@@ -179,7 +179,7 @@
 
                                 @* Ticket attachments part 2 here *@
                                 <hr />
-                                <h6>Attachments</h6>
+                                <h4 class="font-italic"> Attachments Below</h4>
                                 <div class="container">
                                     <div class="row">
                                         @foreach (TicketAttachment item in Model.Attachments)
@@ -187,14 +187,14 @@
                                             <div class="col col-sm-2">
                                                 <a asp-action="ShowFile" asp-controller="Tickets" asp-route-Id="@item.Id">
                                                     <div class="icon">
-                                                        <img src="@FileService.GetFileIcon(item.FileName)" style="height:50px;width:50px" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="@item.FileName" />
+                                                        <img src="@BugTrackerFileService.GetFileIcon(item.FileName)" style="height:50px;width:50px" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="@item.FileName" />
                                                     </div>
                                                 </a>
                                                 <div style="font-size:x-small">
                                                     <div class="file-name">
                                                         <strong>@item.Description</strong>
                                                     </div>
-                                                    <small>Size: @FileService.FormatFileSize(item.FileData.Length) </small>
+                                                    <small>Size: @BugTrackerFileService.FormatFileSize(item.FileData.Length) </small>
                                                 </div>
                                             </div>
                                         }
@@ -218,24 +218,35 @@
                         <div class="card-body" style="overflow-y:auto;height:1000px;background-color:antiquewhite">
                             @*Loop to show the history entries for the Ticket*@
 
-
-                          @foreach (TicketHistory history in Model.History)
+                            @foreach (TicketHistory history in Model.History)
                             {
                                 <div class="">
-                                    <span class="date">@history.Created.ToString("dd, MMM, yyyy")</span>
+                                    <span class="date" style="font-weight:bold;">@history.Created.ToString("dd, MMM, yyyy")</span>
                                     <h5>@history.Description</h5>
                                     <span> By: <a title="@history.User.FullName">@history.User.FullName"</a> </span>
                                     <div class="">
-                                        <p>The Ticket <b>@history.Property</b> was edited</p>
-                                        <p>@($"Previous {history.Property}: {history.OldValue}")</p>
-                                        <p>@($"Previous {history.Property}: {history.NewValue}")</p>
-                                    </div>
+                                        @if (history.Description.Contains("New Ticket Created"))
+                                        {
+                                            <p>A New Ticket Was Added</p>
+                                        }
+                                        else if (history.Property.Equals("TicketComment") || history.Property.Equals("TicketAttatchment"))
+                                        {
+                                            <p>A <b>@history.Property</b> was added</p>
+                                        }
+                                        else
+                                        {
+                                            <p>The Ticket <b>@history.Property</b> was edited</p>
+                                            <p>@($"Previous {history.Property}") <span style="color:red">@history.OldValue}</span></p>
+                                            <p>@($"Previous {history.Property}") <span style="color:green">@history.NewValue}</span></p>
+                                        }
 
-                                    <div class="media">
+                                    </div>
+                                    <hr />
+                                    @*<div class="media">
                                         <div class="media-body">
                                             <h6 class="mb-0"></h6>
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
                             }
 

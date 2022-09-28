@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace BugTracker.Extentions
 {
-
     public class MaxFileSizeAttribute : ValidationAttribute
     {
         private readonly int _maxFileSize;
@@ -70,7 +69,4 @@ namespace BugTracker.Extentions
             return $"The file extension {ext} is not allowed!";
         }
     }
-
-
-
 }
