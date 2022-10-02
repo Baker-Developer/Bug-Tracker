@@ -2,115 +2,573 @@
 @using BugTracker.Models.Enums
 @inject SignInManager<BugTrackerUser> SignInManager
 
-<!DOCTYPE html>
-<html lang="en">
+
+<!doctype html>
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewData["Title"] - TheBugTracker</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="" />
+
+    <link href="~/css/aos.css" rel="stylesheet" />
+    <link href="~/css/custom.min.css" rel="stylesheet" />
+    <link href="~/css/customizer.min.css" rel="stylesheet" />
+
+    <link href="~/css/dark.min.css" rel="stylesheet" />
+
+    <link href="~/css/hope-ui.min.css" rel="stylesheet" />
+
+    <link href="~/css/rtl.min.css" rel="stylesheet" />
+
+
+
 </head>
-<body>
-    <div class="container-fluid overflow-hidden">
-        <div class="row vh-100 overflow-auto">
-            <div class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
-                <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
-                    <a href="/" class="d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-5">B<span class="d-none d-sm-inline">ugTracker</span></span>
-                    </a>
-                    <partial name="_LoginPartial" />
-
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <ul class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start" id="menu">
-                            <li class="nav-item">
-                                <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link px-sm-0 px-2">
-                                    <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-area="" asp-controller="Companies" asp-action="Index" class="nav-link px-sm-0 px-2">
-                                    <i class="fs-5 bi-building"></i><span class="ms-1 d-none d-sm-inline">Company</span>
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a asp-area="" asp-controller="Projects" asp-action="Index" class="nav-link dropdown-toggle px-sm-0 px-2" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fs-5 bi-file-earmark-ppt"></i><span class="ms-1 d-none d-sm-inline">Projects</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdown">
-
-                                    @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))) {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Create">New project...</a></li>
-                                    }
-        
-                                    @if (!User.IsInRole(nameof(Roles.Admin)))
-                                    {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="MyProjects">My Projects</a></li>
-                                    }
-
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="AllProjects">All Projects</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="ArchivedProjects">Archived Projects</a></li>
-
-
-                                    @if (User.IsInRole(nameof(Roles.Admin)))
-                                    {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="UnassignedProjects">Unassigned Projects</a></li>
-                                    }
-
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a asp-area="" asp-controller="Tickets" asp-action="Index" class="nav-link dropdown-toggle px-sm-0 px-2" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fs-5 bi-file-earmark-font"></i><span class="ms-1 d-none d-sm-inline">Tickets</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdown">
-                                   
-
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="Create">New ticket...</a></li>
-
-
-                                    @if (!User.IsInRole(nameof(Roles.Admin)))
-                                    {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="MyTickets">My Tickets</a></li>
-                                    }
-
-
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="AllTickets">All Tickets</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets">Archived Tickets</a></li>
-
-
-                                    @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
-                                    {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="UnassignedTickets">Unassigned Tickets</a></li>
-                                    }
-
-                                </ul>
-                            </li>
-                            <li>
-                                <a asp-area="" asp-controller="Notifications" asp-action="Index" class="nav-link px-sm-0 px-2">
-                                    <i class="fs-5 bi-mailbox2"></i><span class="ms-1 d-none d-sm-inline">Notifications</span>
-                                </a>
-                            </li>
-                        </ul>
-                    }
+<body class="dark">
+    <!-- loader Start -->
+    @*   <div id="loading">
+    <div class="loader simple-loader">
+    <div class="loader-body"></div>
+    </div>
+    </div>*@
+    <!-- loader END -->
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <aside class="sidebar sidebar-default navs-rounded-all ">
+            <div class="sidebar-header d-flex align-items-center justify-content-start">
+                <a href="../dashboard/index.html" class="navbar-brand">
+                    <!--Logo start-->
+                    <svg width="30" class="" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor" />
+                        <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor" />
+                        <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor" />
+                        <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor" />
+                    </svg>
+                    <!--logo End-->            <h4 class="logo-title">Hope UI</h4>
+                </a>
+                <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+                    <i class="icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M10.2998 18.2988L4.2498 12.2748L10.2998 6.24976" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </i>
                 </div>
             </div>
-            <div class="col d-flex flex-column h-100">
-                <main class="row">
-                    @RenderBody()
-                </main>
-                <footer class="row bg-light py-4 mt-auto">
-                    <div class="container">
-                        &copy; 2021 - TheBugTracker - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="sidebar-body pt-0 data-scrollbar">
+                <div class="sidebar-list">
+                    <!-- Sidebar Menu Start -->
+                    <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
+                        <li class="nav-item static-item">
+                            <a class="nav-link static-item disabled" href="#" tabindex="-1">
+                                <span class="default-icon">Home</span>
+                                <span class="mini-icon">-</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Dashboard">
+                                <i class="icon">
+                                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z" fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Companies" asp-action="Index" role="button" aria-expanded="false" aria-controls="horizontal-menu">
+                                <i class="icon">
+
+                                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4" d="M10.0833 15.958H3.50777C2.67555 15.958 2 16.6217 2 17.4393C2 18.2559 2.67555 18.9207 3.50777 18.9207H10.0833C10.9155 18.9207 11.5911 18.2559 11.5911 17.4393C11.5911 16.6217 10.9155 15.958 10.0833 15.958Z" fill="currentColor"></path>
+                                        <path opacity="0.4" d="M22.0001 6.37867C22.0001 5.56214 21.3246 4.89844 20.4934 4.89844H13.9179C13.0857 4.89844 12.4102 5.56214 12.4102 6.37867C12.4102 7.1963 13.0857 7.86 13.9179 7.86H20.4934C21.3246 7.86 22.0001 7.1963 22.0001 6.37867Z" fill="currentColor"></path>
+                                        <path d="M8.87774 6.37856C8.87774 8.24523 7.33886 9.75821 5.43887 9.75821C3.53999 9.75821 2 8.24523 2 6.37856C2 4.51298 3.53999 3 5.43887 3C7.33886 3 8.87774 4.51298 8.87774 6.37856Z" fill="currentColor"></path>
+                                        <path d="M21.9998 17.3992C21.9998 19.2648 20.4609 20.7777 18.5609 20.7777C16.6621 20.7777 15.1221 19.2648 15.1221 17.3992C15.1221 15.5325 16.6621 14.0195 18.5609 14.0195C20.4609 14.0195 21.9998 15.5325 21.9998 17.3992Z" fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Companies</span>
+
+                            </a>
+
+                        </li>
+                        <li><hr class="hr-horizontal"></li>
+                        <li class="nav-item static-item">
+                            <a class="nav-link static-item disabled" href="#" tabindex="-1">
+                                <span class="default-icon">Pages</span>
+                                <span class="mini-icon">-</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-special" role="button" aria-expanded="false" aria-controls="sidebar-special">
+                                <i class="icon">
+                                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4" d="M13.3051 5.88243V6.06547C12.8144 6.05584 12.3237 6.05584 11.8331 6.05584V5.89206C11.8331 5.22733 11.2737 4.68784 10.6064 4.68784H9.63482C8.52589 4.68784 7.62305 3.80152 7.62305 2.72254C7.62305 2.32755 7.95671 2 8.35906 2C8.77123 2 9.09508 2.32755 9.09508 2.72254C9.09508 3.01155 9.34042 3.24276 9.63482 3.24276H10.6064C12.0882 3.2524 13.2953 4.43736 13.3051 5.88243Z" fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.164 6.08279C15.4791 6.08712 15.7949 6.09145 16.1119 6.09469C19.5172 6.09469 22 8.52241 22 11.875V16.1813C22 19.5339 19.5172 21.9616 16.1119 21.9616C14.7478 21.9905 13.3837 22.0001 12.0098 22.0001C10.6359 22.0001 9.25221 21.9905 7.88813 21.9616C4.48283 21.9616 2 19.5339 2 16.1813V11.875C2 8.52241 4.48283 6.09469 7.89794 6.09469C9.18351 6.07542 10.4985 6.05615 11.8332 6.05615C12.3238 6.05615 12.8145 6.05615 13.3052 6.06579C13.9238 6.06579 14.5425 6.07427 15.164 6.08279ZM10.8518 14.7459H9.82139V15.767C9.82139 16.162 9.48773 16.4896 9.08538 16.4896C8.67321 16.4896 8.34936 16.162 8.34936 15.767V14.7459H7.30913C6.90677 14.7459 6.57311 14.4279 6.57311 14.0233C6.57311 13.6283 6.90677 13.3008 7.30913 13.3008H8.34936V12.2892C8.34936 11.8942 8.67321 11.5667 9.08538 11.5667C9.48773 11.5667 9.82139 11.8942 9.82139 12.2892V13.3008H10.8518C11.2542 13.3008 11.5878 13.6283 11.5878 14.0233C11.5878 14.4279 11.2542 14.7459 10.8518 14.7459ZM15.0226 13.1177H15.1207C15.5231 13.1177 15.8567 12.7998 15.8567 12.3952C15.8567 12.0002 15.5231 11.6727 15.1207 11.6727H15.0226C14.6104 11.6727 14.2866 12.0002 14.2866 12.3952C14.2866 12.7998 14.6104 13.1177 15.0226 13.1177ZM16.7007 16.4318H16.7988C17.2012 16.4318 17.5348 16.1139 17.5348 15.7092C17.5348 15.3143 17.2012 14.9867 16.7988 14.9867H16.7007C16.2885 14.9867 15.9647 15.3143 15.9647 15.7092C15.9647 16.1139 16.2885 16.4318 16.7007 16.4318Z" fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Projects</span>
+                                <i class="right-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </i>
+                            </a>
+
+
+                            <ul class="sub-nav collapse" id="sidebar-special" data-bs-parent="#sidebar-menu">
+                                @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Projects" asp-action="Create">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <i class="sidenav-mini-icon"> B </i>
+                                            <span class="item-name">New Project</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (!User.IsInRole(nameof(Roles.Admin)))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Projects" asp-action="MyProjects">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <i class="sidenav-mini-icon"> C </i>
+                                            <span class="item-name">My Projects</span>
+                                        </a>
+                                    </li>
+                                }
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link " asp-controller="Projects" asp-action="AllProjects">
+                                        <i class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                <g>
+                                                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <i class="sidenav-mini-icon"> K </i>
+                                        <span class="item-name">All Projects</span>
+                                    </a>
+                                </li>
+
+
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link " asp-controller="Projects" asp-action="ArchivedProjects">
+                                        <i class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                <g>
+                                                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <i class="sidenav-mini-icon"> P </i>
+                                        <span class="item-name">Archived Projects</span>
+                                    </a>
+                                </li>
+
+
+                                @if (User.IsInRole(nameof(Roles.Admin)))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-controller="Projects" asp-action="UnassignedProjects">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <i class="sidenav-mini-icon"> R </i>
+                                            <span class="item-name">Unassigned Projects</span>
+                                        </a>
+                                    </li>
+                                }
+
+
+                            </ul>
+                        </li>
+
+
+                    
+                  
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#utilities-error" role="button" aria-expanded="false" aria-controls="utilities-error">
+                                <i class="icon">
+                                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4" d="M11.9912 18.6215L5.49945 21.864C5.00921 22.1302 4.39768 21.9525 4.12348 21.4643C4.0434 21.3108 4.00106 21.1402 4 20.9668V13.7087C4 14.4283 4.40573 14.8725 5.47299 15.37L11.9912 18.6215Z" fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.89526 2H15.0695C17.7773 2 19.9735 3.06605 20 5.79337V20.9668C19.9989 21.1374 19.9565 21.3051 19.8765 21.4554C19.7479 21.7007 19.5259 21.8827 19.2615 21.9598C18.997 22.0368 18.7128 22.0023 18.4741 21.8641L11.9912 18.6215L5.47299 15.3701C4.40573 14.8726 4 14.4284 4 13.7088V5.79337C4 3.06605 6.19625 2 8.89526 2ZM8.22492 9.62227H15.7486C16.1822 9.62227 16.5336 9.26828 16.5336 8.83162C16.5336 8.39495 16.1822 8.04096 15.7486 8.04096H8.22492C7.79137 8.04096 7.43991 8.39495 7.43991 8.83162C7.43991 9.26828 7.79137 9.62227 8.22492 9.62227Z" fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Tickets</span>
+                                <i class="right-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </i>
+                            </a>
+
+
+                            <ul class="sub-nav collapse" id="utilities-error" data-bs-parent="#sidebar-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link " class="item-name" asp-area="" asp-controller="Tickets" asp-action="Create">
+                                        <i class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                <g>
+                                                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <span>New Ticket</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+
+
+
+
+
+
+
+                            <ul class="sub-nav collapse" id="utilities-error" data-bs-parent="#sidebar-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link " class="item-name" asp-area="" asp-controller="Tickets" asp-action="AllTickets">
+                                        <i class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                <g>
+                                                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <span>All Tickets</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+
+                            <ul class="sub-nav collapse" id="utilities-error" data-bs-parent="#sidebar-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link " class="item-name" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets">
+                                        <i class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                <g>
+                                                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <span>Archived Tickets</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+
+                            @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                            {
+                                <ul class="sub-nav collapse" id="utilities-error" data-bs-parent="#sidebar-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link " class="item-name" asp-controller="Tickets" asp-action="UnassignedTickets">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <span>Unassigned Tickets</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+
+
+
+                            @if (!User.IsInRole(nameof(Roles.Admin)))
+                            {
+                                <ul class="sub-nav collapse" id="utilities-error" data-bs-parent="#sidebar-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link " class="item-name" asp-area="" asp-controller="Tickets" asp-action="MyTickets">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <span>My Tickets</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+
+                        </li>
+
+
+
+
+                        <li><hr class="hr-horizontal"></li>
+                        <li class="nav-item static-item">
+                            <a class="nav-link static-item disabled" href="#" tabindex="-1">
+                                <span class="default-icon">Work In Progress Features</span>
+                                <span class="mini-icon">-</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Notifications" asp-action="Index">
+                                <i class="icon">
+                                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4" d="M2 11.0786C2.05 13.4166 2.19 17.4156 2.21 17.8566C2.281 18.7996 2.642 19.7526 3.204 20.4246C3.986 21.3676 4.949 21.7886 6.292 21.7886C8.148 21.7986 10.194 21.7986 12.181 21.7986C14.176 21.7986 16.112 21.7986 17.747 21.7886C19.071 21.7886 20.064 21.3566 20.836 20.4246C21.398 19.7526 21.759 18.7896 21.81 17.8566C21.83 17.4856 21.93 13.1446 21.99 11.0786H2Z" fill="currentColor"></path>
+                                        <path d="M11.2451 15.3843V16.6783C11.2451 17.0923 11.5811 17.4283 11.9951 17.4283C12.4091 17.4283 12.7451 17.0923 12.7451 16.6783V15.3843C12.7451 14.9703 12.4091 14.6343 11.9951 14.6343C11.5811 14.6343 11.2451 14.9703 11.2451 15.3843Z" fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.211 14.5565C10.111 14.9195 9.762 15.1515 9.384 15.1015C6.833 14.7455 4.395 13.8405 2.337 12.4815C2.126 12.3435 2 12.1075 2 11.8555V8.38949C2 6.28949 3.712 4.58149 5.817 4.58149H7.784C7.972 3.12949 9.202 2.00049 10.704 2.00049H13.286C14.787 2.00049 16.018 3.12949 16.206 4.58149H18.183C20.282 4.58149 21.99 6.28949 21.99 8.38949V11.8555C21.99 12.1075 21.863 12.3425 21.654 12.4815C19.592 13.8465 17.144 14.7555 14.576 15.1105C14.541 15.1155 14.507 15.1175 14.473 15.1175C14.134 15.1175 13.831 14.8885 13.746 14.5525C13.544 13.7565 12.821 13.1995 11.99 13.1995C11.148 13.1995 10.433 13.7445 10.211 14.5565ZM13.286 3.50049H10.704C10.031 3.50049 9.469 3.96049 9.301 4.58149H14.688C14.52 3.96049 13.958 3.50049 13.286 3.50049Z" fill="currentColor">
+                                        </path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Notifications</span>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                    <!-- Sidebar Menu End -->
+                </div>
+            </div>
+            <div class="sidebar-footer"></div>
+        </aside>
+    }
+    <main class="main-content">
+        <div class="position-relative iq-banner">
+            <!--Nav Start-->
+            <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+                <div class="container-fluid navbar-inner">
+                    <a href="../dashboard/index.html" class="navbar-brand">
+                        <!--Logo start-->
+                        <svg width="30" class="text-primary" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor" />
+                            <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor" />
+                            <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor" />
+                            <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor" />
+                        </svg>
+                        <!--logo End-->        <h4 class="logo-title">Hope UI</h4>
+                    </a>
+                    <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+                        <i class="icon">
+                            <svg width="20px" height="20px" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+                            </svg>
+                        </i>
                     </div>
-                </footer>
+                    <div class="input-group search-input">
+                        <span class="input-group-text" id="search-input">
+                            <svg width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                        <input type="search" class="form-control" placeholder="Search...">
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon">
+                            <span class="mt-2 navbar-toggler-bar bar1"></span>
+                            <span class="navbar-toggler-bar bar2"></span>
+                            <span class="navbar-toggler-bar bar3"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
+
+
+                            <partial name="_LoginPartial" />
+                            <li class="nav-item dropdown">
+                                <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @* <img src="../assets/images/avatars/01.png" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded">*@
+
+                                </a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>          <!-- Nav Header Component Start -->
+            <div class="iq-navbar-header" style="height: 215px;">
+                <div class="container-fluid iq-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="flex-wrap d-flex justify-content-between align-items-center">
+                                <div>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+                <div class="iq-header-img">
+                    <img src="../assets/images/dashboard/top-header.png" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX">
+
+                </div>
+            </div>          <!-- Nav Header Component End -->
+            <!--Nav End-->
+        </div>
+        <div class="conatiner-fluid content-inner mt-n5 py-0">
+        </div>
+        <div class="btn-download">
+        </div>
+
+    </main>
+
+
+
+
+
+
+    <!-- Wrapper End-->
+    <!-- offcanvas start -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <div class="d-flex align-items-center">
+                <h3 class="offcanvas-title me-3" id="offcanvasExampleLabel">Settings</h3>
+            </div>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body data-scrollbar">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5 class="mb-3">Scheme</h5>
+                    <div class="d-grid gap-x-3 grid-cols-3 mb-4">
+
+                        <div class="btn-border" data-setting="color-mode" data-name="color" data-value="dark">
+                            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="currentColor" d="M9,2C7.95,2 6.95,2.16 6,2.46C10.06,3.73 13,7.5 13,12C13,16.5 10.06,20.27 6,21.54C6.95,21.84 7.95,22 9,22A10,10 0 0,0 19,12A10,10 0 0,0 9,2Z" />
+                            </svg>
+                            <span class="ms-2 "> Dark  </span>
+                        </div>
+                        <div class="btn-border active" data-setting="color-mode" data-name="color" data-value="light">
+                            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="currentColor" d="M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8M12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z" />
+                            </svg>
+                            <span class="ms-2 "> Light</span>
+                        </div>
+                    </div>
+                    <hr class="hr-horizontal">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mt-4 mb-3">Color Customizer</h5>
+
+                    </div>
+                    <div class="grid-cols-5 mb-4 d-grid gap-x-2">
+
+                        <div class="btn-border" data-value="theme-color-yellow" data-info="#6410F1" data-setting="color-mode1" data-name="color" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Theme-4">
+                            <svg class="customizer-btn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"> <circle cx="12" cy="12" r="10" fill="#EA6A12" /> <path d="M2,12 a1,1 1 1,0 20,0" fill="#6410F1" /></svg>
+                        </div>
+                        <button class="btn btn-transparent p-0" data-value="theme-color-default" data-info="#079aa2" data-setting="color-mode1" data-name="color" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Default">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                Default Color
+                            </svg>
+                        </button>
+
+
+                    </div>
+                    <hr class="hr-horizontal">
+                    <h5 class="mb-3 mt-4">Scheme Direction</h5>
+                    <div class="d-grid gap-x-3 grid-cols-2 mb-4">
+                        <div class="text-center">
+                            <img src="../assets/images/settings/dark/01.png" alt="ltr" class="mode dark-img img-fluid btn-border p-0 flex-column active" data-setting="dir-mode" data-name="dir" data-value="ltr">
+                            <img src="../assets/images/settings/light/01.png" alt="ltr" class="mode light-img img-fluid btn-border p-0 flex-column active" data-setting="dir-mode" data-name="dir" data-value="ltr">
+                            <span class=" mt-2"> LTR </span>
+                        </div>
+
+                    </div>
+                    <hr class="hr-horizontal">
+                    <h5 class="mt-4 mb-3">Sidebar Color</h5>
+                    <div class="d-grid gap-x-3 grid-cols-2 mb-4">
+                        <div class="btn btn-border mb-4" data-setting="sidebar" data-name="sidebar-color" data-value="sidebar-dark">
+                            <i class="text-dark">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                </svg>
+                            </i>
+                            <span class="ms-2 "> Dark </span>
+                        </div>
+
+                        <div class="btn btn-border active" data-setting="sidebar" data-name="sidebar-color" data-value="sidebar-white">
+                            <i class="text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <circle cx="12" cy="12" r="8" fill="currentColor" stroke="black" stroke-width="3"></circle>
+                                </svg>
+                            </i>
+                            <span class="ms-2 "> White </span>
+                        </div>
+
+                    </div>
+                    <hr class="hr-horizontal">
+                    <h5 class="mt-4 mb-3">Sidebar Types</h5>
+                    <div class="d-grid gap-x-3 grid-cols-3 mb-4">
+
+                        <div class="text-center">
+                            <img src="../assets/images/settings/dark/04.png" alt="hover" class="mode dark-img img-fluid btn-border p-0 flex-column" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-hover" data-extra-value="sidebar-mini">
+                            <img src="../assets/images/settings/light/04.png" alt="hover" class="mode light-img img-fluid btn-border p-0 flex-column" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-hover" data-extra-value="sidebar-mini">
+                            <span class="mt-2">Hover</span>
+                        </div>
+
+                    </div>
+                    <hr class="hr-horizontal">
+                    <h5 class="mt-4 mb-3">Sidebar Active Style</h5>
+                    <div class="d-grid gap-x-3 grid-cols-2 mb-4">
+                    </div>
+                    <hr class="hr-horizontal">
+                    <h5 class="mt-4 mb-3">Navbar Style</h5>
+                    <div class="d-grid gap-x-3 grid-cols-2">
+
+                        <div class="mb-4 text-center">
+                            <img src="../assets/images/settings/dark/12.png" alt="sticky" class="mode dark-img img-fluid btn-border p-0 flex-column" data-setting="navbar" data-target=".iq-navbar" data-name="navbar-type" data-value="navs-sticky">
+                            <img src="../assets/images/settings/light/12.png" alt="sticky" class="mode light-img img-fluid btn-border p-0 flex-column" data-setting="navbar" data-target=".iq-navbar" data-name="navbar-type" data-value="navs-sticky">
+                            <span class="mt-2">Sticky</span>
+                        </div>
+
+                        <div class="btn btn-border active col-span-full" data-setting="navbar" data-name="navbar-default" data-value="default">
+                            <i class="text-body">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <circle cx="12" cy="12" r="8" fill="#F5F6FA" stroke="black" stroke-width="3"></circle>
+                                </svg>
+                            </i>
+                            <span class="ms-2 "> Default Navbar</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+    <script src="~/js/site.js"></script>
+    <script src="~/js/external.min.js"></script>
+    <script src="~/js/libs.min.js"></script>
+    <script src="~/js/fslightbox.js"></script>
+    <script src="~/js/setting.js"></script>
+    <script src="~/js/slider-tabs.js"></script>
+    <script src="~/js/form-wizard.js"></script>
+    <script src="~/js/aos.js"></script>
+    <script src="~/js/hope-ui.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -224,7 +224,7 @@ namespace BugTracker.Controllers
                     await _historyService.AddHistoryAsync(null, newTicket, bugTrackerUser.Id);
 
                     //TODO: Ticket Notification
-                    return RedirectToAction(nameof(Index));
+                    return View(ticket);
                 }
                 catch (Exception)
                 {
