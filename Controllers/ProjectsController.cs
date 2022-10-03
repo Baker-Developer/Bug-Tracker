@@ -310,7 +310,7 @@ namespace BugTracker.Controllers
                     }
                 }
                 //TODO: Redirect To All Projects
-                return RedirectToAction("Index");
+                return RedirectToAction("AllProjects");
             }
 
             return RedirectToAction("Edit");
@@ -350,7 +350,7 @@ namespace BugTracker.Controllers
 
             await _projectService.ArchiveProjectAsync(project);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("AllProjects");
         }
 
 
@@ -388,7 +388,7 @@ namespace BugTracker.Controllers
 
             await _projectService.RestoreProjectAsync(project);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("AllProjects");
         }
 
 

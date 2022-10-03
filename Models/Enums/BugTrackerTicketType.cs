@@ -15,7 +15,7 @@ namespace BugTracker.Models.Enums
         ChangeRequest,
         
         Enhancement,
- 
+       
         GeneralTask
     }
 }

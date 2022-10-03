@@ -304,11 +304,11 @@ namespace BugTracker.Controllers
                     }
                 }
 
-                //TODO: Add Ticket History
+                //Add Ticket History
                 Ticket newTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id);
                 await _historyService.AddHistoryAsync(oldTicket, newTicket, bugTrackerUser.Id);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit");
             }
 
 
@@ -335,7 +335,7 @@ namespace BugTracker.Controllers
 
                     await _ticketService.AddTicketCommentAsync(ticketComment);
 
-                    // Add History
+                    // Add Ticket Comment History
                     await _historyService.AddHistoryAsync(ticketComment.TicketId, nameof(TicketComment), ticketComment.UserId);
 
                 }
@@ -370,9 +370,8 @@ namespace BugTracker.Controllers
 
                     await _ticketService.AddTicketAttachmentAsync(ticketAttachment);
 
-                    // Add History
-                    // TOOD: Fix Error
-                    //await _historyService.AddHistoryAsync(ticketAttachment.TicketId, nameof(TicketAttachment), ticketAttachment.UserId);
+                    // Add History For Ticket Attachment          
+                    await _historyService.AddHistoryAsync(ticketAttachment.TicketId, nameof(TicketAttachment), ticketAttachment.UserId);
 
                 }
                 catch (Exception)
@@ -461,7 +460,7 @@ namespace BugTracker.Controllers
             ticket.Archived = false;
             await _ticketService.UpdateTicketAsync(ticket);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AllTickets");
         }
 
 
@@ -476,7 +475,7 @@ namespace BugTracker.Controllers
             ticket.Archived = true;
             await _ticketService.UpdateTicketAsync(ticket);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AllTickets");
         }
 
         private async Task<bool> TicketExists(int id)

@@ -12,7 +12,8 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         [DisplayName("Ticket")]
-        public string TicketId { get; set; }
+      
+        public int TicketId { get; set; }
 
         [DisplayName("File Date")]
         public DateTimeOffset Created { get; set; }
@@ -28,7 +29,7 @@ namespace BugTracker.Models
         [DisplayName("Select a file")]
         [DataType(DataType.Upload)]
         [MaxFileSize(1024 * 1024)]
-        [AllowedExtensions(new string[] { ".jpg", ".png", ".doc", ".docx", ".xls", ".xlsx", ".pdf" })]
+        [AllowedExtensions(new string[] { ".jpg", ".png", ".doc", ".docx", ".xls", ".xlsx", ".pdf",".html",".css", ".js", ".xml" ,".zip" , ".mov", ".gif", ".sql" })]
         public IFormFile FormFile { get; set; }
 
 

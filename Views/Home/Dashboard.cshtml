@@ -104,7 +104,7 @@
         <div class="row gy-2">
             <div class="col-md-12 col">
                 <div class="row col-cols-4 mt-5 bg-secondary">
-                    <div class="card col m-1 p-2">
+                  @*  <div class="card col m-1 p-2">
                         <div class="card-body">
                             <h5>Projects by Priority</h5>
                             <p>[Google Charts]</p>
@@ -118,8 +118,9 @@
                             <div id="donut"></div>
                         </div>
                     </div>
+*@
 
-                    <div class="card-body">
+               @*     <div class="card-body">
                         <h5>Tickets by Priority</h5>
                         <p>[Morris Charts]</p>
 
@@ -133,12 +134,12 @@
                         </div>
 
 
-                    </div>
+                    </div>*@
 
                     <div class="card col m-1 p-2">
                         <div class="card-body">
                             <h5>Tickets by Status</h5>
-                            <p>[ChartJS]</p>
+                          
                             <!-- ChartJS: Pie/Doughnut -->
                             <div class="col-md-12">
                                 <!--  Chart.js Canvas Tag -->
@@ -150,7 +151,7 @@
                 </div>
             </div>
         </div>
-        <div class="row gy-2">
+@*        <div class="row gy-2">
             <div class="cols mt-5 bg-secondary">
                 <div class="card col m-1 p-2">
                     <div class="card-body" style="height:380px">
@@ -165,13 +166,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
     <hr />
     <div class="mt-5 ">
         <div class="row">
 
-            @* Tickets Table *@
+            @* Tickets Table 
             <div class="col">
                 <div class="bg-secondary">
                     <div class="card m-1 p-2">
@@ -180,12 +181,12 @@
                         </div>
                         <div class="card-body">
 
-                            @* Copy and format table from Unassigned Tickets *@
+                             Copy and format table from Unassigned Tickets 
                             <div class="table-responsive" style="overflow-y:auto;height:600px;">
                                 <table class="table table-hover">
                                     <thead class="">
                                         <tr>
-                                            @* Table header *@
+                                             Table header 
                                             <th>Name</th>
                                             <th>StartDate</th>
                                             <th>EndDate</th>
@@ -194,7 +195,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @* Table body *@
+                                         Table body 
                                         @foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
                                         {
                                             <tr>
@@ -215,7 +216,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
 
             @* Projects Table *@
             <div class="col">
@@ -227,7 +228,7 @@
 
                         </div>
 
-                        <div class="table-responsive" style="overflow-y:auto;height:600px;">
+                        <div class="table-responsive" style="overflow-y:auto;height:700px;">
                             <table class="table table-hover">
                                 <thead class="">
                                     <tr>
@@ -262,7 +263,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <span class="btn  btn-info" asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</span>
+                                                    <a class="btn  btn-info" asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</a>
 
                                                 }
                                             </td>
@@ -278,7 +279,7 @@
                                             <td><span class="">@ticket.TicketPriority.Name </span></td>
                                             <td>@ticket.Created.ToString("MM-dd-yyyy")</td>
                                             <td>
-                                                <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><i class="fs-5 bi-justify"></i></a>
+                                                <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id">Details</a>
 
                                             </td>
                                         </tr>
@@ -294,14 +295,14 @@
                 </div>
             </div>
 
-            <div class="col-md-2 ">
+            <div class="col-12 ">
                 <div class="bg-dark">
                     <div class="card m-1 p-2">
                         <div class="card-header">
                             <h2>Members</h2>
                             <hr />
                         </div>
-                        <div class="card-body" style="overflow-y:auto;height:600px;background-color:antiquewhite">
+                        <div class="card-body">
                             @* Loop over Company members. Display Name and Role *@
                             @foreach (BugTrackerUser member in Model.Members)
                             {

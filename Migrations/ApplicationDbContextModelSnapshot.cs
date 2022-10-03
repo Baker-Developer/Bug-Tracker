@@ -3,17 +3,15 @@ using System;
 using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace BugTracker.Data.Migrations
+namespace BugTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220920205034_FixedDatabase")]
-    partial class FixedDatabase
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +36,7 @@ namespace BugTracker.Data.Migrations
                     b.Property<string>("AvatarFileName")
                         .HasColumnType("text");
 
-                    b.Property<int?>("CompanyId")
+                    b.Property<int>("CompanyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -237,7 +235,7 @@ namespace BugTracker.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("EndDate")
+                    b.Property<DateTimeOffset>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ImageContentType")
@@ -369,10 +367,7 @@ namespace BugTracker.Data.Migrations
                     b.Property<string>("FileName")
                         .HasColumnType("text");
 
-                    b.Property<string>("TicketId")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("TicketId1")
+                    b.Property<int>("TicketId")
                         .HasColumnType("integer");
 
                     b.Property<string>("UserId")
@@ -380,7 +375,7 @@ namespace BugTracker.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TicketId1");
+                    b.HasIndex("TicketId");
 
                     b.HasIndex("UserId");
 
@@ -646,7 +641,9 @@ namespace BugTracker.Data.Migrations
                 {
                     b.HasOne("BugTracker.Models.Company", "Company")
                         .WithMany("Members")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Company");
                 });
@@ -775,7 +772,9 @@ namespace BugTracker.Data.Migrations
                 {
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
                         .WithMany("Attachments")
-                        .HasForeignKey("TicketId1");
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugTracker.Models.BugTrackerUser", "User")
                         .WithMany()

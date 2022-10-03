@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace BugTracker.Data.Migrations
+namespace BugTracker.Migrations
 {
-    public partial class FixedDatabase : Migration
+    public partial class UserDataTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -119,7 +119,7 @@ namespace BugTracker.Data.Migrations
                     AvatarFileName = table.Column<string>(type: "text", nullable: true),
                     AvatarFileData = table.Column<byte[]>(type: "bytea", nullable: true),
                     AvatarContentType = table.Column<string>(type: "text", nullable: true),
-                    CompanyId = table.Column<int>(type: "integer", nullable: true),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -143,7 +143,7 @@ namespace BugTracker.Data.Migrations
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,7 +156,7 @@ namespace BugTracker.Data.Migrations
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     StartDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    EndDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    EndDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     ProjectPriorityId = table.Column<int>(type: "integer", nullable: true),
                     ImageFileName = table.Column<string>(type: "text", nullable: true),
                     ImageFileData = table.Column<byte[]>(type: "bytea", nullable: true),
@@ -439,14 +439,13 @@ namespace BugTracker.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TicketId = table.Column<string>(type: "text", nullable: true),
+                    TicketId = table.Column<int>(type: "integer", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     FileName = table.Column<string>(type: "text", nullable: true),
                     FileData = table.Column<byte[]>(type: "bytea", nullable: true),
-                    FileContentType = table.Column<string>(type: "text", nullable: true),
-                    TicketId1 = table.Column<int>(type: "integer", nullable: true)
+                    FileContentType = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -458,11 +457,11 @@ namespace BugTracker.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TicketAttachments_Tickets_TicketId1",
-                        column: x => x.TicketId1,
+                        name: "FK_TicketAttachments_Tickets_TicketId",
+                        column: x => x.TicketId,
                         principalTable: "Tickets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -617,9 +616,9 @@ namespace BugTracker.Data.Migrations
                 column: "ProjectPriorityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TicketAttachments_TicketId1",
+                name: "IX_TicketAttachments_TicketId",
                 table: "TicketAttachments",
-                column: "TicketId1");
+                column: "TicketId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TicketAttachments_UserId",
