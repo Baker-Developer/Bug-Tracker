@@ -45,7 +45,7 @@
 
 
 <div>
-    <div classxfont-weighteighteightgetainer-fluid">
+    <div class="col">
 
 
         <!-- Info Pills -->
@@ -100,46 +100,51 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row gy-2">
             <div class="col-md-12 col">
-                <div class="row col-cols-4 mt-5 bg-secondary">
-                  @*  <div class="card col m-1 p-2">
+                <div class="row col-cols-4 mt-5 ">
+
+           @*         <div class="card col m-1 p-2">
                         <div class="card-body">
                             <h5>Projects by Priority</h5>
                             <p>[Google Charts]</p>
                             <div id="chart3D"></div>
                         </div>
+
                     </div>
+
                     <div class="card col m-1 p-2">
                         <div class="card-body">
                             <h5>Project Tickets Count (%)</h5>
                             <p>[Google Charts]</p>
                             <div id="donut"></div>
                         </div>
-                    </div>
-*@
-
-               @*     <div class="card-body">
-                        <h5>Tickets by Priority</h5>
-                        <p>[Morris Charts]</p>
-
-                        <!-- Morris: Donut -->
-                        <div class="col-md-12">
-                            <div id="legend" class="donut-legend" style="font-size:x-small"></div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="chart chart-md" id="morrisTicketPriority"></div>
-                        </div>
-
-
                     </div>*@
 
                     <div class="card col m-1 p-2">
                         <div class="card-body">
+                            <h5>Tickets by Priority</h5>
+                            <p>[Morris Charts]</p>
+
+                            <!-- Morris: Donut -->
+                            <div class="col-md-12">
+                                <div id="legend" class="donut-legend" style="font-size:x-small"></div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="chart chart-md" id="morrisTicketPriority"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="card col m-1 p-2">
+                        <div class="card-body">
                             <h5>Tickets by Status</h5>
-                          
+
                             <!-- ChartJS: Pie/Doughnut -->
                             <div class="col-md-12">
                                 <!--  Chart.js Canvas Tag -->
@@ -152,71 +157,71 @@
             </div>
         </div>
 
-@*        <div class="row gy-2">
-            <div class="cols mt-5 bg-secondary">
-                <div class="card col m-1 p-2">
-                    <div class="card-body" style="height:380px">
-                        <h5>Chart 5</h5>
+        @*        <div class="row gy-2">
+        <div class="cols mt-5 bg-secondary">
+        <div class="card col m-1 p-2">
+        <div class="card-body" style="height:380px">
+        <h5>Chart 5</h5>
 
-                        <div class="card-body" style="height:600px">
-                            <h5>Project: Tickets vs Developers</h5>
-                            <p>[amCharts]</p>
-                            <!-- HTML -->
-                            <div id="chartdiv"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="card-body" style="height:600px">
+        <h5>Project: Tickets vs Developers</h5>
+        <p>[amCharts]</p>
+        <!-- HTML -->
+        <div id="chartdiv"></div>
+        </div>
+        </div>
+        </div>
+        </div>
         </div>*@
     </div>
     <hr />
     <div class="mt-5 ">
         <div class="row">
 
-            @* Tickets Table 
+            @* Tickets Table
             <div class="col">
-                <div class="bg-secondary">
-                    <div class="card m-1 p-2">
-                        <div class="card-header">
-                            <h2>Projects</h2>
-                        </div>
-                        <div class="card-body">
+            <div class="bg-secondary">
+            <div class="card m-1 p-2">
+            <div class="card-header">
+            <h2>Projects</h2>
+            </div>
+            <div class="card-body">
 
-                             Copy and format table from Unassigned Tickets 
-                            <div class="table-responsive" style="overflow-y:auto;height:600px;">
-                                <table class="table table-hover">
-                                    <thead class="">
-                                        <tr>
-                                             Table header 
-                                            <th>Name</th>
-                                            <th>StartDate</th>
-                                            <th>EndDate</th>
-                                            <th>Priority</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                         Table body 
-                                        @foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
-                                        {
-                                            <tr>
-                                                <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@project.Id" style="color:black"><strong>@project.Name</strong></a> </td>
-                                                <td><span style="font-size:medium">@project.StartDate.ToString("MM,dd,yyyy")</span></td>
-                                                <td><span style="font-size:medium">@project.EndDate.ToString("MM,dd,yyyy")</span></td>
-                                                <td><span style="font-size:medium" class="badge bg-dark">@project.ProjectPriority?.Name</span></td>
-                                                <td>
-                                                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Project" asp-route-id="@project.Id"><i class="fs-5 bi-justify"></i></a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                        </div>
-                    </div>
-                </div>
+            Copy and format table from Unassigned Tickets
+            <div class="table-responsive" style="overflow-y:auto;height:600px;">
+            <table class="table table-hover">
+            <thead class="">
+            <tr>
+            Table header
+            <th>Name</th>
+            <th>StartDate</th>
+            <th>EndDate</th>
+            <th>Priority</th>
+            <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            Table body
+            @foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
+            {
+            <tr>
+            <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@project.Id" style="color:black"><strong>@project.Name</strong></a> </td>
+            <td><span style="font-size:medium">@project.StartDate.ToString("MM,dd,yyyy")</span></td>
+            <td><span style="font-size:medium">@project.EndDate.ToString("MM,dd,yyyy")</span></td>
+            <td><span style="font-size:medium" class="badge bg-dark">@project.ProjectPriority?.Name</span></td>
+            <td>
+            <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Project" asp-route-id="@project.Id"><i class="fs-5 bi-justify"></i></a>
+            </td>
+            </tr>
+            }
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="card-footer">
+            </div>
+            </div>
+            </div>
             </div>*@
 
             @* Projects Table *@
@@ -408,16 +413,16 @@
         var morrisDonutData = [{
             label: "Low",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Low)).Count()
-                            }, {
+                                    }, {
             label: "Medium",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Medium)).Count()
-                            }, {
+                                    }, {
             label: "High",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.High)).Count()
-                            }, {
+                                    }, {
             label: "Urgent",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Urgent)).Count()
-                            }];
+                                    }];
 
 
         /*
@@ -465,7 +470,7 @@
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.New)).Count(),
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
-                                ],
+                                        ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -495,9 +500,6 @@
         });
     </script>
     <!-- *** End Chart JS Donut *** -->
-
-
-
     <!-- *** Begin AM Charts *** -->
     <!-- Resources -->
     <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
@@ -578,31 +580,29 @@
     </script>
 
     <!-- *** End AM Charts *** -->
-
-
     <!--  Plotly Charts  -->
-<!-- Load plotly.js into the DOM -->
-<script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script>
-<script>
-	$.ajax({
-		type: "POST",
-		url: "/Home/PlotlyBarChart",
-		data: '{}',
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: function (result) {
-			var data = result;
+    <!-- Load plotly.js into the DOM -->
+    <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script>
+    <script>
+        $.ajax({
+            type: "POST",
+            url: "/Home/PlotlyBarChart",
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var data = result;
 
-			var layout = {barmode: 'group'};
+                var layout = { barmode: 'group' };
 
-			Plotly.newPlot('plotlyChart', data, layout);
-			},
-			failure: function (result) {
-				alert(result.d);
-			},
-			error: function (result) {
-				alert(result.d);
-			}
-		});
-</script>
+                Plotly.newPlot('plotlyChart', data, layout);
+            },
+            failure: function (result) {
+                alert(result.d);
+            },
+            error: function (result) {
+                alert(result.d);
+            }
+        });
+    </script>
 }
