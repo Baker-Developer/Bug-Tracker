@@ -110,7 +110,7 @@
                                         <h5>Not Assigned</h5>
                                         @if (User.IsInRole(nameof(Roles.Admin)) || (bugTrackerUser.Id == projectManager.Id))
                                         {
-                                            <span><a asp-action="AssignProjectController" asp-controller="Home" asp-route-id="@Model.Id" class="btn btn-primary">Assign Project Manager</a></span>
+                                            <span><a asp-action="AssignProjectController" asp-controller="Projects" asp-route-id="@Model.Id" class="btn btn-primary">Assign Project Manager</a></span>
                                         }
 
                                     </div>

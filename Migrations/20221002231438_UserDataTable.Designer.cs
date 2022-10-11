@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace BugTracker.Data.Migrations
+namespace BugTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220920212211_BugTrackerUser CompanyId")]
-    partial class BugTrackerUserCompanyId
+    [Migration("20221002231438_UserDataTable")]
+    partial class UserDataTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -237,7 +237,7 @@ namespace BugTracker.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("EndDate")
+                    b.Property<DateTimeOffset>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ImageContentType")
@@ -369,10 +369,7 @@ namespace BugTracker.Data.Migrations
                     b.Property<string>("FileName")
                         .HasColumnType("text");
 
-                    b.Property<string>("TicketId")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("TicketId1")
+                    b.Property<int>("TicketId")
                         .HasColumnType("integer");
 
                     b.Property<string>("UserId")
@@ -380,7 +377,7 @@ namespace BugTracker.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TicketId1");
+                    b.HasIndex("TicketId");
 
                     b.HasIndex("UserId");
 
@@ -777,7 +774,9 @@ namespace BugTracker.Data.Migrations
                 {
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
                         .WithMany("Attachments")
-                        .HasForeignKey("TicketId1");
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugTracker.Models.BugTrackerUser", "User")
                         .WithMany()

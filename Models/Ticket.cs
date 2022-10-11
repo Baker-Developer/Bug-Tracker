@@ -43,7 +43,7 @@ namespace BugTracker.Models
         public int TicketTypeId { get; set; }
 
         [DisplayName("Ticket Priority")]
-        //
+       
         public int TicketPriorityId { get; set; }
 
         [DisplayName("Ticket Status")]
