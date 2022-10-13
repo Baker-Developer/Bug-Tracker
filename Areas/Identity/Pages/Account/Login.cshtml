@@ -5,8 +5,8 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
+
+@*<div class="row">
 
     <div class="col-4">
         <section>
@@ -51,8 +51,129 @@
     </div>
 
 
+</div>*@
+
+
+
+<div class="row m-0 d-flex justify-content-center vh-100">
+    <div class="col-md-6">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
+                    <div class="card-body">
+                        <a href="" class="navbar-brand d-flex align-items-center mb-3">
+
+                        </a>
+                        <h1 class="mt-2 text-center">@ViewData["Title"]</h1>
+                        <form id="account" method="post">
+                            <h4 class="text-center">Use a account to log in.</h4>
+                            <hr />
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label asp-for="Input.Email"></label>
+                                        <input asp-for="Input.Email" class="form-control" id="email" />
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label asp-for="Input.Password"></label>
+                                        <input asp-for="Input.Password" class="form-control" id="password" />
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 d-flex justify-content-between">
+                                    <div class="form-check mb-3">
+                                        <div class="checkbox">
+                                            <label asp-for="Input.RememberMe">
+                                                <input asp-for="Input.RememberMe" />
+                                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-primary rounded-pill">Log in</button>
+                            </div>
+
+                            <div class="row mt-5">
+                                @*<button class="btn btn-primary rounded-pill">Demo Admin</button>*@
+                                <div class="col-6"><button class="btn btn-primary rounded-pill" onclick="setAdminDemoValue()">Demo Admin</button></div>
+                                <div class="col-6"><button class="btn btn-primary rounded-pill" onclick="setProjectManagerDemoValue()">Demo PM</button></div>
+                                <div class="col-6 mt-2"><button class="btn btn-primary rounded-pill" onclick="setDemoSubmitterDemoValue()">Demo Submitter</button></div>
+                                <div class="col-6 mt-2"><button class="btn btn-primary rounded-pill" onclick="setDeveloperDemoValue()">Demo Developer</button></div>
+                            </div>
+
+
+                            <div class="d-flex justify-content-center">
+                                <ul class="list-group list-group-horizontal list-group-flush">
+                                </ul>
+                            </div>
+                            <hr />
+                            <div class="form-group mt-3">
+                                <p class="text-center">
+                                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                                </p>
+                                <p class="text-center">
+                                    Don’t have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-underline">
+                                        Click here to sign
+                                        up.
+                                    </a>
+                                </p>
+                                <p class="text-center">
+                                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function setAdminDemoValue() {
+            let email = document.getElementById("email");
+            email.value = "btadmin1@bugtracker.com";
+            let password = document.getElementById("password");
+            password.value = "Abc&123!";
+        }
+
+        function setProjectManagerDemoValue() {
+            let email = document.getElementById("email");
+            email.value = "ProjectManager1@bugtracker.com";
+            let password = document.getElementById("password");
+            password.value = "Abc&123!";
+        }
+
+        function setDemoSubmitterDemoValue() {
+            let email = document.getElementById("email");
+            email.value = "submitter1@bugtracker.com";
+            let password = document.getElementById("password");
+            password.value = "Abc&123!";
+        }
+
+        function setDeveloperDemoValue() {
+            let email = document.getElementById("email");
+            email.value = "developer1@bugtracker.com";
+            let password = document.getElementById("password");
+            password.value = "Abc&123!";
+        }
+
+    </script>
+
 }

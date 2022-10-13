@@ -149,7 +149,7 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("BugTracker"),
+                _urlEncoder.Encode("Bug Tracker"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

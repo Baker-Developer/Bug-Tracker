@@ -9,13 +9,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewData["Title"] - TheBugTracker</title>
-        <!-- Vendor CSS Files -->
+    <!-- Vendor CSS Files -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" integrity="sha384-xeJqLiuOvjUBq3iGOjvSQSIlwrpqjSHXpduPd6rQpuiM3f5/ijby8pCsnbu5S81n" crossorigin="anonymous">
     <!--SummmerNote-->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="" />
+    <link rel="shortcut icon" href="/img/logos/bugLogoAlt.png" />
 
     <link href="~/css/aos.css" rel="stylesheet" />
     <link href="~/css/custom.min.css" rel="stylesheet" />
@@ -41,9 +41,9 @@
     {
         <aside class="sidebar sidebar-default navs-rounded-all ">
             <div class="sidebar-header d-flex align-items-center justify-content-start">
-                <a  class="navbar-brand" asp-action="Dashboard" asp-controller="Home">
+                <a class="navbar-brand" asp-action="Dashboard" asp-controller="Home">
                     <!--Logo start-->
-                    <img src="/img/logos/target_bug.svg" class="" width="30" viewBox="0 0 30 30" fill="none">
+                    <img src="/img/logos/bugLogoAlt.png" class="" width="30" height="30" viewBox="0 0 30 30" fill="none">
                     <!--logo End-->            <h4 class="logo-title">Bug Tracker</h4>
                 </a>
                 <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
@@ -59,12 +59,12 @@
                 <div class="sidebar-list">
                     <!-- Sidebar Menu Start -->
                     <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
-               @*         <li class="nav-item static-item">
-                            <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                                <span class="default-icon">Home</span>
-                                <span class="mini-icon">-</span>
-                            </a>
-                        </li>*@
+                        @*         <li class="nav-item static-item">
+                    <a class="nav-link static-item disabled" href="#" tabindex="-1">
+                    <span class="default-icon">Home</span>
+                    <span class="mini-icon">-</span>
+                    </a>
+                    </li>*@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Dashboard">
                                 <i class="icon">
@@ -77,7 +77,7 @@
                             </a>
                         </li>
 
-                      
+
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Notifications" asp-action="Index">
                                 <i class="icon">
@@ -92,7 +92,7 @@
                             </a>
                         </li>
 
-                 
+
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-special" role="button" aria-expanded="false" aria-controls="sidebar-special">
                                 <i class="icon">
@@ -340,6 +340,104 @@
 
 
 
+                        @if (User.IsInRole(nameof(Roles.Admin)))
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="" role="button" aria-expanded="false" aria-controls="utilities-error">
+                                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.14373 20.7821V17.7152C9.14372 16.9381 9.77567 16.3067 10.5584 16.3018H13.4326C14.2189 16.3018 14.8563 16.9346 14.8563 17.7152V20.7732C14.8562 21.4473 15.404 21.9951 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0007C21.1356 20.3586 21.5 19.4868 21.5 18.5775V9.86585C21.5 9.13139 21.1721 8.43471 20.6046 7.9635L13.943 2.67427C12.7785 1.74912 11.1154 1.77901 9.98539 2.74538L3.46701 7.9635C2.87274 8.42082 2.51755 9.11956 2.5 9.86585V18.5686C2.5 20.4637 4.04738 22 5.95617 22H7.87229C8.19917 22.0023 8.51349 21.8751 8.74547 21.6464C8.97746 21.4178 9.10793 21.1067 9.10792 20.7821H9.14373Z" fill="currentColor"></path>
+                                    </svg>
+                                    <span class="item-name">Admin</span>
+                                    <i class="right-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </i>
+                                </a>
+
+
+                                <ul class="sub-nav collapse" id="" data-bs-parent="">
+                                    <li class="nav-item">
+                                        <a class="nav-link " class="item-name" asp-area="" asp-controller="Tickets" asp-action="Create">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <span>New Ticket</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="sub-nav collapse" id="" data-bs-parent="">
+                                    <li class="nav-item">
+                                        <a class="nav-link " class="item-name" asp-area="" asp-controller="Tickets" asp-action="AllTickets">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <span>All Tickets</span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+
+                                <ul class="sub-nav collapse" id="" data-bs-parent="">
+                                    <li class="nav-item">
+                                        <a class="nav-link " class="item-name" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <span>Archived Tickets</span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <ul class="sub-nav collapse" id="" data-bs-parent="">
+                                    <li class="nav-item">
+                                        <a class="nav-link " class="item-name" asp-controller="Tickets" asp-action="UnassignedTickets">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <span>Unassigned Tickets</span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+
+
+
+
+                                <ul class="sub-nav collapse" id="" data-bs-parent="">
+                                    <li class="nav-item">
+                                        <a class="nav-link " class="item-name" asp-area="" asp-controller="Tickets" asp-action="MyTickets">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <span>My Tickets</span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        }
 
 
 
@@ -356,9 +454,6 @@
 
 
 
-
-
-   
                     </ul>
                     <!-- Sidebar Menu End -->
                 </div>
@@ -373,8 +468,8 @@
                 <div class="container-fluid navbar-inner">
                     <a href="" class="navbar-brand">
                         <!--Logo start-->
-                        <img src="/img/logos/target_bug.svg" class="" width="30" viewBox="0 0 30 30" fill="none">
-                        <!--logo End-->        <h4 class="logo-title">Bug Tracker</h4>
+                        <img src="/img/logos/bugLogoAlt.png" class="" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                        <!--logo End-->            <h4 class="logo-title">Bug Tracker</h4>
                     </a>
                     <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                         <i class="icon">
@@ -383,15 +478,15 @@
                             </svg>
                         </i>
                     </div>
-                 
-           @*         <div class="input-group search-input">
-                        <span class="input-group-text" id="search-input">
-                            <svg width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
-                                <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </span>
-                        <input type="search" class="form-control" placeholder="Search...">
+
+                    @*         <div class="input-group search-input">
+                    <span class="input-group-text" id="search-input">
+                    <svg width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                    <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    </span>
+                    <input type="search" class="form-control" placeholder="Search...">
                     </div>*@
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -402,22 +497,20 @@
                         </span>
                     </button>
 
-                     <div class="conatiner-fluid">
-                        <partial name="_LoginPartial" />
-                    </div>
-                  
+             
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        
+
                         <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                          
+
                             <li class="nav-item dropdown">
                                 <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     @* <img src="../assets/images/avatars/01.png" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded">*@
+                                    <partial name="_LoginPartial" />
                                 </a>
                             </li>
                         </ul>
                     </div>
-             
+
                 </div>
             </nav>          <!-- Nav Header Component Start -->
             <div class="iq-navbar-header" style="height: 215px;">
