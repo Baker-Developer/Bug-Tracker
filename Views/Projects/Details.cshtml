@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="row gy-2">
             <div class="col-md-12 col">
-                <div class="row col-cols-2 mt-5 bg-secondary">
+                <div class="row col-cols-2 mt-5 ">
                     <div class="card col m-1 p-2">
                         <div class="body">
                             @* Project Name *@
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="col-md-4 col mt-5 ">
-                <div class="bg-secondary">
+                <div class="">
                     <div class="card m-1 p-2">
                         <div class="header">
                             <h2>Project Manager</h2>
@@ -121,7 +121,7 @@
                 </div>
             </div>
             <div class="col-md-4 col mt-5 ">
-                <div class="bg-secondary">
+                <div class="">
                     <div class="card m-1 p-2">
                         <div class="header">
                             <h2>Project Team</h2>
@@ -165,7 +165,7 @@
                             <h2>Project Activity</h2>
                             <hr />
                         </div>
-                        <div class="body" style="overflow-y:auto;height:300px;background-color:antiquewhite">
+                        <div class="body" style="overflow-y:auto;height:300px;">
                             @* Project Activity loop *@
                             @foreach (TicketHistory history in await HistoryService.GetProjectTicketsHistoriesAsync(Model.Id, bugTrackerUser.CompanyId))
                             {
@@ -193,7 +193,7 @@
                 </div>
             </div>
             <div class="col-md-12 col">
-                <div class="mt-5 bg-secondary">
+                <div class="mt-5 ">
                     <div class="card m-1 p-2">
                         <div class="header">
                             <h2>Tickets</h2>

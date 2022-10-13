@@ -51,6 +51,30 @@ namespace BugTracker.Controllers
             return View();
         }
 
+
+
+        [Route("/Home/HandleError/{code:int}")]
+        public IActionResult HandleError(int code)
+        {
+            var customError = new CustomError();
+
+
+            if (code == 404)
+            {
+                customError.message = "The page you are looking for might have been removed had its name changed or is temporarily unavailable. If the issue persists please contact the developer.";
+            } else if (code == 500)
+            {
+                customError.message = "Internal Service Error";
+            }
+            else
+            {
+                customError.message = "Something Went Wrong";
+            }
+
+            return View("~/Views/Shared/CustomError.cshtml", customError);    
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

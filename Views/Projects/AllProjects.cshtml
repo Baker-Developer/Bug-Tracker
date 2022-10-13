@@ -10,31 +10,27 @@
     BugTrackerUser bugTrackerUser = await UserManager.GetUserAsync(User);
 }
 
-<h1>All Projects</h1>
 
 
-@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
-{
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-}
 
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="header-title">
-                    <h4 class="card-title">All Tickets</h4>
-                    <p>
-                        <a asp-action="Create">Create New</a>
-                    </p>
+                    <h4 class="card-title">All Projects</h4>
+                    @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                    {
+                        <p>
+                            <a asp-action="Create">Create New</a>
+                        </p>
+                    }
                 </div>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive mt-4">
                     <table id="basic-table" class="table table-striped mb-0" role="grid">
-                        <thead>
+                        <thead class="">
                             <tr>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Name)
@@ -72,75 +68,75 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                               
+
                                 <tr>
                                     <td>
-                                            @Html.DisplayFor(modelItem => item.Name)
+                                        @Html.DisplayFor(modelItem => item.Name)
                                     </td>
                                     <td>
-                                            @Html.DisplayFor(modelItem => item.Description)
+                                        @Html.DisplayFor(modelItem => item.Description)
                                     </td>
                                     <td>
-                                            @Html.DisplayFor(modelItem => item.StartDate)
+                                        @Html.DisplayFor(modelItem => item.StartDate)
                                     </td>
                                     <td>
-                                            @Html.DisplayFor(modelItem => item.EndDate)
+                                        @Html.DisplayFor(modelItem => item.EndDate)
                                     </td>
                                     <td>
-                                            @Html.DisplayFor(modelItem => item.ImageFileName)
+                                        @Html.DisplayFor(modelItem => item.ImageFileName)
                                     </td>
                                     <td>
-                                            @if (item.ImageFileData != null)
-                                            {
+                                        @if (item.ImageFileData != null)
+                                        {
                                             <img class="img-fluid" style="width:120px; height:90px" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))">
-                                            }
+                                        }
 
                                     </td>
 
                                     <td>
-                                            @Html.DisplayFor(modelItem => item.Archived)
+                                        @Html.DisplayFor(modelItem => item.Archived)
                                     </td>
                                     <td>
-                                            @Html.DisplayFor(modelItem => item.Company.Name)
+                                        @Html.DisplayFor(modelItem => item.Company.Name)
                                     </td>
                                     <td>
-                                            @Html.DisplayFor(modelItem => item.ProjectPriority.Name)
+                                        @Html.DisplayFor(modelItem => item.ProjectPriority.Name)
                                     </td>
                                     <td>
 
                                         <a asp-action="Details" asp-route-id="@item.Id">Details</a>
 
 
-                                            @{
-                                                bool isProjectPM = (await ProjectService.GetProjectManagerAsync(item.Id))?.Id == bugTrackerUser.Id;
-                                            }
+                                        @{
+                                            bool isProjectPM = (await ProjectService.GetProjectManagerAsync(item.Id))?.Id == bugTrackerUser.Id;
+                                        }
 
-                                            @if (User.IsInRole(nameof(Roles.Admin)) || isProjectPM)
-                                            {
+                                        @if (User.IsInRole(nameof(Roles.Admin)) || isProjectPM)
+                                        {
 
                                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
 
-                                                @if (item.Archived)
-                                                {
+                                            @if (item.Archived)
+                                            {
                                                 <a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
-                                                }
-                                                else
-                                                {
+                                            }
+                                            else
+                                            {
 
                                                 <a asp-action="Archive" asp-route-id="@item.Id">Archive</a>
 
-                                                }
                                             }
+                                        }
 
                                     </td>
                                 </tr>
-                                }
+                            }
 
 
 
-                        </table>
-                    </div>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
