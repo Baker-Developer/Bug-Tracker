@@ -76,7 +76,7 @@
                             <hr />
                         </div>
                         <div class="body" style="overflow-y:auto;height:300px;">
-                            
+
                             @* if() logic for Avatar/Default etc *@
                             @if (projectManager != null)
                             {
@@ -217,7 +217,7 @@
                                         @foreach (var ticket in Model.Tickets.OrderByDescending(d => d.Created))
                                         {
                                             <tr>
-                                                <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" style="color:black"><strong>@ticket.Title</strong></a> </td>
+                                                <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" ><strong>@ticket.Title</strong></a> </td>
                                                 <td>
                                                     @if (ticket.DeveloperUserId != null)
                                                     {
@@ -260,10 +260,8 @@
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
