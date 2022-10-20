@@ -39,8 +39,8 @@
     }
 </a>
 <strong>@bugTrackerUser.FullName</strong>
-<span class="text-muted" style="font-size:x-small;">
-    <strong>@Model.Company.Name</strong>
+<span class="text-muted" style="font-size:small;">
+    <a class="text-white">@Model.Company.Name</a>
 </span>
 
 
@@ -103,7 +103,7 @@
 
         <div class="row gy-2">
             <div class="col-md-12 col">
-                <div class="row col-cols-4 mt-5 ">
+                <div class="row col-cols-4 mt-2 ">
 
                     @*         <div class="card col m-1 p-2">
                     <div class="card-body">
@@ -153,9 +153,24 @@
                         </div>
                     </div>
 
+                    <div class="card col m-1 p-2">
+                        <div class="card-body">
+                            <h5>Tickets By Ticket Type</h5>
+
+                            <!-- ChartJS: Pie/Doughnut -->
+                            <div class="col-md-12">
+                                <!--  Chart.js Canvas Tag -->
+                                <canvas id="donutChartForProjects"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+            
                 </div>
             </div>
         </div>
+
+      
 
         @*        <div class="row gy-2">
         <div class="cols mt-5 bg-secondary">
@@ -299,7 +314,7 @@
                 </div>
             </div>
 
-            <div class="col-12">
+      @*      <div class="col-12">
                 <div class="bg-dark">
                     <div class="card m-1 p-2">
                         <div class="card-header">
@@ -307,7 +322,7 @@
                             <hr />
                         </div>
                         <div class="card-body">
-                            @* Loop over Company members. Display Name and Role *@
+                          
                             @foreach (BugTrackerUser member in Model.Members)
                             {
                                 <div class="">
@@ -318,7 +333,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
@@ -497,7 +512,65 @@
             data: donutData,
             options: donutOptions
         });
+
+
+
+
+
+
+
+        // Get the projects ticket count
+        var donutChartCanvas = $('#donutChartForProjects').get(0).getContext('2d');
+        var donutData = {
+            labels: [
+                '@nameof(BugTrackerTicketType.NewDevelopment)',
+                '@nameof(BugTrackerTicketType.WorkTask)',
+                '@nameof(BugTrackerTicketType.Defect)',
+                '@nameof(BugTrackerTicketType.ChangeRequest)',
+                '@nameof(BugTrackerTicketType.Enhancement)',
+                '@nameof(BugTrackerTicketType.GeneralTask)'
+            ],
+            datasets: [
+                {
+                    data: [
+        @Model.Tickets.Where(t=> t.TicketType.Name == nameof(BugTrackerTicketType.NewDevelopment)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.WorkTask)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Defect)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
+                                                        ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ]
+                }
+            ]
+        };
+
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        };
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(donutChartCanvas, {
+            type: 'doughnut',
+            data: donutData,
+            options: donutOptions
+        });
+
     </script>
+
+
     <!-- *** End Chart JS Donut *** -->
     <!-- *** Begin AM Charts *** -->
     <!-- Resources -->
