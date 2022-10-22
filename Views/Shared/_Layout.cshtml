@@ -43,8 +43,8 @@
             <div class="sidebar-header d-flex align-items-center justify-content-start">
                 <a class="navbar-brand" asp-action="Dashboard" asp-controller="Home">
                     <!--Logo start-->
-                    <img src="/img/logos/bugLogoAlt.png" class="" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                    <!--logo End-->            <h4 class="logo-title">Bug Tracker</h4>
+                    <img src="/img/logos/buglogoalt2.png" class="" width="45" height="45" viewBox="0 0 30 30" fill="none">
+                    <!--logo End-->            <h4 class="logo-title mt-2">Bug Tracker</h4>
                 </a>
                 <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                     <i class="icon">
@@ -125,6 +125,24 @@
                                     </li>
                                 }
 
+
+                                @if (User.IsInRole(nameof(Roles.Admin)))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-controller="Projects" asp-action="UnassignedProjects">
+                                            <i class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                                    <g>
+                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <i class="sidenav-mini-icon"> R </i>
+                                            <span class="item-name">Unassigned Projects</span>
+                                        </a>
+                                    </li>
+                                }
+
                                 @if (!User.IsInRole(nameof(Roles.Admin)))
                                 {
                                     <li class="nav-item">
@@ -175,22 +193,6 @@
                                 </li>
 
 
-                                @if (User.IsInRole(nameof(Roles.Admin)))
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link " asp-controller="Projects" asp-action="UnassignedProjects">
-                                            <i class="icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                                    <g>
-                                                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                                    </g>
-                                                </svg>
-                                            </i>
-                                            <i class="sidenav-mini-icon"> R </i>
-                                            <span class="item-name">Unassigned Projects</span>
-                                        </a>
-                                    </li>
-                                }
 
                                 @if (User.IsInRole(nameof(Roles.Admin)))
                                 {
@@ -468,7 +470,7 @@
                 <div class="container-fluid navbar-inner">
                     <a href="" class="navbar-brand">
                         <!--Logo start-->
-                        <img src="/img/logos/bugLogoAlt.png" class="" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                        <img src="/img/logos/bugLogoAlt2.png" class="" width="45" height="45" viewBox="0 0 30 30" fill="none">
                         <!--logo End-->            <h4 class="logo-title">Bug Tracker</h4>
                     </a>
                     <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">

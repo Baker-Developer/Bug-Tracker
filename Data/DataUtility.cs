@@ -569,6 +569,127 @@ namespace BugTracker.Data
                 throw;
             }
 
+
+
+
+
+            //Seed Default Admin3 User
+            defaultUser = new BugTrackerUser
+            {
+                UserName = "benjamin@bakermedical.net",
+                Email = "benjamin@bakermedical.net",
+                FirstName = "Benjamin",
+                LastName = "Baker",
+                EmailConfirmed = true,
+                CompanyId = company3Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Default Admin3 User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+
+
+
+            //Seed Default PM3 User
+            defaultUser = new BugTrackerUser
+            {
+                UserName = "benjaminbaker1122@gmail.com",
+                Email = "benjaminbaker1122@gmail.com",
+                FirstName = "John",
+                LastName = "ProjectManager",
+                EmailConfirmed = true,
+                CompanyId = company3Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, Roles.ProjectManager.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Default PM3 User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+
+
+            //Seed Default Developer3 User
+            defaultUser = new BugTrackerUser
+            {
+                UserName = "benjamin@bakermedical.net",
+                Email = "benjamin@bakermedical.net",
+                FirstName = "Eric",
+                LastName = "Developer",
+                EmailConfirmed = true,
+                CompanyId = company3Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Developer.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Default Developer3 User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+            //Seed Default Submitter3 User
+            defaultUser = new BugTrackerUser
+            {
+                UserName = "benjamin@bakermedical.net",
+                Email = "benjamin@bakermedical.net",
+                FirstName = "Chad",
+                LastName = "Developer",
+                EmailConfirmed = true,
+                CompanyId = company3Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Developer.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Default Submitter3 User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
         }
 
         public static async Task SeedDemoUsersAsync(UserManager<BugTrackerUser> userManager)

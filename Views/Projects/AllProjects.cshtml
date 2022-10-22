@@ -12,7 +12,7 @@
 
 
 
-@*
+
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
@@ -22,7 +22,7 @@
                     @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
                     {
                         <p>
-                            <a asp-action="Create">Create New</a>
+                            <a asp-action="Create" class="btn btn-success mt-3">Create New</a>
                         </p>
                     }
                 </div>
@@ -30,7 +30,7 @@
             <div class="card-body p-0">
                 <div class="table-responsive mt-4">
                     <table id="basic-table" class="table table-striped mb-0" role="grid">
-                        <thead class="">
+                        <thead class="flex-fill">
                             <tr>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Name)
@@ -50,11 +50,11 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.ImageFileData)
                                 </th>
-                                <th>
+                             @*   <th>
                                     @Html.DisplayNameFor(model => model.ImageContentType)
-                                </th>
+                                </th>*@
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Archived)
+                                     Project Archived Status
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Company)
@@ -74,7 +74,7 @@
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
+                                       @Html.DisplayFor(modelItem => item.Description)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StartDate)
@@ -94,13 +94,16 @@
                                     </td>
 
                                     <td>
-                                        @if (!item.Archived) {
+                                        @if (!item.Archived)
+                                        {
                                             <img src="~/img/logos/openDocument.png" width="50" height="50">
-                                        } else if (item.Archived) {
+                                        }
+                                        else if (item.Archived)
+                                        {
                                             <img src="~/img/logos/archivedDocument.png" width="50" height="50">
-                                        } 
+                                        }
 
-                                   
+
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Company.Name)
@@ -137,64 +140,6 @@
                                     </td>
                                 </tr>
                             }
-
-
-
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
-
-
-
-
-
-
-
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">Bootstrap Datatables</h4>
-                </div>
-            </div>
-            <div class="card-body">
-                @*<p>Images in Bootstrap are made responsive with <code>.img-fluid</code>. <code>max-width: 100%;</code> and <code>height: auto;</code> are applied to the image so that it scales with the parent element.</p>*@
-                <div class="table-responsive">
-                    <table id="datatable" class="table table-striped" data-toggle="data-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
