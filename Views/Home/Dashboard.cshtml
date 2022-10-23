@@ -141,7 +141,7 @@
                     </div>
 *@
 
-                    <div class="card col m-1 p-2">
+                    <div class="card col-lg col-sm-12 m-1 p-2">
                         <div class="card-body">
                             <h5>Tickets by Status</h5>
 
@@ -153,7 +153,7 @@
                         </div>
                     </div>
 
-                    <div class="card col m-1 p-2">
+                    <div class="card col-lg col-sm-12 m-1 p-2">
                         <div class="card-body">
                             <h5>Tickets By Ticket Type</h5>
 
@@ -246,24 +246,20 @@
                         <div class="card-header">
                             <h2>Tickets</h2>
                         </div>
-                        <div class="table-responsive" style="overflow-y:auto;height:700px;">
+                        <div class="table-responsive" style="overflow-y:auto;height:400px;">
                             <table class="table table-hover">
                                 <thead class="">
                                     <tr>
                                         @* Table header *@
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                        <th>StartDate</th>
-                                        <th>EndDate</th>
-                                        <th>Priority</th>
-                                       
+                              
+                              
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @* Table body *@
                                     @foreach (var ticket in Model.Tickets.OrderByDescending(d => d.Created))
                                     {
-                                        @* <tr>
+                                @*         <tr>
                                     <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" style="color:black"><strong>@ticket.Title</strong></a> </td>
                                     <td><span style="font-size:medium">@ticket.StartDate.ToString("MM,dd,yyyy")</span></td>
                                     <td><span style="font-size:medium">@ticket.EndDate.ToString("MM,dd,yyyy")</span></td>

@@ -607,8 +607,8 @@ namespace BugTracker.Data
             //Seed Default PM3 User
             defaultUser = new BugTrackerUser
             {
-                UserName = "benjaminbaker1122@gmail.com",
-                Email = "benjaminbaker1122@gmail.com",
+                UserName = "BakerProjectManager@gmail.com",
+                Email = "BakerProjectManager@gmail.com",
                 FirstName = "John",
                 LastName = "ProjectManager",
                 EmailConfirmed = true,
@@ -637,8 +637,8 @@ namespace BugTracker.Data
             //Seed Default Developer3 User
             defaultUser = new BugTrackerUser
             {
-                UserName = "benjamin@bakermedical.net",
-                Email = "benjamin@bakermedical.net",
+                UserName = "BakerDeveloper@gmail.com",
+                Email = "BakerDeveloper@gmail.com",
                 FirstName = "Eric",
                 LastName = "Developer",
                 EmailConfirmed = true,
@@ -665,8 +665,8 @@ namespace BugTracker.Data
             //Seed Default Submitter3 User
             defaultUser = new BugTrackerUser
             {
-                UserName = "benjamin@bakermedical.net",
-                Email = "benjamin@bakermedical.net",
+                UserName = "BakerSubmitter@bakermedical.net",
+                Email = "BakerSubmitter@bakermedical.net",
                 FirstName = "Chad",
                 LastName = "Developer",
                 EmailConfirmed = true,
@@ -702,7 +702,7 @@ namespace BugTracker.Data
                 FirstName = "Demo",
                 LastName = "Admin",
                 EmailConfirmed = true,
-                CompanyId = company1Id
+                CompanyId = company2Id
             };
             try
             {
