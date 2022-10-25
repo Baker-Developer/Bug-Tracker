@@ -106,6 +106,7 @@
                                 <div class="col-6"><button class="btn btn-primary" onclick="setProjectManagerDemoValue()">Demo PM</button></div>
                                 <div class="col-6 mt-2"><button class="btn btn-primary" onclick="setDemoSubmitterDemoValue()">Demo Submitter</button></div>
                                 <div class="col-6 mt-2"><button class="btn btn-primary " onclick="setDeveloperDemoValue()">Demo Developer</button></div>
+                                <div class="col-6 mt-2"><button class="btn btn-primary " onclick="setDeveloperDemoValue()">Demo New User</button></div>
                             </div>
 
 
@@ -170,6 +171,13 @@
         function setDeveloperDemoValue() {
             let email = document.getElementById("email");
             email.value = "demodev@bugtracker.com";
+            let password = document.getElementById("password");
+            password.value = "Abc&123!";
+        }
+
+        function setDeveloperDemoValue() {
+            let email = document.getElementById("email");
+            email.value = "demonew@bugtracker.com";
             let password = document.getElementById("password");
             password.value = "Abc&123!";
         }

@@ -50,11 +50,11 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.ImageFileData)
                                 </th>
-                             @*   <th>
-                                    @Html.DisplayNameFor(model => model.ImageContentType)
+                                @*   <th>
+                                @Html.DisplayNameFor(model => model.ImageContentType)
                                 </th>*@
                                 <th>
-                                     Project Archived Status
+                                    Project Archived Status
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Company)
@@ -69,12 +69,22 @@
                             @foreach (var item in Model)
                             {
 
+
+
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
+                                        @if (item.Archived)
+                                        {
+                                            <p></p>
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        }
+
                                     </td>
                                     <td>
-                                       @Html.DisplayFor(modelItem => item.Description)
+                                        @Html.DisplayFor(modelItem => item.Description)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StartDate)

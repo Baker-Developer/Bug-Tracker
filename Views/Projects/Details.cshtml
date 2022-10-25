@@ -108,9 +108,9 @@
                                     <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" width="28" height="28" class="rounded-circle">
                                     <div class="wid-u-info">
                                         <h5>Not Assigned</h5>
-                                        @if (User.IsInRole(nameof(Roles.Admin)) || (bugTrackerUser.Id == projectManager.Id))
+                                        @if (User.IsInRole(nameof(Roles.Admin)))
                                         {
-                                            <span><a asp-action="AssignProjectController" asp-controller="Projects" asp-route-id="@Model.Id" class="btn btn-primary">Assign Project Manager</a></span>
+                                            <span><a asp-action="AssignProjectManager" asp-controller="Project" asp-route-id="@Model.Id" class="btn btn-primary">Assign Project Manager</a></span>
                                         }
 
                                     </div>
