@@ -29,8 +29,6 @@ namespace BugTracker.Models
 
         [DisplayName("End Date")]
         [DataType(DataType.Date)]
-       
-      
         public DateTimeOffset EndDate { get; set; }
 
         [DisplayName("Priority")]
