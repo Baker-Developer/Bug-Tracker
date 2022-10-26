@@ -165,8 +165,8 @@ namespace BugTracker.Data
                          CompanyId = company1Id,
                          Name = "Build a Personal Porfolio",
                          Description="Single page html, css & javascript page.  Serves as a landing page for candidates and contains a bio and links to all applications and challenges." ,
-                         StartDate = new DateTime(2021,8,20),
-                         EndDate = new DateTime(2021,8,20).AddMonths(1),
+                         StartDate = new DateTime(2022,8,20),
+                         EndDate = new DateTime(2022,12,20).AddMonths(1),
                          ProjectPriorityId = priorityLow
                      },
                      new Project()
@@ -174,8 +174,8 @@ namespace BugTracker.Data
                          CompanyId = company2Id,
                          Name = "Build a supplemental Blog Web Application",
                          Description="Candidate's custom built web application using .Net Core with MVC, a postgres database and hosted in a heroku container.  The app is designed for the candidate to create, update and maintain a live blog site.",
-                         StartDate = new DateTime(2021,8,20),
-                         EndDate = new DateTime(2021,8,20).AddMonths(4),
+                         StartDate = new DateTime(2022,9,20),
+                         EndDate = new DateTime(2022,12,20).AddMonths(4),
                          ProjectPriorityId = priorityMedium
                      },
                      new Project()
@@ -183,8 +183,8 @@ namespace BugTracker.Data
                          CompanyId = company1Id,
                          Name = "Build an Issue Tracking Web Application",
                          Description="A custom designed .Net Core application with postgres database.  The application is a multi tennent application designed to track issue tickets' progress.  Implemented with identity and user roles, Tickets are maintained in projects which are maintained by users in the role of projectmanager.  Each project has a team and team members.",
-                         StartDate = new DateTime(2021,8,20),
-                         EndDate = new DateTime(2021,8,20).AddMonths(6),
+                         StartDate = new DateTime(2022,8,20),
+                         EndDate = new DateTime(2022,8,20).AddMonths(6),
                          ProjectPriorityId = priorityHigh
                      },
                      new Project()
@@ -192,8 +192,8 @@ namespace BugTracker.Data
                          CompanyId = company2Id,
                          Name = "Build an Address Book Web Application",
                          Description="A custom designed .Net Core application with postgres database.  This is an application to serve as a rolodex of contacts for a given user..",
-                         StartDate = new DateTime(2021,8,20),
-                         EndDate = new DateTime(2021,8,20).AddMonths(2),
+                         StartDate = new DateTime(2022,10,20),
+                         EndDate = new DateTime(2022,11,20).AddMonths(2),
                          ProjectPriorityId = priorityLow
                      },
                     new Project()
@@ -201,8 +201,8 @@ namespace BugTracker.Data
                          CompanyId = company1Id,
                          Name = "Build a Movie Information Web Application",
                          Description="A custom designed .Net Core application with postgres database.  An API based application allows users to input and import movie posters and details including cast and crew information.",
-                         StartDate = new DateTime(2021,8,20),
-                         EndDate = new DateTime(2021,8,20).AddMonths(3),
+                         StartDate = new DateTime(2022,8,20),
+                         EndDate = new DateTime(2022,8,20).AddMonths(3),
                          ProjectPriorityId = priorityHigh
                      }
                 };
@@ -569,6 +569,127 @@ namespace BugTracker.Data
                 throw;
             }
 
+
+
+
+
+            //Seed Default Admin3 User
+            defaultUser = new BugTrackerUser
+            {
+                UserName = "benjamin@bakermedical.net",
+                Email = "benjamin@bakermedical.net",
+                FirstName = "Benjamin",
+                LastName = "Baker",
+                EmailConfirmed = true,
+                CompanyId = company3Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Default Admin3 User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+
+
+
+            //Seed Default PM3 User
+            defaultUser = new BugTrackerUser
+            {
+                UserName = "BakerProjectManager@gmail.com",
+                Email = "BakerProjectManager@gmail.com",
+                FirstName = "John",
+                LastName = "ProjectManager",
+                EmailConfirmed = true,
+                CompanyId = company3Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, Roles.ProjectManager.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Default PM3 User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+
+
+            //Seed Default Developer3 User
+            defaultUser = new BugTrackerUser
+            {
+                UserName = "BakerDeveloper@gmail.com",
+                Email = "BakerDeveloper@gmail.com",
+                FirstName = "Eric",
+                LastName = "Developer",
+                EmailConfirmed = true,
+                CompanyId = company3Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Developer.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Default Developer3 User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+            //Seed Default Submitter3 User
+            defaultUser = new BugTrackerUser
+            {
+                UserName = "BakerSubmitter@bakermedical.net",
+                Email = "BakerSubmitter@bakermedical.net",
+                FirstName = "Chad",
+                LastName = "Developer",
+                EmailConfirmed = true,
+                CompanyId = company3Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Developer.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Default Submitter3 User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
         }
 
         public static async Task SeedDemoUsersAsync(UserManager<BugTrackerUser> userManager)
@@ -581,7 +702,7 @@ namespace BugTracker.Data
                 FirstName = "Demo",
                 LastName = "Admin",
                 EmailConfirmed = true,
-                CompanyId = company1Id
+                CompanyId = company2Id
             };
             try
             {

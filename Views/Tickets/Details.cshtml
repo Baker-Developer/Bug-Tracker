@@ -211,7 +211,7 @@
                 </div>
             </div>
             <div class="col-md-4 col mt-5 ">
-                <div class="bg-dark">
+                <div class="">
                     <div class="card m-1 p-2">
                         <div class="card-header">
                             <h2>History</h2>
@@ -225,7 +225,11 @@
                                 <div class="">
                                     <span class="date" style="font-weight:bold;">@history.Created.ToString("dd, MMM, yyyy")</span>
                                     <h5>@history.Description</h5>
-                                    <span> By: <a title="@history.User.FullName">@history.User.FullName"</a> </span>
+
+                                   @*TODO FIX PROBLEM*@
+                                    @*<span> By: <a title="@history.User.FullName">@history.User.FullName"</a> </span>*@
+                                   
+                                    
                                     <div class="">
                                         @if (history.Description.Contains("New Ticket Created"))
                                         {

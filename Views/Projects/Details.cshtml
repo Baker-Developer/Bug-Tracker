@@ -76,7 +76,7 @@
                             <hr />
                         </div>
                         <div class="body" style="overflow-y:auto;height:300px;">
-                            
+
                             @* if() logic for Avatar/Default etc *@
                             @if (projectManager != null)
                             {
@@ -108,9 +108,9 @@
                                     <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" width="28" height="28" class="rounded-circle">
                                     <div class="wid-u-info">
                                         <h5>Not Assigned</h5>
-                                        @if (User.IsInRole(nameof(Roles.Admin)) || (bugTrackerUser.Id == projectManager.Id))
+                                        @if (User.IsInRole(nameof(Roles.Admin)))
                                         {
-                                            <span><a asp-action="AssignProjectController" asp-controller="Projects" asp-route-id="@Model.Id" class="btn btn-primary">Assign Project Manager</a></span>
+                                            <span><a asp-action="AssignProjectManager" asp-controller="Project" asp-route-id="@Model.Id" class="btn btn-primary">Assign Project Manager</a></span>
                                         }
 
                                     </div>
@@ -195,7 +195,7 @@
             <div class="col-md-12 col">
                 <div class="mt-5 ">
                     <div class="card m-1 p-2">
-                        <div class="header">
+                        <div class="">
                             <h2>Tickets</h2>
                         </div>
                         <div class="body">
@@ -217,7 +217,7 @@
                                         @foreach (var ticket in Model.Tickets.OrderByDescending(d => d.Created))
                                         {
                                             <tr>
-                                                <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" style="color:black"><strong>@ticket.Title</strong></a> </td>
+                                                <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" style=""><strong>@ticket.Title</strong></a> </td>
                                                 <td>
                                                     @if (ticket.DeveloperUserId != null)
                                                     {
@@ -227,7 +227,7 @@
                                                     {
                                                         if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
                                                         {
-                                                            <a class="btn btn-xs btn-info" asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-ticketId="@ticket.Id">Assign Dev</a>
+                                                            <a class="btn btn-xs btn-primary" asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</a>
                                                         }
 
                                                     }
@@ -260,10 +260,8 @@
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

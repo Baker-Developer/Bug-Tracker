@@ -22,7 +22,7 @@
                     @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
                     {
                         <p>
-                            <a asp-action="Create">Create New</a>
+                            <a asp-action="Create" class="btn btn-success mt-3">Create New</a>
                         </p>
                     }
                 </div>
@@ -30,7 +30,7 @@
             <div class="card-body p-0">
                 <div class="table-responsive mt-4">
                     <table id="basic-table" class="table table-striped mb-0" role="grid">
-                        <thead class="">
+                        <thead class="flex-fill">
                             <tr>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Name)
@@ -50,11 +50,11 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.ImageFileData)
                                 </th>
+                                @*   <th>
+                                @Html.DisplayNameFor(model => model.ImageContentType)
+                                </th>*@
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ImageContentType)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Archived)
+                                    Project Archived Status
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Company)
@@ -69,9 +69,19 @@
                             @foreach (var item in Model)
                             {
 
+
+
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
+                                        @if (item.Archived)
+                                        {
+                                            <p></p>
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        }
+
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Description)
@@ -94,7 +104,16 @@
                                     </td>
 
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Archived)
+                                        @if (!item.Archived)
+                                        {
+                                            <img src="~/img/logos/openDocument.png" width="50" height="50">
+                                        }
+                                        else if (item.Archived)
+                                        {
+                                            <img src="~/img/logos/archivedDocument.png" width="50" height="50">
+                                        }
+
+
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Company.Name)
@@ -131,9 +150,6 @@
                                     </td>
                                 </tr>
                             }
-
-
-
                     </table>
                 </div>
             </div>
