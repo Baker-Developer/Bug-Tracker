@@ -11,5 +11,21 @@ namespace BugTracker.Extentions
             // Ternary Operator (If/Else)
             return (claim != null) ? int.Parse(claim.Value) : null;
         }
+
+        // Above ternary operator explanation
+
+        //  int result;
+        // if (claim != null)
+        //{
+            // result = int.Parse(claim.Value);
+        //} else 
+        //{
+            //result = 0;
+        //}
+
+        //return result;
+
+
+
     }
 }
