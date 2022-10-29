@@ -73,15 +73,7 @@
 
                                 <tr>
                                     <td>
-                                        @if (item.Archived)
-                                        {
-                                            <p></p>
-                                        }
-                                        else
-                                        {
-                                            @Html.DisplayFor(modelItem => item.Name)
-                                        }
-
+                                        @Html.DisplayFor(modelItem => item.Name)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Description)
