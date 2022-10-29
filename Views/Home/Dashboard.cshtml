@@ -76,7 +76,7 @@
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card text-center bg-warning">
+                <div class="card text-center bg-primary">
                     <div class="body">
                         <div class="p-15 text-light">
                             <h3>@Model.Tickets.Where(t => string.IsNullOrEmpty(t.DeveloperUserId)).Count()</h3>
@@ -86,7 +86,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card text-center bg-warning">
+                <div class="card text-center bg-primary">
                     <div class="body">
                         <div class="p-15 text-light">
                             <h3>
@@ -121,25 +121,25 @@
                     <div id="donut"></div>
                     </div>
                     </div>*@
-@*
+                    @*
                     <div class="card col m-1 p-2">
-                        <div class="card-body">
-                            <h5>Tickets by Priority</h5>
-                            <p>[Morris Charts]</p>
+                    <div class="card-body">
+                    <h5>Tickets by Priority</h5>
+                    <p>[Morris Charts]</p>
 
-                            <!-- Morris: Donut -->
-                            <div class="col-md-12">
-                                <div id="legend" class="donut-legend" style="font-size:x-small"></div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="chart chart-md" id="morrisTicketPriority"></div>
-                            </div>
-
-
-                        </div>
+                    <!-- Morris: Donut -->
+                    <div class="col-md-12">
+                    <div id="legend" class="donut-legend" style="font-size:x-small"></div>
                     </div>
-*@
+
+                    <div class="col-md-12">
+                    <div class="chart chart-md" id="morrisTicketPriority"></div>
+                    </div>
+
+
+                    </div>
+                    </div>
+                    *@
 
                     <div class="card col-lg col-sm-12 m-1 p-2">
                         <div class="card-body">
@@ -165,12 +165,12 @@
                         </div>
                     </div>
 
-            
+               
                 </div>
             </div>
         </div>
 
-      
+
 
         @*        <div class="row gy-2">
         <div class="cols mt-5 bg-secondary">
@@ -251,15 +251,15 @@
                                 <thead class="">
                                     <tr>
                                         @* Table header *@
-                              
-                              
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @* Table body *@
                                     @foreach (var ticket in Model.Tickets.OrderByDescending(d => d.Created))
                                     {
-                                @*         <tr>
+                                        @*         <tr>
                                     <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" style="color:black"><strong>@ticket.Title</strong></a> </td>
                                     <td><span style="font-size:medium">@ticket.StartDate.ToString("MM,dd,yyyy")</span></td>
                                     <td><span style="font-size:medium">@ticket.EndDate.ToString("MM,dd,yyyy")</span></td>
@@ -270,7 +270,7 @@
                                     </tr>*@
 
                                         <tr>
-                                            <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" ><strong>@ticket.Title</strong></a> </td>
+                                            <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><strong>@ticket.Title</strong></a> </td>
                                             <td>
                                                 @if (ticket.DeveloperUserId != null)
                                                 {
@@ -278,7 +278,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <a class="btn btn-primary" asp-action="UnassignedTickets" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</a>
+                                                    <a class="btn btn-primary btn-sm" asp-action="UnassignedTickets" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</a>
 
                                                 }
                                             </td>
@@ -302,33 +302,30 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-body">
-                        </div>
-                        <div class="card-footer">
-                        </div>
+                        
                     </div>
                 </div>
             </div>
 
-      @*      <div class="col-12">
-                <div class="bg-dark">
-                    <div class="card m-1 p-2">
-                        <div class="card-header">
-                            <h2>Members</h2>
-                            <hr />
-                        </div>
-                        <div class="card-body">
-                          
-                            @foreach (BugTrackerUser member in Model.Members)
-                            {
-                                <div class="">
-                                    <span>@member.FullName</span>
-                                    <h6>@((await RolesService.GetUserRolesAsync(member)).FirstOrDefault())</h6>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
+            @*      <div class="col-12">
+            <div class="bg-dark">
+            <div class="card m-1 p-2">
+            <div class="card-header">
+            <h2>Members</h2>
+            <hr />
+            </div>
+            <div class="card-body">
+
+            @foreach (BugTrackerUser member in Model.Members)
+            {
+            <div class="">
+            <span>@member.FullName</span>
+            <h6>@((await RolesService.GetUserRolesAsync(member)).FirstOrDefault())</h6>
+            </div>
+            }
+            </div>
+            </div>
+            </div>
             </div>*@
         </div>
     </div>
@@ -422,16 +419,16 @@
         var morrisDonutData = [{
             label: "Low",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Low)).Count()
-                                            }, {
+                                                                    }, {
             label: "Medium",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Medium)).Count()
-                                            }, {
+                                                                    }, {
             label: "High",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.High)).Count()
-                                            }, {
+                                                                    }, {
             label: "Urgent",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Urgent)).Count()
-                                            }];
+                                                                    }];
 
 
         /*
@@ -480,7 +477,7 @@
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
 
-                                                ],
+                                                                        ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -515,7 +512,7 @@
 
 
 
-        // Get the projects ticket count
+        // Get the projects ticket type
         var donutChartCanvas = $('#donutChartForProjects').get(0).getContext('2d');
         var donutData = {
             labels: [
@@ -535,7 +532,7 @@
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
-                                                        ],
+                                                                                ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -559,10 +556,20 @@
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.
         new Chart(donutChartCanvas, {
-            type: 'doughnut',
+            type: 'pie',
             data: donutData,
             options: donutOptions
         });
+
+
+
+
+
+
+
+
+
+
 
     </script>
 
