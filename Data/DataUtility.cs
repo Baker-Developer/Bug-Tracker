@@ -668,7 +668,7 @@ namespace BugTracker.Data
                 UserName = "BakerSubmitter@bakermedical.net",
                 Email = "BakerSubmitter@bakermedical.net",
                 FirstName = "Chad",
-                LastName = "Developer",
+                LastName = "Submitter",
                 EmailConfirmed = true,
                 CompanyId = company3Id
             };
@@ -678,7 +678,7 @@ namespace BugTracker.Data
                 if (user == null)
                 {
                     await userManager.CreateAsync(defaultUser, "Abc&123!");
-                    await userManager.AddToRoleAsync(defaultUser, Roles.Developer.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Submitter.ToString());
                 }
             }
             catch (Exception ex)
