@@ -6,7 +6,7 @@
     @foreach (var member in Model)
     {
         <div class="row">
-            <div class="card col-4 m-3">
+            <div class="card col-12 m-3">
                 <div class="card-body">
                     <p class="text-muted font-13 m-b-30">
                         This form displays the current roles assigned to the user: <strong class="text-info">@member.BugTrackerUser.FullName</strong>.
@@ -19,7 +19,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label asp-for="@member.Roles" class="custom-control-label">Roles For @member.BugTrackerUser.FullName</label>
+                                    <label asp-for="@member.Roles" class="control-label">Roles For @member.BugTrackerUser.FullName</label>
                                     <select asp-for="@member.SelectedRoles" class="form-control" asp-items="member.Roles" multiple>
 
                                     </select>
