@@ -24,8 +24,8 @@
                 </div>
             </div>
             <div class="card-body p-0">
-                <div class="table-responsive mt-4" style="height: 500px !important;">
-                    <table id="basic-table" class="table table-striped mb-0" role="grid">
+                <div class="table-responsive mt-4" >
+                    <table id="myTicketsTable" class="table table-striped table-bordered border-dark mb-0" role="grid">
                         <thead>
                             <tr>
                                 <th>
@@ -43,9 +43,9 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.Archived)
                                 </th>
-                                @*  <th>
+                                  <th>
                                 @Html.DisplayNameFor(model => model.TicketPriorityId)
-                                </th>*@
+                                </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Project)
                                 </th>
@@ -145,4 +145,13 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTicketsTable').DataTable();
+        });
+    </script>
+}

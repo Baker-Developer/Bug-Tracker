@@ -165,7 +165,7 @@
                         </div>
                     </div>
 
-               
+
                 </div>
             </div>
         </div>
@@ -278,7 +278,13 @@
                                                 }
                                                 else
                                                 {
-                                                    <a class="btn btn-primary btn-sm" asp-action="UnassignedTickets" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</a>
+
+                                                    if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                                                    {
+
+                                                        <a class="btn btn-primary btn-sm" asp-action="UnassignedTickets" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</a>
+                                                    } 
+
 
                                                 }
                                             </td>
@@ -302,7 +308,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -419,16 +425,16 @@
         var morrisDonutData = [{
             label: "Low",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Low)).Count()
-                                                                    }, {
+                                                                            }, {
             label: "Medium",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Medium)).Count()
-                                                                    }, {
+                                                                            }, {
             label: "High",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.High)).Count()
-                                                                    }, {
+                                                                            }, {
             label: "Urgent",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Urgent)).Count()
-                                                                    }];
+                                                                            }];
 
 
         /*
@@ -477,7 +483,7 @@
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
 
-                                                                        ],
+                                                                                ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -532,7 +538,7 @@
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
-                                                                                ],
+                                                                                        ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
