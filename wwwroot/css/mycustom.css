@@ -3,3 +3,8 @@
     background-color: #222738;
     border-color: #30384f;
 }
+
+
+table.dataTable tbody tr {
+    background-color: #151824 !important;
+}
