@@ -29,39 +29,43 @@
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive mt-4">
-                    <table id="basic-table" class="table table-striped mb-0" role="grid">
+                    <table id="myTable" class="table table-striped table-bordered border-dark mb-0" role="grid">
                         <thead class="flex-fill">
                             <tr>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Name)
+                                    @*@Html.DisplayNameFor(model => model.StartDate)*@
                                 </th>
-                              @*  <th>
-                                    @Html.DisplayNameFor(model => model.Description)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.StartDate)
-                                </th>
+                                @*   <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                                </th>*@
+                                @*    <th>
+                                @Html.DisplayNameFor(model => model.StartDate)
+                                </th>*@
                                 <th>
                                     @Html.DisplayNameFor(model => model.EndDate)
                                 </th>
+                                @*      <th>
+                                @Html.DisplayNameFor(model => model.ImageFileName)
+                                </th>*@
+                                @*  <th>
+                                @Html.DisplayNameFor(model => model.ImageFileData)
+                                </th>*@
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ImageFileName)
+                                    @Html.DisplayNameFor(model => model.Archived) <span>Status</span>
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ImageFileData)
-                                </th>*@
-                                @*   <th>
-                                @Html.DisplayNameFor(model => model.ImageContentType)
-                                </th>*@
-                                <th>
-                                    Project Archived Status
-                                </th>
-@*                                <th>
-                                    @Html.DisplayNameFor(model => model.Company)
-                                </th>*@
                                 <th>
                                     @Html.DisplayNameFor(model => model.ProjectPriority)
                                 </th>
+                            
+                                <th>
+                                    @*@Html.DisplayNameFor(model => model.ImageContentType)*@
+                                </th>
+                            
+                             @*   <th>
+                                    @Html.DisplayNameFor(model => model.Company)
+                                </th>*@
+              
                             </tr>
                         </thead>
 
@@ -73,48 +77,49 @@
 
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
+                                        @Html.DisplayFor(modelItem => item.Name) <hr>
+                                        <span>Created On</span> @Html.DisplayFor(modelItem => item.StartDate)
                                     </td>
-                            @*        <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </td>*@
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.StartDate)
-                                    </td>
+                                    @*   <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                                </td>*@
+                                    @*    <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.EndDate)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ImageFileName)
-                                    </td>
-                                    <td>
-                                        @if (item.ImageFileData != null)
-                                        {
-                                            <img class="img-fluid" style="width:120px; height:90px" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))">
-                                        }
+                                    @*      <td>
+                                @Html.DisplayFor(modelItem => item.ImageFileName)
+                                </td>*@
+                                    @*        <td>
+                                @if (item.ImageFileData != null)
+                                {
+                                <img class="img-fluid" style="width:120px; height:90px" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))">
+                                }
 
-                                    </td>
-
+                                </td>
+                                *@
                                     <td>
                                         @if (!item.Archived)
                                         {
-                                            <img src="~/img/logos/openDocument.png" width="50" height="50">
+                                            <img src="~/img/logos/openDocument.png" width="50" height="50"> 
                                         }
                                         else if (item.Archived)
                                         {
-                                            <img src="~/img/logos/archivedDocument.png" width="50" height="50">
+                                            <img src="~/img/logos/archivedDocument.png" width="50" height="50"> <span>Project Is Archived</span>
                                         }
 
 
                                     </td>
-                                    <td>
+                                   @* <td>
                                         @Html.DisplayFor(modelItem => item.Company.Name)
-                                    </td>
+                                    </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ProjectPriority.Name)
                                     </td>
                                     <td>
-
+                                     
                                         <a asp-action="Details" asp-route-id="@item.Id">Details</a>
 
 
@@ -140,6 +145,7 @@
                                         }
 
                                     </td>
+                                 
                                 </tr>
                             }
                     </table>
@@ -148,3 +154,14 @@
         </div>
     </div>
 </div>
+
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
