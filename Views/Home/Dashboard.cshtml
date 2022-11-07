@@ -196,48 +196,46 @@
 
             @* Projects Table*@
             <div class="col">
-            <div class="bg-secondary">
-            <div class="card m-1 p-2">
-            <div class="card-header">
-            <h2>Projects</h2>
-            </div>
-            <div class="card-body">
+                <div class="">
+                    <div class="card m-1 p-2">
+                        <div class="card-header">
+                            <h2>Projects</h2>
+                        </div>
+                        <div class="card-body">
 
-           @* Copy and format table from Unassigned Tickets*@
-            <div class="table-responsive" style="overflow-y:auto;height:600px;">
-            <table class="table table-hover" id="myTable2">
-            <thead class="">
-            <tr>
-           @* Table header*@
-            <th>Name</th>
-            <th>StartDate</th>
-            <th>EndDate</th>
-            <th>Priority</th>
-            <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-           @* Table body*@
-            @foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
-            {
-            <tr>
-            <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@project.Id" ><strong>@project.Name</strong></a> </td>
-            <td><span style="font-size:medium">@project.StartDate.ToString("MM,dd,yyyy")</span></td>
-            <td><span style="font-size:medium">@project.EndDate.ToString("MM,dd,yyyy")</span></td>
-            <td><span style="font-size:medium" class="badge bg-dark">@project.ProjectPriority?.Name</span></td>
-            <td>
-            <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Project" asp-route-id="@project.Id"><i class="fs-5 bi-justify"></i></a>
-            </td>
-            </tr>
-            }
-            </tbody>
-            </table>
-            </div>
-            </div>
-            <div class="card-footer">
-            </div>
-            </div>
-            </div>
+                            @* Copy and format table from Unassigned Tickets*@
+                            <div class="table-responsive" style="overflow-y:auto;height:400px;">
+                                <table class="table table-hover" id="myTable2">
+                                    <thead class="">
+                                        <tr>
+                                            @* Table header*@
+                                            <th>Name</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Priority</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @* Table body*@
+                                        @foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
+                                        {
+                                            <tr>
+                                                <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@project.Id"><strong>@project.Name</strong></a> </td>
+                                                <td><span style="font-size:medium">@project.StartDate.ToString("MM,dd,yyyy")</span></td>
+                                                <td><span style="font-size:medium">@project.EndDate.ToString("MM,dd,yyyy")</span></td>
+                                                <td><span style="font-size:medium" class="badge bg-dark">@project.ProjectPriority?.Name</span></td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id"><i class="fs-5 bi-justify"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -258,11 +256,11 @@
                         <div class="table-responsive" style="overflow-y:auto;height:400px;">
                             <table id="myTable" class="table table-hover">
                                 <thead class="flex-fill">
-                                                           <tr>
+                                    <tr>
                                         @* Table header *@
                                         <th>Name</th>
-                                        <th>StartDate</th>
-                                        <th>EndDate</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
                                         <th>Priority</th>
                                         <th>Date Created</th>
                                         <th>Action</th>
@@ -296,7 +294,7 @@
                                                     {
 
                                                         <a class="btn btn-primary btn-sm" asp-action="UnassignedTickets" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</a>
-                                                    } 
+                                                    }
 
 
                                                 }
@@ -449,16 +447,16 @@
         var morrisDonutData = [{
             label: "Low",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Low)).Count()
-                                                                            }, {
+                                                                                    }, {
             label: "Medium",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Medium)).Count()
-                                                                            }, {
+                                                                                    }, {
             label: "High",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.High)).Count()
-                                                                            }, {
+                                                                                    }, {
             label: "Urgent",
             value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Urgent)).Count()
-                                                                            }];
+                                                                                    }];
 
 
         /*
@@ -507,7 +505,7 @@
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
 
-                                                                                ],
+                                                                                        ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -562,7 +560,7 @@
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
-                                                                                        ],
+                                                                                                ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
