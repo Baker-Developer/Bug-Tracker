@@ -193,7 +193,8 @@
     <div class="mt-5 ">
         <div class="row">
 
-            @* Tickets Table
+
+            @* Projects Table*@
             <div class="col">
             <div class="bg-secondary">
             <div class="card m-1 p-2">
@@ -202,12 +203,12 @@
             </div>
             <div class="card-body">
 
-            Copy and format table from Unassigned Tickets
+           @* Copy and format table from Unassigned Tickets*@
             <div class="table-responsive" style="overflow-y:auto;height:600px;">
-            <table class="table table-hover">
+            <table class="table table-hover" id="myTable2">
             <thead class="">
             <tr>
-            Table header
+           @* Table header*@
             <th>Name</th>
             <th>StartDate</th>
             <th>EndDate</th>
@@ -216,11 +217,11 @@
             </tr>
             </thead>
             <tbody>
-            Table body
+           @* Table body*@
             @foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
             {
             <tr>
-            <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@project.Id" style="color:black"><strong>@project.Name</strong></a> </td>
+            <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@project.Id" ><strong>@project.Name</strong></a> </td>
             <td><span style="font-size:medium">@project.StartDate.ToString("MM,dd,yyyy")</span></td>
             <td><span style="font-size:medium">@project.EndDate.ToString("MM,dd,yyyy")</span></td>
             <td><span style="font-size:medium" class="badge bg-dark">@project.ProjectPriority?.Name</span></td>
@@ -237,22 +238,34 @@
             </div>
             </div>
             </div>
-            </div>*@
+            </div>
 
-            @* Projects Table *@
+
+
+            @* Tickets Table *@
             <div class="col">
                 <div class="">
                     <div class="card m-1 p-2">
                         <div class="card-header">
                             <h2>Tickets</h2>
                         </div>
+                        @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                        {
+                            <p>
+                                <a asp-action="Create" asp-controller="Tickets" class="btn btn-success mt-3">Create New Ticket</a>
+                            </p>
+                        }
                         <div class="table-responsive" style="overflow-y:auto;height:400px;">
-                            <table class="table table-hover">
-                                <thead class="">
-                                    <tr>
+                            <table id="myTable" class="table table-hover">
+                                <thead class="flex-fill">
+                                                           <tr>
                                         @* Table header *@
-
-
+                                        <th>Name</th>
+                                        <th>StartDate</th>
+                                        <th>EndDate</th>
+                                        <th>Priority</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -290,12 +303,12 @@
                                             </td>
                                             @if (ticket.TicketStatus.Name == "New")
                                             {
-                                                <td><span class="btn btn-success">@ticket.TicketStatus.Name </span></td>
+                                                <td><span class="btn btn-success btn-sm">@ticket.TicketStatus.Name </span></td>
 
                                             }
                                             else
                                             {
-                                                <td><span class="btn btn-warning">@ticket.TicketStatus.Name </span></td>
+                                                <td><span class="btn btn-warning btn-sm">@ticket.TicketStatus.Name </span></td>
                                             }
                                             <td><span class="">@ticket.TicketPriority.Name </span></td>
                                             <td>@ticket.Created.ToString("MM-dd-yyyy")</td>
@@ -303,6 +316,7 @@
                                                 <a class="btn btn-primary" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id">Details</a>
 
                                             </td>
+
                                         </tr>
                                     }
                                 </tbody>
@@ -341,6 +355,16 @@
 
 
 @section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+        $(document).ready(function () {
+            $('#myTable2').DataTable();
+        });
+    </script>
 
     <!--Google Charts-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
