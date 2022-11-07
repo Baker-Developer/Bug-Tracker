@@ -26,7 +26,7 @@
             <div class="card-body p-0">
                 <div class="table-responsive mt-4" style="height: 600px;">
                     <table id="myTicketsTable" class="table table-striped table-bordered border-dark mb-0" role="grid">
-                        <thead>
+                        <thead class="flex-fill">
                             <tr>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Title)
@@ -43,9 +43,9 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.Archived)
                                 </th>
-                                  <th>
+                         @*         <th>
                                 @Html.DisplayNameFor(model => model.TicketPriorityId)
-                                </th>
+                                </th>*@
                                 <th>
                                     @Html.DisplayNameFor(model => model.Project)
                                 </th>
@@ -81,6 +81,7 @@
                                         @Html.DisplayFor(modelItem => item.Updated)
                                     </td>
                                     <td>
+
                                         @if (!item.Archived)
                                         {
                                             <img src="~/img/logos/openDocument.png" width="50" height="50">
@@ -90,9 +91,9 @@
                                             <img src="~/img/logos/archivedDocument.png" width="50" height="50">
                                         }
                                     </td>
-                                    <td>
+                         @*           <td>
                                         @Html.DisplayFor(modelItem => item.TicketPriorityId)
-                                    </td>
+                                    </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.TicketPriority.Name)
                                     </td>
