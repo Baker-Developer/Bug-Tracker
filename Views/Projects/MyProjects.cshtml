@@ -14,8 +14,9 @@
     </p>
 }
 
-
-<table id="basic-table" class="table table-striped mb-0" role="grid">
+<div class="table-responsive" style="overflow-y:auto;height:600px;">
+<table id="myTable" class="table table-striped mb-0" role="grid">
+    <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -47,7 +48,7 @@
         <th>
             @Html.DisplayNameFor(model => model.ProjectPriority)
         </th>
-        <th></th>
+        
     </tr>
     </thead>
     <tbody>
@@ -114,3 +115,14 @@
         }
     </tbody>
 </table>
+
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
