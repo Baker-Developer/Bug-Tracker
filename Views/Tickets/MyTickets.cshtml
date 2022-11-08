@@ -9,7 +9,9 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<div class="table-responsive" style="overflow-y:auto;height:600px;">
+    <table class="table" id="myTable">
     <thead>
         <tr>
             <th>
@@ -45,7 +47,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.DeveloperUser)
             </th>
-            <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeveloperUser)
+                </th>
+                <th>
+                   <span>Action</span>
+                </th>
         </tr>
     </thead>
     <tbody>
@@ -96,3 +103,12 @@
         }
     </tbody>
 </table>
+</div>
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

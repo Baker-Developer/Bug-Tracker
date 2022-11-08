@@ -10,7 +10,7 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<table class="table">
+<table id="myTable" class="table-responsive">
     <thead>
         <tr>
             <th>
@@ -82,3 +82,12 @@
 <div>
     <a asp-action="Dashboard" asp-controller="Home">Back to Dashboard</a>
 </div>
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

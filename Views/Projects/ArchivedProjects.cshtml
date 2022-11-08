@@ -15,7 +15,7 @@
 
 
 
-<table class="table">
+<table id="myTable" class="table-responsive">
     <thead>
         <tr>
             <th>
@@ -48,7 +48,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.ProjectPriority)
             </th>
-            <th></th>
+         
         </tr>
     </thead>
     <tbody>
@@ -109,3 +109,12 @@
         }
     </tbody>
 </table>
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

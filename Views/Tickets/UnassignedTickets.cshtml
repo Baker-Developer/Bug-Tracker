@@ -10,8 +10,8 @@
                 <h2>Unassigned Tickets</h2>
             </div>
             <div class="body">
-                <div class="table-responsive" style="overflow-y:auto;height:600px;">
-                    <table class="table table-hover">
+                <div class="table-responsive"  style="overflow-y:auto;height:600px;">
+                    <table id="myTable" class="table table-hover">
                         <thead class="">
                             <tr>
                                 @* Table header *@
@@ -74,3 +74,12 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
