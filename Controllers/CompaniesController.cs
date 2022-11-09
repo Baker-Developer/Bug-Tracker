@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BugTracker.Data;
 using BugTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BugTracker.Controllers
 {
+    [Authorize]
     public class CompaniesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,12 +21,14 @@ namespace BugTracker.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin,ProjectManager")]
         // GET: Companies
         public async Task<IActionResult> Index()
         {
             return View(await _context.Companies.ToListAsync());
         }
 
+        [Authorize(Roles = "Admin,ProjectManager")]
         // GET: Companies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -52,6 +56,7 @@ namespace BugTracker.Controllers
         // POST: Companies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,ProjectManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description")] Company company)
@@ -84,6 +89,7 @@ namespace BugTracker.Controllers
         // POST: Companies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,ProjectManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Company company)
@@ -135,6 +141,7 @@ namespace BugTracker.Controllers
         }
 
         // POST: Companies/Delete/5
+        [Authorize(Roles = "Admin,ProjectManager")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
