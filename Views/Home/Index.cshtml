@@ -1,26 +1,42 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome To The Bug Tracker";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<main class="flex-shrink-0">
-    <div class="container mt-1">
-        <div class="row row-cols-1 row-cols-md-2 gy-2 justify-content-center" style="margin-top: 250px;">
-            <div class="col">
-                <div class="bg-gradient text-light h-100 p-3 rounded-2">
-                    <h1 class="text-center">Welcome To The Bug Tracker</h1>
-                    <p class="text-center mt-1">
-                        A custom designed .NET Core application with PostgreSQL database. 
-                        <hr />
-                        The application is a multi-tenant application designed to track issue tickets' progress.
-                        Implemented with identity and user roles, tickets are maintained in projects which are maintained by users in the role of project manager.
-                        Each project has a team and team members.
-                    </p>
-                    <hr />
-                    <div class="row row-cols-1  row-cols-md-2 justify-content-center">
-                        <a class="btn btn-primary rounded-2" asp-area="Identity" asp-page="/Account/Login">Try It Now</a>
+<div class="wrapper">
+    <section class="login-content">
+        <div class="row m-0 align-items-center bg-white vh-100">
+            <div class="col-md-6 p-0">
+                <div class="card card-transparent auth-card shadow-none d-flex justify-content-center mb-0">
+                    <div class="card-body">
+
+
+
+
+                        <form>
+                            <div class="card">
+
+
+                                <div class="body">
+                                    <h1 class="lead mb-3">
+                                        <strong>Welcome!</strong>
+                                    </h1>
+
+                                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Launch Bug Tracker</a>
+                                </div>
+                            </div>
+
+
+                        </form>
                     </div>
                 </div>
+
+            </div>
+            <div class="col-md-6 d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">
+                <img src="~/img/logos/04.png" class="img-fluid gradient-main animated-scaleX" alt="images">
             </div>
         </div>
-    </div>
-</main>
+    </section>
+</div>
+
+
