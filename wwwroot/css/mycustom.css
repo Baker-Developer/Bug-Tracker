@@ -13,3 +13,10 @@ table.dataTable tbody tr {
     color: white !important;
 }
 
+
+.gradient-main {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
