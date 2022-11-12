@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using BugTracker.Models;
+using BugTracker.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,16 +16,21 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<BugTrackerUser> _userManager;
         private readonly SignInManager<BugTrackerUser> _signInManager;
+        private readonly IImageService _imageService;
 
         public IndexModel(
             UserManager<BugTrackerUser> userManager,
-            SignInManager<BugTrackerUser> signInManager)
+            SignInManager<BugTrackerUser> signInManager,
+            IImageService imageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _imageService = imageService;
         }
 
         public string Username { get; set; }
+
+        public string CurrentImage { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -36,14 +43,18 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+
+            public IFormFile Image { get; set; }
         }
 
         private async Task LoadAsync(BugTrackerUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
+          
             Username = userName;
+            CurrentImage = _imageService.DecodeImage(user.AvatarFileData, user.AvatarContentType);
 
             Input = new InputModel
             {
@@ -86,6 +97,14 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
+            }
+
+            // If And Only If The User Selected A NEW Image It Will Update Their Profile
+            if (Input.Image != null)
+            {
+                user.AvatarFileData = await _imageService.EncodeImageAsync(Input.Image);
+                user.AvatarContentType = _imageService.ContentType(Input.Image);
+                await _userManager.UpdateAsync(user);
             }
 
             await _signInManager.RefreshSignInAsync(user);
