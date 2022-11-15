@@ -2,59 +2,48 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Login";
+    ViewData["MainMenu"] = "Login";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-
-@*<div class="row">
-
-    <div class="col-4">
-        <section>
-            <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
+<div class="card">
+    <div class="header">
+        <p class="lead">Login to your account</p>
     </div>
+    <div class="body">
+        <form id="account" method="post" class="form-auth-small">
+            <div class="form-group">
+                <label asp-for="Input.Email" class="control-label sr-only">Email</label>
+                <input type="email" class="form-control" id="signin-email" placeholder="Email" asp-for="Input.Email">
+                <span asp-validation-for="Input.Email" class="text-danger" style="text-decoration: none"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password" class="control-label sr-only">Password</label>
+                <input asp-for="Input.Password" type="password" class="form-control" id="signin-password" placeholder="Password">
+            </div>
+            <div class="form-group clearfix">
+                <label class="fancy-checkbox element-left">
+                    <input asp-for="Input.RememberMe" type="checkbox">
+                    <span>Remember me</span>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
+            <div class="bottom">
+                <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a asp-page="./ForgotPassword">Forgot password?</a></span>
+            </div>
+            <hr />
+            <div class="form-group">
+                <a class="btn btn-sm btn-primary btn-block" asp-area="Identity" asp-page="/Account/DemoLogin">Demo Application</a>
+            </div>
+           
+        </form>
+    </div>
+</div>
 
 
-</div>*@
 
-
-
+@*
 <div class="row m-0 d-flex justify-content-center vh-100">
     <div class="col-md-6">
         <div class="row justify-content-center">
@@ -101,7 +90,7 @@
                             </div>
 
                             <div class="row mt-5">
-                                @*<button class="btn btn-primary rounded-pill">Demo Admin</button>*@
+
                                 <div class="col-6"><button class="btn btn-primary btn-sm" onclick="setAdminDemoValue()">Demo Admin</button></div>
                                 <div class="col-6"><button class="btn btn-primary btn-sm" onclick="setProjectManagerDemoValue()">Demo PM</button></div>
                                 <div class="col-6 mt-2"><button class="btn btn-primary btn-sm" onclick="setDemoSubmitterDemoValue()">Demo Submitter</button></div>
@@ -119,17 +108,7 @@
                                 <p class="text-center">
                                     <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                                 </p>
-                           @*     <p class="text-center">
-                                    Don’t have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-underline">
-                                        Click here to sign
-                                        up.
-                                    </a>
-                                </p>
-                                <p class="text-center">
-                                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                                </p>*@
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -138,13 +117,19 @@
     </div>
 </div>
 
+*@
 
+<!--Bootstrap-->        
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/popper.min.js"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>  
 
-
-
-
+@*
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+
+ 
+  
 
     <script>
         function setAdminDemoValue() {
@@ -185,3 +170,4 @@
     </script>
 
 }
+*@
