@@ -12,7 +12,7 @@
     ViewData["MainMenu"] = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
     BugTrackerUser bugTrackerUser = await UserManager.GetUserAsync(User);
-     
+
 }
 
 
@@ -37,12 +37,13 @@
     </div>
     </div>
     </div>*@
+
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card text-center bg-info">
             <div class="body">
                 <div class="p-15 text-light">
-                    <h3>521</h3>
-                    <span>New items</span>
+                    <h3>@Model.Projects.Where(p => p.StartDate < DateTime.Now && p.EndDate > DateTime.Now).Count()</h3>
+                    <span>Active Projects</span>
                 </div>
             </div>
         </div>
@@ -64,8 +65,8 @@
         <div class="card text-center bg-secondary">
             <div class="body">
                 <div class="p-15 text-light">
-                    <h3>902</h3>
-                    <span>Uploads</span>
+                    <h3>@Model.Tickets.Count()</h3>
+                    <span>Total Tickets</span>
                 </div>
             </div>
         </div>
@@ -74,8 +75,8 @@
         <div class="card text-center bg-warning">
             <div class="body">
                 <div class="p-15 text-light">
-                    <h3>1,025</h3>
-                    <span>Feeds</span>
+                    <h3>@Model.Tickets.Where(t => string.IsNullOrEmpty(t.DeveloperUserId)).Count()</h3>
+                    <span>Unassigned Tickets</span>
                 </div>
             </div>
         </div>
@@ -84,8 +85,12 @@
         <div class="card text-center bg-dark">
             <div class="body">
                 <div class="p-15 text-light">
-                    <h3>318</h3>
-                    <span>Comments</span>
+                    <h3>
+                        @(
+                            Model.Projects.Count() + Model.Tickets.Count() + Model.Members.Count()
+                            )
+                    </h3>
+                    <span>Total Data</span>
                 </div>
             </div>
         </div>
@@ -293,145 +298,44 @@
             </div>
         </div>
     </div>
-    @*  <div class="col-lg-5 col-md-12">
-    <div class="card">
-    <div class="header">
-    <h2>ToDo List <small>This Month task list</small></h2>
-    </div>
-    <div class="body todo_list">
-    <div class="dd nestable-with-handle m-b-15">
-    <ol class="dd-list">
-    <li class="dd-item dd3-item" data-id="1">
-    <div class="dd-handle dd3-handle"></div>
-    <div class="dd3-content">
-    <label class="fancy-checkbox mb-0">
-    <input type="checkbox" name="checkbox" checked>
-    <span><i class=" icon-calendar m-r-5"></i> Report Panel Usag</span>
-    </label>
-    </div>
-    <ol class="dd-list">
-    <li class="dd-item dd3-item" data-id="1">
-    <div class="dd-handle dd3-handle"></div>
-    <div class="dd3-content">
-    <label class="fancy-checkbox mb-0">
-    <input type="checkbox" name="checkbox">
-    <span>Report Panel Usag</span>
-    </label>
-    </div>
-    </li>
-    </ol>
-    </li>
-    <li class="dd-item dd3-item" data-id="1">
-    <div class="dd-handle dd3-handle"></div>
-    <div class="dd3-content">
-    <label class="fancy-checkbox mb-0">
-    <input type="checkbox" name="checkbox">
-    <span><i class="icon-bell m-r-5"></i> New logo design for InfiniO</span>
-    </label>
-    </div>
-    </li>
-    <li class="dd-item dd3-item" data-id="1">
-    <div class="dd-handle dd3-handle"></div>
-    <div class="dd3-content">
-    <label class="fancy-checkbox mb-0">
-    <input type="checkbox" name="checkbox">
-    <span>Design PSD files for InfiniO <span class="badge badge-warning">1 Week</span></span>
-    </label>
-    </div>
-    </li>
-    <li class="dd-item dd3-item" data-id="1">
-    <div class="dd-handle dd3-handle"></div>
-    <div class="dd3-content">
-    <label class="fancy-checkbox mb-0">
-    <input type="checkbox" name="checkbox">
-    <span>Deploy existing code to example.com</span>
-    </label>
-    </div>
-    </li>
-    <li class="dd-item dd3-item" data-id="1">
-    <div class="dd-handle dd3-handle"></div>
-    <div class="dd3-content">
-    <label class="fancy-checkbox mb-0">
-    <input type="checkbox" name="checkbox" checked>
-    <span><i class=" icon-calendar m-r-5"></i> Report Panel Usag</span>
-    </label>
-    </div>
-    </li>
-    <li class="dd-item dd3-item" data-id="1">
-    <div class="dd-handle dd3-handle"></div>
-    <div class="dd3-content">
-    <label class="fancy-checkbox mb-0">
-    <input type="checkbox" name="checkbox">
-    <span><i class="icon-bell m-r-5"></i> New logo design for InfiniO</span>
-    </label>
-    </div>
-    </li>
-    </ol>
-    </div>
-    </div>
-    </div>
-    </div>*@
+
+    @* Project Priorty Chart*@
     <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
         <div class="card">
             <div class="header">
-                <h2>Priority Projects<small>Project Priorities</small></h2>
+                <h2>Priority Of Projects<small>Project Priorities</small></h2>
             </div>
 
-
-            <div class="body mt-0 pt-0">
-                <div class="sparkline-pie text-center"><canvas width="200" height="200" style="display: inline-block; width: 200px; height: 200px; vertical-align: top;"></canvas></div>
-                <div class="stats-report text-center">
-                    <div class="stat-item">
-                        <h5>Urgent</h5>
-                        <b class="col-black">0.0%</b>
-                    </div>
-                    <div class="stat-item">
-                        <h5>High</h5>
-                        <b class="col-black">0.0%</b>
-                    </div>
-                    <div class="stat-item">
-                        <h5>Medium</h5>
-                        <b class="col-black">50.0%</b>
-                    </div>
-                    <div class="stat-item">
-                        <h5>Low</h5>
-                        <b class="col-black">50.0%</b>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
-        <div class="card">
-            <div class="header">
-                <h2>Priority Tickets<small>Project Priorities</small></h2>
-            </div>
-
-
-            <div class="body mt-0 pt-0">
-                <div class="sparkline-pie text-center"><canvas width="200" height="200" style="display: inline-block; width: 200px; height: 200px; vertical-align: top;"></canvas></div>
-                <div class="stats-report text-center">
-                    <div class="stat-item">
-                        <h5>Urgent</h5>
-                        <b class="col-black">0.0%</b>
-                    </div>
-                    <div class="stat-item">
-                        <h5>High</h5>
-                        <b class="col-black">0.0%</b>
-                    </div>
-                    <div class="stat-item">
-                        <h5>Medium</h5>
-                        <b class="col-black">50.0%</b>
-                    </div>
-                    <div class="stat-item">
-                        <h5>Low</h5>
-                        <b class="col-black">50.0%</b>
-                    </div>
-                </div>
+            <!-- ChartJS: Pie/Doughnut -->
+            <div class="col-md-12">
+                <!--  Chart.js Canvas Tag -->
+                <canvas width="300" height="300" style="display: inline-block; width: 300px; height: 300px; vertical-align: top; " id="donutChart"></canvas>
             </div>
         </div>
     </div>
 
+    @* Project Tickets Chart*@
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
+        <div class="card">
+            <div class="header">
+                <h2>Type Of Tickets<small>Ticket Types</small></h2>
+            </div>
+
+            <div class="col-md-12">
+                <!--  Chart.js Canvas Tag -->
+                <canvas width="300" height="300" style="display: inline-block; width: 300px; height: 300px; vertical-align: top; " id="donutChartForProjects"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
+        <div class="card">
+            <div class="col-md-12">
+                <canvas id="myChart" width="800" height="400"></canvas>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -1108,5 +1012,190 @@
 
     <script src="~/js/pages/ui/sortable-nestable.js"></script>
     <script src="~/js/index6.js"></script>
+
+
+
+
+    <!-- *** Begin Chart JS Pie/Donut *** -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+    <script>
+
+        var donutChartCanvas = $('#donutChart').get(0).getContext('2d');
+        var donutData = {
+            labels: [
+                '@nameof(BugTrackerTicketStatus.Development)',
+                '@nameof(BugTrackerTicketStatus.New)',
+                '@nameof(BugTrackerTicketStatus.Resolved)',
+                '@nameof(BugTrackerTicketStatus.Testing)'
+            ],
+            datasets: [
+                {
+                    data: [
+        @Model.Tickets.Where(t=> t.TicketStatus.Name == nameof(BugTrackerTicketStatus.Development)).Count(),
+        @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.New)).Count(),
+        @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
+        @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
+
+                                                                                                                ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ]
+                }
+            ]
+        };
+
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        };
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(donutChartCanvas, {
+            type: 'pie',
+            data: donutData,
+            options: donutOptions
+        });
+
+
+
+
+
+
+
+        // Get the projects ticket type
+        var donutChartCanvas = $('#donutChartForProjects').get(0).getContext('2d');
+        var donutData = {
+            labels: [
+                '@nameof(BugTrackerTicketType.NewDevelopment)',
+                '@nameof(BugTrackerTicketType.WorkTask)',
+                '@nameof(BugTrackerTicketType.Defect)',
+                '@nameof(BugTrackerTicketType.ChangeRequest)',
+                '@nameof(BugTrackerTicketType.Enhancement)',
+                '@nameof(BugTrackerTicketType.GeneralTask)'
+            ],
+            datasets: [
+                {
+                    data: [
+        @Model.Tickets.Where(t=> t.TicketType.Name == nameof(BugTrackerTicketType.NewDevelopment)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.WorkTask)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Defect)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
+        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
+                                                                                                                        ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ]
+                }
+            ]
+        };
+
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        };
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(donutChartCanvas, {
+            type: 'pie',
+            data: donutData,
+            options: donutOptions
+        });
+
+
+
+
+        // Horizontial Chart
+
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12"],
+                datasets: [{
+                    label: '# of Tickets For Each Project',
+                    data: [12, 19, 3, 5, 2, 3, 20, 3, 5, 6, 2, 1],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                 indexAxis: 'y',
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                     
+                        },
+                        gridLines: {
+                       
+                        }
+                    },
+                    {
+                        position: "top",
+                        ticks: {
+                          
+                        },
+                        gridLines: {
+                           
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+    </script>
+
+
 
 }
