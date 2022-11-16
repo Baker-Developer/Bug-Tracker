@@ -8,343 +8,827 @@
 @inject IBugTrackerRolesService RolesService;
 
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Project";
+    ViewData["MainMenu"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     BugTrackerUser bugTrackerUser = await UserManager.GetUserAsync(User);
-
+     
 }
 
-<!-- Styles -->
-<style>
-    .amDark {
-        background-color: #30303d;
-        color: #fff;
-    }
 
-    #chartdiv {
-        width: 100%;
-        height: 500px;
-    }
-</style>
+@section VendorCSS {
+    <link rel="stylesheet" href="~/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css">
+    <link rel="stylesheet" href="~/vendor/jvectormap/jquery-jvectormap-2.0.3.min.css" />
+    <link rel="stylesheet" href="~/vendor/morrisjs/morris.min.css" />
+    <link rel="stylesheet" href="~/vendor/nestable/jquery-nestable.css" />
 
-<h1>Dashboard</h1>
-<a href="javascript:void(0);">
-
-    @if (bugTrackerUser?.AvatarFileData != null)
-    {
-        <img class="media-object" src="data:image/*;base64,@(Convert.ToBase64String(bugTrackerUser.AvatarFileData))" alt="">
-    }
-    else
-    {
-        <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" width="30" height="30" class="rounded-circle">
-    }
-</a>
-<strong>@bugTrackerUser.FullName</strong>
-<span class="text-muted" style="font-size:small;">
-    <a class="text-white">@Model.Company.Name</a>
-</span>
-
-
-<div>
-    <div class="col">
-
-
-        <!-- Info Pills -->
-        <div class="row mt-2">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a asp-action="AllProjects" asp-controller="Projects" style="text-decoration:none">
-                    <div class="card text-center bg-primary">
-                        <div class="body">
-                            <div class="p-15 text-light">
-                                <h3>@Model.Projects.Where(p => p.StartDate < DateTime.Now && p.EndDate > DateTime.Now).Count()</h3>
-                                <span>Active Projects</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a asp-action="AllTickets" asp-controller="Tickets" style="text-decoration:none">
-                    <div class="card text-center bg-primary">
-                        <div class="body">
-                            <div class="p-15 text-light">
-
-                                <h3>@Model.Tickets.Count()</h3>
-                                <span>Total Tickets</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card text-center bg-primary">
-                    <div class="body">
-                        <div class="p-15 text-light">
-                            <h3>@Model.Tickets.Where(t => string.IsNullOrEmpty(t.DeveloperUserId)).Count()</h3>
-                            <span>Unassigned Tickets</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card text-center bg-primary">
-                    <div class="body">
-                        <div class="p-15 text-light">
-                            <h3>
-                                @(
-                                    Model.Projects.Count() + Model.Tickets.Count() + Model.Members.Count()
-                                    )
-                            </h3>
-                            <span>Total Data</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row gy-2">
-            <div class="col-md-12 col">
-                <div class="row col-cols-4 mt-2 ">
-
-                    @*         <div class="card col m-1 p-2">
-                    <div class="card-body">
-                    <h5>Projects by Priority</h5>
-                    <p>[Google Charts]</p>
-                    <div id="chart3D"></div>
-                    </div>
-
-                    </div>
-
-                    <div class="card col m-1 p-2">
-                    <div class="card-body">
-                    <h5>Project Tickets Count (%)</h5>
-                    <p>[Google Charts]</p>
-                    <div id="donut"></div>
-                    </div>
-                    </div>*@
-                    @*
-                    <div class="card col m-1 p-2">
-                    <div class="card-body">
-                    <h5>Tickets by Priority</h5>
-                    <p>[Morris Charts]</p>
-
-                    <!-- Morris: Donut -->
-                    <div class="col-md-12">
-                    <div id="legend" class="donut-legend" style="font-size:x-small"></div>
-                    </div>
-
-                    <div class="col-md-12">
-                    <div class="chart chart-md" id="morrisTicketPriority"></div>
-                    </div>
-
-
-                    </div>
-                    </div>
-                    *@
-
-                    <div class="card col-lg col-sm-12 m-1 p-2">
-                        <div class="card-body">
-                            <h5>Tickets by Status</h5>
-
-                            <!-- ChartJS: Pie/Doughnut -->
-                            <div class="col-md-12">
-                                <!--  Chart.js Canvas Tag -->
-                                <canvas id="donutChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card col-lg col-sm-12 m-1 p-2">
-                        <div class="card-body">
-                            <h5>Tickets By Ticket Type</h5>
-
-                            <!-- ChartJS: Pie/Doughnut -->
-                            <div class="col-md-12">
-                                <!--  Chart.js Canvas Tag -->
-                                <canvas id="donutChartForProjects"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-
-
-        @*        <div class="row gy-2">
-        <div class="cols mt-5 bg-secondary">
-        <div class="card col m-1 p-2">
-        <div class="card-body" style="height:380px">
-        <h5>Chart 5</h5>
-
-        <div class="card-body" style="height:600px">
-        <h5>Project: Tickets vs Developers</h5>
-        <p>[amCharts]</p>
-        <!-- HTML -->
-        <div id="chartdiv"></div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>*@
+}
+<div class="row clearfix">
+    @*   <div class="col-lg-3 col-md-6">
+    <div class="card overflowhidden">
+    <div class="body text-center">
+    <div class="p-15">
+    <h3>109</h3>
+    <span>Today Works</span>
     </div>
-    <hr />
-    <div class="mt-5 ">
-        <div class="row">
+    </div>
+    <div class="progress progress-xs progress-transparent custom-color-blue m-b-0">
+    <div class="progress-bar" data-transitiongoal="87"></div>
+    </div>
+    </div>
+    </div>*@
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card text-center bg-info">
+            <div class="body">
+                <div class="p-15 text-light">
+                    <h3>521</h3>
+                    <span>New items</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* <div class="col-lg-3 col-md-6">
+    <div class="card overflowhidden">
+    <div class="body text-center">
+    <div class="p-15">
+    <h3>87</h3>
+    <span>Today Tasks</span>
+    </div>
+    </div>
+    <div class="progress progress-xs progress-transparent custom-color-purple m-b-0">
+    <div class="progress-bar" data-transitiongoal="34"></div>
+    </div>
+    </div>
+    </div>*@
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card text-center bg-secondary">
+            <div class="body">
+                <div class="p-15 text-light">
+                    <h3>902</h3>
+                    <span>Uploads</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card text-center bg-warning">
+            <div class="body">
+                <div class="p-15 text-light">
+                    <h3>1,025</h3>
+                    <span>Feeds</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card text-center bg-dark">
+            <div class="body">
+                <div class="p-15 text-light">
+                    <h3>318</h3>
+                    <span>Comments</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* <div class="col-lg-3 col-md-6">
+    <div class="card overflowhidden">
+    <div class="body text-center">
+    <div class="p-15">
+    <h3>318</h3>
+    <span>Statistics</span>
+    </div>
+    </div>
+    <div class="progress progress-xs progress-transparent custom-color-yellow m-b-0">
+    <div class="progress-bar" data-transitiongoal="54"></div>
+    </div>
+    </div>
+    </div>*@
 
+    @* <div class="col-lg-3 col-md-6">
+    <div class="card overflowhidden">
+    <div class="body text-center">
+    <div class="p-15">
+    <h3>520</h3>
+    <span>Analytics</span>
+    </div>
+    </div>
+    <div class="progress progress-xs progress-transparent custom-color-green m-b-0">
+    <div class="progress-bar" data-transitiongoal="67"></div>
+    </div>
+    </div>
+    </div>*@
+</div>
 
-            @* Projects Table*@
-            <div class="col">
-                <div class="">
-                    <div class="card m-1 p-2">
-                        <div class="card-header">
-                            <h2>Projects</h2>
+@*<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="header">
+                <h2>Wrok Report</h2>
+                <ul class="header-dropdown">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="javascript:void(0);">Action</a></li>
+                            <li><a href="javascript:void(0);">Another Action</a></li>
+                            <li><a href="javascript:void(0);">Something else</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <div id="m_area_chart" class="m-b-20" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="row clearfix">
+    @*    <div class="col-lg-4 col-md-6">
+    <div class="card">
+    <div class="body">
+    <div class="list-group list-widget">
+    <a asp-controller="App" asp-action="Inbox" class="list-group-item">
+    <span class="badge badge-success">654</span>
+    <i class="fa fa-envelope text-muted"></i>Inbox
+    </a>
+    <a href="javascript:void(0);" class="list-group-item">
+    <span class="badge badge-info">364</span>
+    <i class="fa fa-eye text-muted"></i> Profile visits
+    </a>
+    <a href="javascript:void(0);" class="list-group-item">
+    <span class="badge badge-warning">12</span>
+    <i class="fa fa-phone text-muted"></i> Call
+    </a>
+    <a href="javascript:void(0);" class="list-group-item">
+    <span class="badge badge-danger">54</span>
+    <i class="fa fa-comments-o text-muted"></i> Messages
+    </a>
+    <a href="javascript:void(0);" class="list-group-item">
+    <span class="badge badge-warning">19</span>
+    <i class="fa fa-bookmark text-muted"></i> Bookmarks
+    </a>
+    <a href="javascript:void(0);" class="list-group-item">
+    <span class="badge">56</span>
+    <i class="fa fa-bell text-muted"></i> Notifications
+    </a>
+    <a href="javascript:void(0);" class="list-group-item">
+    <span class="badge badge-info">25</span>
+    <i class="fa fa-clock-o text-muted"></i> Watch
+    </a>
+    </div>
+    </div>
+    </div>
+    </div>*@
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
+        <div class="card">
+            <div class="header pb-0 mb-1">
+                <h2>
+                    Company Data
+                    <small>Company2</small>
+                </h2>
+            </div>
+            <div class="body">
+                <div class="list-group list-widget pt-0 pb-1 mt-0">
+                    <div class="list-group-item">
+                        <span class="badge badge-success">17</span>
+                        <i class="fa fa-users text-muted"></i>Members
+                    </div>
+                    <div href="javascript:void(0);" class="list-group-item">
+                        <span class="badge badge-info">2</span>
+                        <i class="fa fa-folder text-muted"></i> Projects
+                    </div>
+                    <div class="list-group-item">
+                        <span class="badge badge-warning">16</span>
+                        <i class="fa fa-ticket text-muted"></i> Tickets
+                    </div>
+                    <div class="list-group-item">
+                        <span class="badge badge-danger">0</span>
+                        <i class="fa fa-bell text-muted"></i> Notifications
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*   <div class="col-lg-3 col-md-6">
+    <div class="card top_counter">
+    <div class="body">
+    <div class="icon">
+    <img src="~/images/xs/avatar2.jpg" class="rounded-circle" alt="">
+    </div>
+    <div class="content m-t-5">
+    <div>Team Leader</div>
+    <h6>Maryam Amiri</h6>
+    </div>
+    </div>
+    <hr>
+    <div class="body">
+    <div class="icon">
+    <img src="~/images/xs/avatar5.jpg" class="rounded-circle" alt="">
+    </div>
+    <div class="content m-t-5">
+    <div>Angular Champ</div>
+    <h6>Fidel Tonn</h6>
+    </div>
+    </div>
+    <hr>
+    <div class="body">
+    <div class="icon">
+    <img src="~/images/xs/avatar3.jpg" class="rounded-circle" alt="">
+    </div>
+    <div class="content m-t-5">
+    <div>UI UX Desiger</div>
+    <h6>Tim Hank</h6>
+    </div>
+    </div>
+    <hr>
+    <div class="body">
+    <div class="icon">
+    <img src="~/images/xs/avatar4.jpg" class="rounded-circle" alt="">
+    </div>
+    <div class="content m-t-5">
+    <div>Sales Lead</div>
+    <h6>Gary Camara</h6>
+    </div>
+    </div>
+    </div>
+    </div>*@
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12">
+                <div class="card top_counter h-100 pt-2">
+                    <div class="body pb-0">
+                        <div class="icon"><i class="fa fa-user"></i> </div>
+                        <div class="content">
+                            <div class="text">New Users</div>
+                            <h5 class="number">0</h5>
                         </div>
-                        <div class="card-body">
+                        <hr>
+                    </div>
+                    <div class="body mt-0 pt-0 pb-0">
+                        <div class="icon"><i class="fa fa-users"></i> </div>
+                        <div class="content">
+                            <div class="text">Total Users</div>
+                            <h5 class="number">17</h5>
+                        </div>
+                        <hr>
+                    </div>
 
-                            @* Copy and format table from Unassigned Tickets*@
-                            <div class="table-responsive" style="overflow-y:auto;height:400px;">
-                                <table class="table table-hover" id="myTable2">
-                                    <thead class="">
-                                        <tr>
-                                            @* Table header*@
-                                            <th>Name</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Priority</th>
-                                            <th>Action</th>
-                                        </tr>
+                    <div class="body mt-0 pt-0 pb-0">
+                        <div class="icon"><i class="fa fa-ticket"></i> </div>
+                        <div class="content">
+                            <div class="text">Tickets in Development</div>
+                            <h5 class="number">6</h5>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="body mt-0 pt-0 pb-0">
+                        <div class="icon"><i class="fa fa-code"></i> </div>
+                        <div class="content">
+                            <div class="text">Total Developers</div>
+                            <h5 class="number">7</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*  <div class="col-lg-5 col-md-12">
+    <div class="card">
+    <div class="header">
+    <h2>ToDo List <small>This Month task list</small></h2>
+    </div>
+    <div class="body todo_list">
+    <div class="dd nestable-with-handle m-b-15">
+    <ol class="dd-list">
+    <li class="dd-item dd3-item" data-id="1">
+    <div class="dd-handle dd3-handle"></div>
+    <div class="dd3-content">
+    <label class="fancy-checkbox mb-0">
+    <input type="checkbox" name="checkbox" checked>
+    <span><i class=" icon-calendar m-r-5"></i> Report Panel Usag</span>
+    </label>
+    </div>
+    <ol class="dd-list">
+    <li class="dd-item dd3-item" data-id="1">
+    <div class="dd-handle dd3-handle"></div>
+    <div class="dd3-content">
+    <label class="fancy-checkbox mb-0">
+    <input type="checkbox" name="checkbox">
+    <span>Report Panel Usag</span>
+    </label>
+    </div>
+    </li>
+    </ol>
+    </li>
+    <li class="dd-item dd3-item" data-id="1">
+    <div class="dd-handle dd3-handle"></div>
+    <div class="dd3-content">
+    <label class="fancy-checkbox mb-0">
+    <input type="checkbox" name="checkbox">
+    <span><i class="icon-bell m-r-5"></i> New logo design for InfiniO</span>
+    </label>
+    </div>
+    </li>
+    <li class="dd-item dd3-item" data-id="1">
+    <div class="dd-handle dd3-handle"></div>
+    <div class="dd3-content">
+    <label class="fancy-checkbox mb-0">
+    <input type="checkbox" name="checkbox">
+    <span>Design PSD files for InfiniO <span class="badge badge-warning">1 Week</span></span>
+    </label>
+    </div>
+    </li>
+    <li class="dd-item dd3-item" data-id="1">
+    <div class="dd-handle dd3-handle"></div>
+    <div class="dd3-content">
+    <label class="fancy-checkbox mb-0">
+    <input type="checkbox" name="checkbox">
+    <span>Deploy existing code to example.com</span>
+    </label>
+    </div>
+    </li>
+    <li class="dd-item dd3-item" data-id="1">
+    <div class="dd-handle dd3-handle"></div>
+    <div class="dd3-content">
+    <label class="fancy-checkbox mb-0">
+    <input type="checkbox" name="checkbox" checked>
+    <span><i class=" icon-calendar m-r-5"></i> Report Panel Usag</span>
+    </label>
+    </div>
+    </li>
+    <li class="dd-item dd3-item" data-id="1">
+    <div class="dd-handle dd3-handle"></div>
+    <div class="dd3-content">
+    <label class="fancy-checkbox mb-0">
+    <input type="checkbox" name="checkbox">
+    <span><i class="icon-bell m-r-5"></i> New logo design for InfiniO</span>
+    </label>
+    </div>
+    </li>
+    </ol>
+    </div>
+    </div>
+    </div>
+    </div>*@
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
+        <div class="card">
+            <div class="header">
+                <h2>Priority Projects<small>Project Priorities</small></h2>
+            </div>
+
+
+            <div class="body mt-0 pt-0">
+                <div class="sparkline-pie text-center"><canvas width="200" height="200" style="display: inline-block; width: 200px; height: 200px; vertical-align: top;"></canvas></div>
+                <div class="stats-report text-center">
+                    <div class="stat-item">
+                        <h5>Urgent</h5>
+                        <b class="col-black">0.0%</b>
+                    </div>
+                    <div class="stat-item">
+                        <h5>High</h5>
+                        <b class="col-black">0.0%</b>
+                    </div>
+                    <div class="stat-item">
+                        <h5>Medium</h5>
+                        <b class="col-black">50.0%</b>
+                    </div>
+                    <div class="stat-item">
+                        <h5>Low</h5>
+                        <b class="col-black">50.0%</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
+        <div class="card">
+            <div class="header">
+                <h2>Priority Tickets<small>Project Priorities</small></h2>
+            </div>
+
+
+            <div class="body mt-0 pt-0">
+                <div class="sparkline-pie text-center"><canvas width="200" height="200" style="display: inline-block; width: 200px; height: 200px; vertical-align: top;"></canvas></div>
+                <div class="stats-report text-center">
+                    <div class="stat-item">
+                        <h5>Urgent</h5>
+                        <b class="col-black">0.0%</b>
+                    </div>
+                    <div class="stat-item">
+                        <h5>High</h5>
+                        <b class="col-black">0.0%</b>
+                    </div>
+                    <div class="stat-item">
+                        <h5>Medium</h5>
+                        <b class="col-black">50.0%</b>
+                    </div>
+                    <div class="stat-item">
+                        <h5>Low</h5>
+                        <b class="col-black">50.0%</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-5 col-md-12">
+        <div class="card">
+            <div class="header">
+                <h2>Members</h2>
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label></div></div></div><div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover js-basic-example dataTable table-custom mb-0 no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                    <thead class="thead-dark">
+                                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Avatar: activate to sort column descending" style="width: 44.5px;">Avatar</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 125.219px;">Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Projects: activate to sort column ascending" style="width: 55.5156px;">Projects</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 104.531px;">Role</th></tr>
                                     </thead>
                                     <tbody>
-                                        @* Table body*@
-                                        @foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
-                                        {
-                                            <tr>
-                                                <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@project.Id"><strong>@project.Name</strong></a> </td>
-                                                <td><span style="font-size:medium">@project.StartDate.ToString("MM,dd,yyyy")</span></td>
-                                                <td><span style="font-size:medium">@project.EndDate.ToString("MM,dd,yyyy")</span></td>
-                                                <td><span style="font-size:medium" class="badge bg-dark">@project.ProjectPriority?.Name</span></td>
-                                                <td>
-                                                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id"><i class="fs-5 bi-justify"></i></a>
-                                                </td>
-                                            </tr>
-                                        }
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=0e6b406b-43a3-420c-98d4-b3bd22a44235"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Steve Appuser" alt="Default Avatar"></a></td>
+
+                                            <td>Steve Appuser</td>
+
+                                            <td>0</td>
+
+
+                                            <td><span class="badge badge-default">Admin</span></td>
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=06942103-611a-4cb9-8bf1-02fcae518ae8"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Jane Appuser" alt="Default Avatar"></a></td>
+
+                                            <td>Jane Appuser</td>
+
+                                            <td>0</td>
+
+
+                                            <td><span class="badge badge-default">ProjectManager</span></td>
+                                        </tr>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=1386cfc6-856b-464d-a8e1-ab2b0740ccfe"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="James Appuser" alt="Default Avatar"></a></td>
+
+                                            <td>James Appuser</td>
+
+                                            <td>0</td>
+
+
+                                            <td><span class="badge badge-default">Developer</span></td>
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=67b04895-b103-4e76-82c4-670952d9bfa5"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Carol Appuser" alt="Default Avatar"></a></td>
+
+                                            <td>Carol Appuser</td>
+
+                                            <td>0</td>
+
+
+                                            <td><span class="badge badge-default">Developer</span></td>
+                                        </tr>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=a735e1fd-36d2-40b7-a980-edaa72103e7d"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Bruce Appuser" alt="Default Avatar"></a></td>
+
+                                            <td>Bruce Appuser</td>
+
+                                            <td>0</td>
+
+
+                                            <td><span class="badge badge-default">Developer</span></td>
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=8e7aeb59-c572-4ad2-ba70-01c67d472796"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Sue Appuser" alt="Default Avatar"></a></td>
+
+                                            <td>Sue Appuser</td>
+
+                                            <td>0</td>
+
+
+                                            <td><span class="badge badge-default">Submitter</span></td>
+                                        </tr>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=30a3c267-1a20-4985-9129-c5b9bf6c52d7"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Demo Admin" alt="Default Avatar"></a></td>
+
+                                            <td>Demo Admin</td>
+
+                                            <td>0</td>
+
+
+                                            <td><span class="badge badge-default">Admin</span></td>
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=8ed621cb-3bd0-404a-a74e-6b9ea2778473"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Demo ProjectManager" alt="Default Avatar"></a></td>
+
+                                            <td>Demo ProjectManager</td>
+
+                                            <td>1</td>
+
+
+                                            <td><span class="badge badge-default">ProjectManager</span></td>
+                                        </tr>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=71052a7d-b1f3-462d-af53-25fdf5c71dc2"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Demo Developer" alt="Default Avatar"></a></td>
+
+                                            <td>Demo Developer</td>
+
+                                            <td>0</td>
+
+
+                                            <td><span class="badge badge-default">Developer</span></td>
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=ab87163e-ccd8-48c2-b56e-207a0f47f894"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Demo Submitter" alt="Default Avatar"></a></td>
+
+                                            <td>Demo Submitter</td>
+
+                                            <td>0</td>
+
+
+                                            <td><span class="badge badge-default">Submitter</span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 10 of 11 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="col-lg-7 col-md-12">
+        <div class="card">
+            <div class="header">
+                <h2>Projects</h2>
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_1_length"><label>Show <select name="DataTables_Table_1_length" aria-controls="DataTables_Table_1" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_1"></label></div></div></div><div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover js-basic-example dataTable table-custom mb-0 no-footer" id="DataTables_Table_1" role="grid" aria-describedby="DataTables_Table_1_info">
+                                    <thead class="thead-dark">
+                                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Project: activate to sort column descending" style="width: 236.969px;">Project</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Start Date: activate to sort column ascending" style="width: 65.4531px;">Start Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="End Date: activate to sort column ascending" style="width: 65.4531px;">End Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Team: activate to sort column ascending" style="width: 35.5469px;">Team</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Ticket Count: activate to sort column ascending" style="width: 41.6406px;">Ticket Count</th></tr>
+                                    </thead>
+                                    <tbody>
 
 
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">
+                                                <a href="/Projects/Details/2">Address Book</a>
+                                                <p class="text-muted">Project Manager: Demo ProjectManager</p>
 
-            @* Tickets Table *@
-            <div class="col">
-                <div class="">
-                    <div class="card m-1 p-2">
-                        <div class="card-header">
-                            <h2>Tickets</h2>
-                        </div>
-                        @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
-                        {
-                            <p>
-                                <a asp-action="Create" asp-controller="Tickets" class="btn btn-success mt-3">Create New Ticket</a>
-                            </p>
-                        }
-                        <div class="table-responsive" style="overflow-y:auto;height:400px;">
-                            <table id="myTable" class="table table-hover">
-                                <thead class="flex-fill">
-                                    <tr>
-                                        @* Table header *@
-                                        <th>Name</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Priority</th>
-                                        <th>Date Created</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @* Table body *@
-                                    @foreach (var ticket in Model.Tickets.OrderByDescending(d => d.Created))
-                                    {
-                                        @*         <tr>
-                                    <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" style="color:black"><strong>@ticket.Title</strong></a> </td>
-                                    <td><span style="font-size:medium">@ticket.StartDate.ToString("MM,dd,yyyy")</span></td>
-                                    <td><span style="font-size:medium">@ticket.EndDate.ToString("MM,dd,yyyy")</span></td>
-                                    <td><span style="font-size:medium" class="badge bg-dark">@ticket.ProjectPriority?.Name</span></td>
-                                    <td>
-                                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Project" asp-route-id="@ticket.Id"><i class="fs-5 bi-justify"></i></a>
-                                    </td>
-                                    </tr>*@
-
-                                        <tr>
-                                            <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><strong>@ticket.Title</strong></a> </td>
-                                            <td>
-                                                @if (ticket.DeveloperUserId != null)
-                                                {
-                                                    @ticket.DeveloperUser?.FullName
-                                                }
-                                                else
-                                                {
-
-                                                    if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
-                                                    {
-
-                                                        <a class="btn btn-primary btn-sm" asp-action="UnassignedTickets" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</a>
-                                                    }
-
-
-                                                }
                                             </td>
-                                            @if (ticket.TicketStatus.Name == "New")
-                                            {
-                                                <td><span class="btn btn-success btn-sm">@ticket.TicketStatus.Name </span></td>
-
-                                            }
-                                            else
-                                            {
-                                                <td><span class="btn btn-warning btn-sm">@ticket.TicketStatus.Name </span></td>
-                                            }
-                                            <td><span class="">@ticket.TicketPriority.Name </span></td>
-                                            <td>@ticket.Created.ToString("MM-dd-yyyy")</td>
+                                            <td><span class="badge badge-success">03/09/2022</span></td>
+                                            <td><span class="badge badge-danger">05/09/2022</span></td>
                                             <td>
-                                                <a class="btn btn-primary" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id">Details</a>
+                                                <ul class="list-unstyled team-info pb-0 mb-0">
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <strong>0</strong>
+                                            </td>
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1">
+                                                <a href="/Projects/Details/4">Blog Site</a>
+                                                <p class="text-muted">Project Manager: Unassigned</p>
 
+                                            </td>
+                                            <td><span class="badge badge-success">02/20/2022</span></td>
+                                            <td><span class="badge badge-danger">06/20/2022</span></td>
+                                            <td>
+                                                <ul class="list-unstyled team-info pb-0 mb-0">
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <strong>17</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="DataTables_Table_1_info" role="status" aria-live="polite">Showing 1 to 2 of 2 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_1_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_1_previous"><a href="#" aria-controls="DataTables_Table_1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_1" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="DataTables_Table_1_next"><a href="#" aria-controls="DataTables_Table_1" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="header">
+                <h2>Tickets</h2>
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_2_length"><label>Show <select name="DataTables_Table_2_length" aria-controls="DataTables_Table_2" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_2_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_2"></label></div></div></div><div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover js-basic-example dataTable table-custom mb-0 no-footer" id="DataTables_Table_2" role="grid" aria-describedby="DataTables_Table_2_info">
+                                    <thead class="thead-dark">
+                                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 117.422px;">Title</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Developer: activate to sort column ascending" style="width: 114.484px;">Developer</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 135.391px;">Status</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Priority: activate to sort column ascending" style="width: 89.4375px;">Priority</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 91.8438px;">Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 132.422px;">Action</th></tr>
+                                    </thead>
+                                    <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">Blog Ticket 1</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/47">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-primary">New</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">Low</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/47"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/47"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/47"><i class="fa fa-file-archive-o"></i></a>
                                             </td>
 
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1">Blog Ticket 10</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/57">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-primary">New</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">Medium</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/57"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/57"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/57"><i class="fa fa-file-archive-o"></i></a>
+                                            </td>
 
+                                        </tr>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">Blog Ticket 11</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/74">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-info">Development</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">High</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/74"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/74"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/74"><i class="fa fa-file-archive-o"></i></a>
+                                            </td>
+
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1">Blog Ticket 12</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/58">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-primary">New</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">Urgent</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/58"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/58"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/58"><i class="fa fa-file-archive-o"></i></a>
+                                            </td>
+
+                                        </tr>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">Blog Ticket 14</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/72">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-info">Development</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">Medium</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/72"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/72"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/72"><i class="fa fa-file-archive-o"></i></a>
+                                            </td>
+
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1">Blog Ticket 15</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/71">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-primary">New</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">High</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/71"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/71"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/71"><i class="fa fa-file-archive-o"></i></a>
+                                            </td>
+
+                                        </tr>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">Blog Ticket 16</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/70">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-primary">New</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">Urgent</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/70"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/70"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/70"><i class="fa fa-file-archive-o"></i></a>
+                                            </td>
+
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1">Blog Ticket 17</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/69">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-info">Development</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">High</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/69"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/69"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/69"><i class="fa fa-file-archive-o"></i></a>
+                                            </td>
+
+                                        </tr>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">Blog Ticket 2</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/46">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-info">Development</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">Medium</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/46"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/46"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/46"><i class="fa fa-file-archive-o"></i></a>
+                                            </td>
+
+                                        </tr>
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1">Blog Ticket 3</td>
+                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/45">Assign Dev</a></td>
+                                            <td>
+                                                <span class="badge badge-primary">New</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">High</span>
+                                            </td>
+                                            <td>11-09-2022</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/45"><i class="icon-eye"></i></a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/45"><i class="icon-pencil"></i></a>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/45"><i class="fa fa-file-archive-o"></i></a>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="DataTables_Table_2_info" role="status" aria-live="polite">Showing 1 to 10 of 16 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_2_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_2_previous"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="DataTables_Table_2_next"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
                     </div>
                 </div>
             </div>
-
-            @*      <div class="col-12">
-            <div class="bg-dark">
-            <div class="card m-1 p-2">
-            <div class="card-header">
-            <h2>Members</h2>
-            <hr />
-            </div>
-            <div class="card-body">
-
-            @foreach (BugTrackerUser member in Model.Members)
-            {
-            <div class="">
-            <span>@member.FullName</span>
-            <h6>@((await RolesService.GetUserRolesAsync(member)).FirstOrDefault())</h6>
-            </div>
-            }
-            </div>
-            </div>
-            </div>
-            </div>*@
         </div>
     </div>
 </div>
@@ -352,360 +836,277 @@
 
 
 
-@section scripts {
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#myTable').DataTable();
-        });
+@*<div class="row clearfix">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="header">
+                <h2>Team Details</h2>
+            </div>
+            <div class="body team_list">
+                <div class="dd" data-plugin="nestable">
+                    <ol class="dd-list">
+                        <li class="dd-item" data-id="1">
+                            <div class="dd-handle">Desiger</div>
+                            <div class="dd-content top_counter">
+                                <div class="icon">
+                                    <img src="~/images/xs/avatar1.jpg" class="rounded-circle" alt="">
+                                </div>
+                                <div class="content m-t-5">
+                                    <div>UI UX Desiger</div>
+                                    <h6>Tim Hank</h6>
+                                </div>
+                            </div>
+                            <ol class="dd-list">
+                                <li class="dd-item" data-id="1">
+                                    <div class="dd-handle">Team Member</div>
+                                    <div class="dd-content">
+                                        <h6 class="m-b-15">Info about Design Team <span class="badge badge-success float-right">New</span></h6>
+                                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                                        <ul class="list-unstyled team-info m-t-20 m-b-20">
+                                            <li class="m-r-15"><small class="text-muted">Team</small></li>
+                                            <li><img src="~/images/xs/avatar1.jpg" title="Avatar" alt="Avatar"></li>
+                                            <li><img src="~/images/xs/avatar2.jpg" title="Avatar" alt="Avatar"></li>
+                                            <li><img src="~/images/xs/avatar5.jpg" title="Avatar" alt="Avatar"></li>
+                                        </ul>
+                                        <div class="progress-container l-black m-b-20">
+                                            <span class="progress-badge">Prograss</span>
+                                            <div class="progress">
+                                                <div class="progress-bar l-parpl" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" style="width: 68%;">
+                                                    <span class="progress-value">68%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <small>PROJECTS: 12</small>
+                                                <h6>BUDGET: 4,870 USD</h6>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="sparkline text-right m-t-10" data-type="bar" data-width="97%" data-height="26px" data-bar-Width="2" data-bar-Spacing="7" data-bar-Color="#333333">2,5,8,3,5,7,1,6</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="dd-item" data-id="1">
+                            <div class="dd-handle">Sales</div>
+                            <div class="dd-content top_counter">
+                                <div class="icon">
+                                    <img src="~/images/xs/avatar2.jpg" class="rounded-circle" alt="">
+                                </div>
+                                <div class="content m-t-5">
+                                    <div>Sales Lead</div>
+                                    <h6>Gary Camara</h6>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dd-item" data-id="1">
+                            <div class="dd-handle">Developer</div>
+                            <div class="dd-content top_counter">
+                                <div class="icon">
+                                    <img src="~/images/xs/avatar10.jpg" class="rounded-circle" alt="">
+                                </div>
+                                <div class="content m-t-5">
+                                    <div>Project Lead</div>
+                                    <h6>Fidel Tonn</h6>
+                                </div>
+                            </div>
+                            <ol class="dd-list">
+                                <li class="dd-item" data-id="1">
+                                    <div class="dd-handle">FrontEnd Developer</div>
+                                    <div class="dd-content">
+                                        <ul class="list-unstyled team-info">
+                                            <li><img src="~/images/xs/avatar5.jpg" alt="Avatar"></li>
+                                            <li><img src="~/images/xs/avatar6.jpg" alt="Avatar"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="dd-item" data-id="1">
+                                    <div class="dd-handle">PHP Expert</div>
+                                    <div class="dd-content">
+                                        <ul class="list-unstyled team-info">
+                                            <li><img src="~/images/xs/avatar7.jpg" alt="Avatar"></li>
+                                            <li><img src="~/images/xs/avatar8.jpg" alt="Avatar"></li>
+                                            <li><img src="~/images/xs/avatar9.jpg" alt="Avatar"></li>
+                                            <li><img src="~/images/xs/avatar10.jpg" alt="Avatar"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
 
-        $(document).ready(function () {
-            $('#myTable2').DataTable();
-        });
-    </script>
+@*<div class="row clearfix">
 
-    <!--Google Charts-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <div class="col-lg-8 col-md-12">
+        <div class="card">
+            <div class="header">
+                <h2>Project List</h2>
+                <ul class="header-dropdown">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="javascript:void(0);">Action</a></li>
+                            <li><a href="javascript:void(0);">Another Action</a></li>
+                            <li><a href="javascript:void(0);">Something else</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <table class="table m-b-0 table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Application</th>
+                                <th>Team</th>
+                                <th>Change</th>
+                                <th>Sales</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h6>Alpino 4.1</h6>
+                                    <span>WrapTheme To By Again</span>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled team-info">
+                                        <li><img src="~/images/xs/avatar1.jpg" alt="Avatar"></li>
+                                        <li><img src="~/images/xs/avatar2.jpg" alt="Avatar"></li>
+                                        <li><img src="~/images/xs/avatar3.jpg" alt="Avatar"></li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <div class="sparkline text-left" data-type="line" data-width="8em" data-height="20px" data-line-Width="1.5" data-line-Color="#00c5dc"
+                                         data-fill-Color="transparent">
+                                        3,5,1,6,5,4,8,3
+                                    </div>
+                                </td>
+                                <td>11,200</td>
+                                <td>$83</td>
+                                <td><strong>$22,520</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6>Compass 2.0</h6>
+                                    <span>WrapTheme To By Again</span>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled team-info">
+                                        <li><img src="~/images/xs/avatar2.jpg" alt="Avatar"></li>
+                                        <li><img src="~/images/xs/avatar3.jpg" alt="Avatar"></li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <div class="sparkline text-left" data-type="line" data-width="8em" data-height="20px" data-line-Width="1.5" data-line-Color="#f4516c"
+                                         data-fill-Color="transparent">
+                                        4,6,3,2,5,6,5,4
+                                    </div>
+                                </td>
+                                <td>11,200</td>
+                                <td>$66</td>
+                                <td><strong>$13,205</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6>Nexa 1.1</h6>
+                                    <span>WrapTheme To By Again</span>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled team-info">
+                                        <li><img src="~/images/xs/avatar4.jpg" alt="Avatar"></li>
+                                        <li><img src="~/images/xs/avatar6.jpg" alt="Avatar"></li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <div class="sparkline text-left" data-type="line" data-width="8em" data-height="20px" data-line-Width="1.5" data-line-Color="#31db3d"
+                                         data-fill-Color="transparent">
+                                        7,3,2,1,5,4,6,8
+                                    </div>
+                                </td>
+                                <td>12,080</td>
+                                <td>$93</td>
+                                <td><strong>$17,700</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6>Oreo 2.2</h6>
+                                    <span>ThemeMakker To By Again</span>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled team-info">
+                                        <li><img src="~/images/xs/avatar1.jpg" alt="Avatar"></li>
+                                        <li><img src="~/images/xs/avatar3.jpg" alt="Avatar"></li>
+                                        <li><img src="~/images/xs/avatar2.jpg" alt="Avatar"></li>
+                                        <li><img src="~/images/xs/avatar9.jpg" alt="Avatar"></li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <div class="sparkline text-left" data-type="line" data-width="8em" data-height="20px" data-line-Width="1.5" data-line-Color="#2d342e"
+                                         data-fill-Color="transparent">
+                                        3,1,2,5,4,6,2,3
+                                    </div>
+                                </td>
+                                <td>18,200</td>
+                                <td>$178</td>
+                                <td><strong>$17,700</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script type="text/javascript">
-        google.load("visualization", "1", { packages: ["corechart"] });
-        google.setOnLoadCallback(drawChart);
-        function drawChart() {
-            $.ajax({
-                type: "POST",
-                url: "/Home/GglProjectPriority",
-                data: '{}',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    var data = google.visualization.arrayToDataTable(result);
+    <div class="col-lg-4 col-md-12">
+        <div class="row">
+            <div class="col-lg-12 col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h2>Income Analysis<small>8% High then last month</small></h2>
+                    </div>
+                    <div class="body">
+                        <div class="sparkline-pie text-center">6,4,8</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h2>Sales Income</h2>
+                    </div>
+                    <div class="body">
+                        <h6>Overall <b class="text-success">7,000</b></h6>
+                        <div class="sparkline" data-type="line" data-spot-Radius="2" data-highlight-Spot-Color="#445771" data-highlight-Line-Color="#222"
+                             data-min-Spot-Color="#445771" data-max-Spot-Color="#445771" data-spot-Color="#445771"
+                             data-offset="90" data-width="100%" data-height="40px" data-line-Width="1" data-line-Color="#ffcd55"
+                             data-fill-Color="#ffcd55">
+                            2,4,3,1,5,7,3,2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    //3D Pie
-                    var options = {
-                        title: 'Project Priority',
-                        is3D: true,
-                        chartArea: { left: 0, bottom: 15, width: '100%', height: '100%' },
-                        legend: { position: 'bottom' }
+</div>*@
+@section Scripts {
+    <script src="~/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
+    <script src="~/bundles/morrisscripts.bundle.js"></script> <!-- Morris Plugin Js -->
+    <script src="~/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
+    <script src="~/vendor/nestable/jquery.nestable.js"></script> <!-- Jquery Nestable -->
 
-                    };
+    <script src="~/js/pages/ui/sortable-nestable.js"></script>
+    <script src="~/js/index6.js"></script>
 
-                    var chart = new google.visualization.PieChart($("#chart3D")[0]);
-                    chart.draw(data, options);
-                },
-                failure: function (rresult) {
-                    alert(result.d);
-                },
-                error: function (result) {
-                    alert(result.d);
-                }
-            });
-        }
-    </script>
-    <script type="text/javascript">
-        google.load("visualization", "1", { packages: ["corechart"] });
-        google.setOnLoadCallback(drawChart);
-        function drawChart() {
-            $.ajax({
-                type: "POST",
-                url: "/Home/GglProjectPriority",
-                data: '{}',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    var data = google.visualization.arrayToDataTable(result);
-
-                    //Donut
-                    var options = {
-                        title: 'Company Ticket Distribution',
-                        pieHole: 0.3,
-                        chartArea: { left: 0, bottom: 15, width: '100%', height: '100%' },
-                        legend: { position: 'bottom' }
-                    };
-                    var chart = new google.visualization.PieChart($("#donut")[0]);
-                    chart.draw(data, options);
-                },
-                failure: function (rresult) {
-                    alert(result.d);
-                },
-                error: function (result) {
-                    alert(result.d);
-                }
-            });
-        }
-    </script>
-
-
-
-
-
-
-    @* Morris Donut Chart *@
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <script>
-
-        var morrisDonutData = [{
-            label: "Low",
-            value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Low)).Count()
-                                                                                    }, {
-            label: "Medium",
-            value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Medium)).Count()
-                                                                                    }, {
-            label: "High",
-            value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.High)).Count()
-                                                                                    }, {
-            label: "Urgent",
-            value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BugTrackerTicketPriority.Urgent)).Count()
-                                                                                    }];
-
-
-        /*
-        Morris: Donut
-        */
-        if ($('#morrisTicketPriority').get(0)) {
-            var donutChart = Morris.Donut({
-                resize: true,
-                element: 'morrisTicketPriority',
-                data: morrisDonutData,
-                colors: ['#0088cc', '#734ba9', '#E36159', '#ff993b']
-            });
-
-            donutChart.options.data.forEach(function (label, i) {
-                var legendItem = $('<span></span>').text(label['label'] + ": " + label['value']).prepend('<span>&nbsp;</span>');
-                legendItem.find('span')
-                    .css('backgroundColor', donutChart.options.colors[i])
-                    .css('width', '20px')
-                    .css('display', 'inline-block')
-                    .css('margin', '10px');
-                $('#legend').append(legendItem)
-            });
-        };
-    </script>
-
-
-
-
-    <!-- *** Begin Chart JS Pie/Donut *** -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
-    <script>
-
-        var donutChartCanvas = $('#donutChart').get(0).getContext('2d');
-        var donutData = {
-            labels: [
-                '@nameof(BugTrackerTicketStatus.Development)',
-                '@nameof(BugTrackerTicketStatus.New)',
-                '@nameof(BugTrackerTicketStatus.Resolved)',
-                '@nameof(BugTrackerTicketStatus.Testing)'
-            ],
-            datasets: [
-                {
-                    data: [
-        @Model.Tickets.Where(t=> t.TicketStatus.Name == nameof(BugTrackerTicketStatus.Development)).Count(),
-        @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.New)).Count(),
-        @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
-        @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
-
-                                                                                        ],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
-                    ]
-                }
-            ]
-        };
-
-        var donutOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-        };
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        new Chart(donutChartCanvas, {
-            type: 'pie',
-            data: donutData,
-            options: donutOptions
-        });
-
-
-
-
-
-
-
-        // Get the projects ticket type
-        var donutChartCanvas = $('#donutChartForProjects').get(0).getContext('2d');
-        var donutData = {
-            labels: [
-                '@nameof(BugTrackerTicketType.NewDevelopment)',
-                '@nameof(BugTrackerTicketType.WorkTask)',
-                '@nameof(BugTrackerTicketType.Defect)',
-                '@nameof(BugTrackerTicketType.ChangeRequest)',
-                '@nameof(BugTrackerTicketType.Enhancement)',
-                '@nameof(BugTrackerTicketType.GeneralTask)'
-            ],
-            datasets: [
-                {
-                    data: [
-        @Model.Tickets.Where(t=> t.TicketType.Name == nameof(BugTrackerTicketType.NewDevelopment)).Count(),
-        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.WorkTask)).Count(),
-        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Defect)).Count(),
-        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
-        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
-        @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
-                                                                                                ],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
-                    ]
-                }
-            ]
-        };
-
-        var donutOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-        };
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        new Chart(donutChartCanvas, {
-            type: 'pie',
-            data: donutData,
-            options: donutOptions
-        });
-
-
-
-
-
-
-
-
-
-
-
-    </script>
-
-
-    <!-- *** End Chart JS Donut *** -->
-    <!-- *** Begin AM Charts *** -->
-    <!-- Resources -->
-    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-    <!-- Chart code -->
-    <script>
-        $.ajax({
-            type: "POST",
-            url: "/Home/AmCharts",
-            data: '{}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                am4core.ready(function () {
-
-                    // Themes begin
-                    // Themes end
-
-                    // Create chart instance
-                    var chart = am4core.create("chartdiv", am4charts.XYChart);
-
-
-                    // Add data
-                    chart.data = result;
-
-                    // Create axes
-                    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-                    categoryAxis.dataFields.category = "project";
-                    categoryAxis.numberFormatter.numberFormat = "#";
-                    categoryAxis.renderer.inversed = true;
-                    categoryAxis.renderer.grid.template.location = 0;
-                    categoryAxis.renderer.cellStartLocation = 0.1;
-                    categoryAxis.renderer.cellEndLocation = 0.9;
-
-                    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-                    valueAxis.renderer.opposite = true;
-
-                    // Create series
-                    function createSeries(field, name) {
-                        var series = chart.series.push(new am4charts.ColumnSeries());
-                        series.dataFields.valueX = field;
-                        series.dataFields.categoryY = "project";
-                        series.name = name;
-                        series.columns.template.tooltipText = "{name}: [bold]{valueX}[/]";
-                        series.columns.template.height = am4core.percent(100);
-                        series.sequencedInterpolation = true;
-
-                        var valueLabel = series.bullets.push(new am4charts.LabelBullet());
-                        valueLabel.label.text = "{valueX}";
-                        valueLabel.label.horizontalCenter = "left";
-                        valueLabel.label.dx = 10;
-                        valueLabel.label.hideOversized = false;
-                        valueLabel.label.truncate = false;
-
-                        var categoryLabel = series.bullets.push(new am4charts.LabelBullet());
-                        categoryLabel.label.text = "{name}";
-                        categoryLabel.label.horizontalCenter = "right";
-                        categoryLabel.label.dx = -10;
-                        categoryLabel.label.fill = am4core.color("#fff");
-                        categoryLabel.label.hideOversized = false;
-                        categoryLabel.label.truncate = false;
-                    }
-
-                    createSeries("tickets", "Tickets");
-                    createSeries("developers", "Devs");
-
-                }); // end am4core.ready()
-
-
-            },
-            failure: function (result) {
-                alert(result.d);
-            },
-            error: function (result) {
-                alert(result.d);
-            }
-        });
-    </script>
-
-    <!-- *** End AM Charts *** -->
-    <!--  Plotly Charts  -->
-    <!-- Load plotly.js into the DOM -->
-    <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script>
-    <script>
-        $.ajax({
-            type: "POST",
-            url: "/Home/PlotlyBarChart",
-            data: '{}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                var data = result;
-
-                var layout = { barmode: 'group' };
-
-                Plotly.newPlot('plotlyChart', data, layout);
-            },
-            failure: function (result) {
-                alert(result.d);
-            },
-            error: function (result) {
-                alert(result.d);
-            }
-        });
-    </script>
 }
