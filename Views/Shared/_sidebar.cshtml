@@ -7,56 +7,56 @@
 @inject IBugTrackerRolesService RolesService;
 
 @{
-   
+
     BugTrackerUser bugTrackerUser = await UserManager.GetUserAsync(User);
-     
+
 }
 
 <sidebar class="">
     <div class="user-account">
-           @if (bugTrackerUser?.AvatarFileData != null)
-    {
+        @if (bugTrackerUser?.AvatarFileData != null)
+        {
             <img class="rounded-circle user-photo" src="data:image/*;base64,@(Convert.ToBase64String(bugTrackerUser.AvatarFileData))" alt="">
-    }
-    else
-    {
-            <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt=""  class="rounded-circle user-photo">
-    }
-       @* <img src="" class="rounded-circle user-photo" alt="User Profile Picture">*@
+        }
+        else
+        {
+            <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" class="rounded-circle user-photo">
+        }
+        @* <img src="" class="rounded-circle user-photo" alt="User Profile Picture">*@
         <div class="dropdown">
             <span>Welcome,</span>
             <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>@bugTrackerUser.FullName</strong></a>
             <span class="badge badge-primary"></span>
             <ul class="dropdown-menu dropdown-menu-right account">
                 <li><a asp-controller="Page" asp-action="Profile2"><i class="icon-user"></i>My Profile</a></li>
-               @* <li><a asp-controller="App" asp-action="Inbox"><i class="icon-envelope-open"></i>Messages</a></li>*@
+                @* <li><a asp-controller="App" asp-action="Inbox"><i class="icon-envelope-open"></i>Messages</a></li>*@
                 <li><a href="javascript:void(0);"><i class="icon-settings"></i>Settings</a></li>
                 <li class="divider"></li>
                 <li><a asp-controller="Authentication" asp-action="Login"><i class="icon-power"></i>Logout</a></li>
             </ul>
         </div>
-@*        <hr>
+        @*        <hr>
         <ul class="row list-unstyled">
-            <li class="col-4">
-                <small>Sales</small>
-                <h6>456</h6>
-            </li>
-            <li class="col-4">
-                <small>Order</small>
-                <h6>1350</h6>
-            </li>
-            <li class="col-4">
-                <small>Revenue</small>
-                <h6>$2.13B</h6>
-            </li>
+        <li class="col-4">
+        <small>Sales</small>
+        <h6>456</h6>
+        </li>
+        <li class="col-4">
+        <small>Order</small>
+        <h6>1350</h6>
+        </li>
+        <li class="col-4">
+        <small>Revenue</small>
+        <h6>$2.13B</h6>
+        </li>
         </ul>*@
     </div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu">Menu</a></li>
-    @*    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Chat"><i class="icon-book-open"></i></a></li>*@
+        @*    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Chat"><i class="icon-book-open"></i></a></li>*@
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#setting"><i class="icon-settings"></i></a></li>
-   @*     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#question"><i class="icon-question"></i></a></li>*@
+        @*     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#question"><i class="icon-question"></i></a></li>*@
     </ul>
 
     <!-- Tab panes -->
@@ -64,70 +64,89 @@
         <div class="tab-pane active" id="menu">
             <nav id="left-sidebar-nav" class="sidebar-nav">
                 <ul id="main-menu" class="metismenu">
-                    <li class="active">
-                        <a href="#Dashboard" class="has-arrow"><i class="icon-home"></i> <span>Dashboard</span></a>
+                    <li class="">
+                        <a asp-action="Dashboard" asp-controller="Home"><i class="icon-home"></i> <span>Dashboard</span></a>
+                    </li>
+                    @*   <li class="active">
+                    <a href="#Dashboard" class="has-arrow"><i class="icon-home"></i> <span>Dashboard</span></a>
+                    <ul>
+                    <li class="active"><a asp-controller="Dashboard" asp-action="Analytical">Analytical</a></li>
+                    <li><a asp-controller="Dashboard" asp-action="Demographic">Demographic</a></li>
+                    <li><a asp-controller="Dashboard" asp-action="Hospital">Hospital</a></li>
+                    <li><a asp-controller="Dashboard" asp-action="University">University</a></li>
+                    <li><a asp-controller="Dashboard" asp-action="RealEstate">Real Estate</a></li>
+                    <li><a asp-controller="Dashboard" asp-action="Project">Project</a></li>
+                    <li><a asp-controller="Dashboard" asp-action="Cryptocurrency">Cryptocurrency</a></li>
+                    <li><a asp-controller="Dashboard" asp-action="eCommerce">eCommerce</a></li>
+                    <li><a asp-controller="Dashboard" asp-action="IoT">IoT</a></li>
+                    </ul>
+                    </li>*@
+                    <li>
+                        <a href="#App" class="has-arrow"><i class="icon-grid"></i> <span>Notification Inbox</span></a>
                         <ul>
-                            <li class="active"><a asp-controller="Dashboard" asp-action="Analytical">Analytical</a></li>
-                            <li><a asp-controller="Dashboard" asp-action="Demographic">Demographic</a></li>
-                            <li><a asp-controller="Dashboard" asp-action="Hospital">Hospital</a></li>
-                            <li><a asp-controller="Dashboard" asp-action="University">University</a></li>
-                            <li><a asp-controller="Dashboard" asp-action="RealEstate">Real Estate</a></li>
-                            <li><a asp-controller="Dashboard" asp-action="Project">Project</a></li>
-                            <li><a asp-controller="Dashboard" asp-action="Cryptocurrency">Cryptocurrency</a></li>
-                            <li><a asp-controller="Dashboard" asp-action="eCommerce">eCommerce</a></li>
-                            <li><a asp-controller="Dashboard" asp-action="IoT">IoT</a></li>
+                            <li><a asp-controller="Invites" asp-action="Create">Invite Users</a></li>
+                            <li><a asp-controller="Invites" asp-action="Create">Compose</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#App" class="has-arrow"><i class="icon-grid"></i> <span>App</span></a>
+                        <a href="#FileManager" class="has-arrow"><i class="icon-folder"></i> <span>Projects</span></a>
                         <ul>
-                            <li><a asp-controller="App" asp-action="Inbox">Inbox</a></li>
-                            <li><a asp-controller="App" asp-action="Chat">Chat</a></li>
-                            <li><a asp-controller="App" asp-action="Calendar">Calendar</a></li>
-                            <li><a asp-controller="App" asp-action="ContactList">Contact list</a></li>
-                            <li><a asp-controller="App" asp-action="ContactCard">Contact Card <span class="badge badge-warning float-right">New</span></a></li>
-                            <li><a asp-controller="App" asp-action="TaskBoard">Taskboard</a></li>
+                            @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                            {
+                                <li><a asp-controller="Projects" asp-action="Create">Create Project</a></li>
+                            }
+                            @if (User.IsInRole(nameof(Roles.Admin)))
+                            {
+                                <li><a asp-controller="Projects" asp-action="UnassignedProjects">Unassigned Projects</a></li>
+                            }
+                            @if (!User.IsInRole(nameof(Roles.Admin)))
+                            {
+                                <li><a asp-controller="Projects" asp-action="MyProjects">My Projects</a></li>
+                            }
+
+                            <li><a asp-controller="Projects" asp-action="AllProjects">All Projects</a></li>
+
+                            @if (User.IsInRole(nameof(Roles.Admin)))
+                            {
+                                <li><a asp-controller="Projects" asp-action="ArchivedProjects">Archived Projects</a></li>
+                            }
+
+                          
                         </ul>
                     </li>
                     <li>
-                        <a href="#FileManager" class="has-arrow"><i class="icon-folder"></i> <span>File Manager</span></a>
+                        <a href="#Blog" class="has-arrow"><i class="icon-globe"></i> <span>Tickets</span></a>
                         <ul>
-                            <li><a asp-controller="FileManager" asp-action="Dashboard">Dashboard</a></li>
-                            <li><a asp-controller="FileManager" asp-action="Documents">Documents</a></li>
-                            <li><a asp-controller="FileManager" asp-action="Media">Media</a></li>
-                            <li><a asp-controller="FileManager" asp-action="Images">Images</a></li>
+                            <li><a asp-controller="Tickets" asp-action="Create">New Ticket</a></li>
+                            <li><a asp-controller="Tickets" asp-action="AllTickets">All Tickets</a></li>
+                            <li><a asp-controller="Tickets" asp-action="ArchivedTickets">Archived Tickets</a></li>
+                            
+                            @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                            {
+                                <li><a asp-controller="Tickets" asp-action="UnassignedTickets">Unassigned Tickets</a></li>
+                            }
+
+                               @if (!User.IsInRole(nameof(Roles.Admin)))
+                            {
+                                <li><a asp-controller="Tickets" asp-action="MyTickets">Blog Detail</a>My Tickets</li>
+                            }
+
                         </ul>
                     </li>
-                    <li>
-                        <a href="#Blog" class="has-arrow"><i class="icon-globe"></i> <span>Blog</span></a>
-                        <ul>
-                            <li><a asp-controller="Blog" asp-action="Dashboard">Dashboard</a></li>
-                            <li><a asp-controller="Blog" asp-action="NewPost">New Post</a></li>
-                            <li><a asp-controller="Blog" asp-action="BlogList">Blog List</a></li>
-                            <li><a asp-controller="Blog" asp-action="BlogDetail">Blog Detail</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#uiElements" class="has-arrow"><i class="icon-diamond"></i> <span>UI Elements</span></a>
-                        <ul>
-                            <li><a asp-controller="UIElements" asp-action="Typography">Typography</a></li>
-                            <li><a asp-controller="UIElements" asp-action="Tabs">Tabs</a></li>
-                            <li><a asp-controller="UIElements" asp-action="Buttons">Buttons</a></li>
-                            <li><a asp-controller="UIElements" asp-action="BootstrapUI">Bootstrap UI</a></li>
-                            <li><a asp-controller="UIElements" asp-action="Icons">Icons</a></li>
-                            <li><a asp-controller="UIElements" asp-action="Notifications">Notifications</a></li>
-                            <li><a asp-controller="UIElements" asp-action="Colors">Colors</a></li>
-                            <li><a asp-controller="UIElements" asp-action="Dialogs">Dialogs</a></li>
-                            <li><a asp-controller="UIElements" asp-action="ListGroup">List Group</a></li>
-                            <li><a asp-controller="UIElements" asp-action="MediaObject">Media Object</a></li>
-                            <li><a asp-controller="UIElements" asp-action="Modals">Modals</a></li>
-                            <li><a asp-controller="UIElements" asp-action="Nestable">Nestable</a></li>
-                            <li><a asp-controller="UIElements" asp-action="ProgressBars">Progress Bars</a></li>
-                            <li><a asp-controller="UIElements" asp-action="RangeSliders">Range Sliders</a></li>
-                            <li><a asp-controller="UIElements" asp-action="TreeView">Treeview</a></li>
-                        </ul>
-                    </li>
-                    <li>
+                       @if (User.IsInRole(nameof(Roles.Admin)))
+                    {
+                        <li>
+                            <a href="#uiElements" class="has-arrow"><i class="icon-diamond"></i> <span>Admin</span></a>
+                            <ul>
+                                <li><a asp-area="Identity" asp-page="/Account/Manage/Inde">User Profile</a></li>
+                                <li><a asp-controller="UserRoles" asp-action="ManageUserRoles"> Manage Role Assginment </a></li>
+                              @*  <li><a asp-controller="UIElements" asp-action="Buttons">Buttons</a></li*@
+
+                            </ul>
+                        </li>
+                    }
+               
+                @*    <li>
                         <a href="#Widgets" class="has-arrow"><i class="icon-puzzle"></i> <span>Widgets</span></a>
                         <ul>
                             <li><a asp-controller="Widget" asp-action="Statistics">Statistics</a></li>
@@ -223,7 +242,7 @@
                             <li><a asp-controller="Map" asp-action="Yandex">Yandex Map</a></li>
                             <li><a asp-controller="Map" asp-action="JVector">jVector Map</a></li>
                         </ul>
-                    </li>
+                    </li>*@
                 </ul>
             </nav>
         </div>
@@ -338,74 +357,74 @@
                     <span>Blush</span>
                 </li>
             </ul>
-       @*     <hr>*@
+            @*     <hr>*@
 
-@*
+            @*
             <h6>General Settings</h6>
             <ul class="setting-list list-unstyled">
-                <li>
-                    <label class="fancy-checkbox">
-                        <input type="checkbox" name="checkbox">
-                        <span>Report Panel Usag</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="fancy-checkbox">
-                        <input type="checkbox" name="checkbox" checked>
-                        <span>Email Redirect</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="fancy-checkbox">
-                        <input type="checkbox" name="checkbox" checked>
-                        <span>Notifications</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="fancy-checkbox">
-                        <input type="checkbox" name="checkbox">
-                        <span>Auto Updates</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="fancy-checkbox">
-                        <input type="checkbox" name="checkbox">
-                        <span>Offline</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="fancy-checkbox">
-                        <input type="checkbox" name="checkbox">
-                        <span>Location Permission</span>
-                    </label>
-                </li>
+            <li>
+            <label class="fancy-checkbox">
+            <input type="checkbox" name="checkbox">
+            <span>Report Panel Usag</span>
+            </label>
+            </li>
+            <li>
+            <label class="fancy-checkbox">
+            <input type="checkbox" name="checkbox" checked>
+            <span>Email Redirect</span>
+            </label>
+            </li>
+            <li>
+            <label class="fancy-checkbox">
+            <input type="checkbox" name="checkbox" checked>
+            <span>Notifications</span>
+            </label>
+            </li>
+            <li>
+            <label class="fancy-checkbox">
+            <input type="checkbox" name="checkbox">
+            <span>Auto Updates</span>
+            </label>
+            </li>
+            <li>
+            <label class="fancy-checkbox">
+            <input type="checkbox" name="checkbox">
+            <span>Offline</span>
+            </label>
+            </li>
+            <li>
+            <label class="fancy-checkbox">
+            <input type="checkbox" name="checkbox">
+            <span>Location Permission</span>
+            </label>
+            </li>
             </ul>*@
         </div>
-     @*   <div class="tab-pane p-l-15 p-r-15" id="question">
-            <form>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="icon-magnifier"></i></span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Search...">
-                </div>
-            </form>
-            <ul class="list-unstyled question">
-                <li class="menu-heading">HOW-TO</li>
-                <li><a href="javascript:void(0);">How to Create Campaign</a></li>
-                <li><a href="javascript:void(0);">Boost Your Sales</a></li>
-                <li><a href="javascript:void(0);">Website Analytics</a></li>
-                <li class="menu-heading">ACCOUNT</li>
-                <li><a href="javascript:void(0);">Cearet New Account</a></li>
-                <li><a href="javascript:void(0);">Change Password?</a></li>
-                <li><a href="javascript:void(0);">Privacy &amp; Policy</a></li>
-                <li class="menu-heading">BILLING</li>
-                <li><a href="javascript:void(0);">Payment info</a></li>
-                <li><a href="javascript:void(0);">Auto-Renewal</a></li>
-                <li class="menu-button m-t-30">
-                    <a href="javascript:void(0);" class="btn btn-primary"><i class="icon-question"></i> Need Help?</a>
-                </li>
-            </ul>
+        @*   <div class="tab-pane p-l-15 p-r-15" id="question">
+        <form>
+        <div class="input-group">
+        <div class="input-group-prepend">
+        <span class="input-group-text"><i class="icon-magnifier"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="Search...">
+        </div>
+        </form>
+        <ul class="list-unstyled question">
+        <li class="menu-heading">HOW-TO</li>
+        <li><a href="javascript:void(0);">How to Create Campaign</a></li>
+        <li><a href="javascript:void(0);">Boost Your Sales</a></li>
+        <li><a href="javascript:void(0);">Website Analytics</a></li>
+        <li class="menu-heading">ACCOUNT</li>
+        <li><a href="javascript:void(0);">Cearet New Account</a></li>
+        <li><a href="javascript:void(0);">Change Password?</a></li>
+        <li><a href="javascript:void(0);">Privacy &amp; Policy</a></li>
+        <li class="menu-heading">BILLING</li>
+        <li><a href="javascript:void(0);">Payment info</a></li>
+        <li><a href="javascript:void(0);">Auto-Renewal</a></li>
+        <li class="menu-button m-t-30">
+        <a href="javascript:void(0);" class="btn btn-primary"><i class="icon-question"></i> Need Help?</a>
+        </li>
+        </ul>
         </div>*@
     </div>
 </sidebar>

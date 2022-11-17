@@ -1093,16 +1093,18 @@
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
                                                                                                                                 ],
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
+                        "hsla(220, 70%, 50%, 0.5)",
+                        "hsla(160, 70%, 50%, 0.5)",
+                        "hsla(100, 70%, 50%, 0.5)",
+                        "hsla(80, 70%, 50%, 0.5)",
+                        "hsla(60, 70%, 50%, 0.5)",
+                        "hsla(40, 70%, 50%, 0.5)"
                     ],
+                    	borderWidth: 0,
+                    	hoverBackgroundColor: "rgba(211, 164, 36,0.4)",
+                        	hoverBorderColor: "rgba(211, 164, 36,1)",
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
+                       "rgba(211, 164, 36,1)",
                     ]
                 }
             ]
@@ -1136,13 +1138,13 @@
                     '@nameof(BugTrackerProjectPriority.Urgent)'
                 ],
                 datasets: [{
+                    axis: 'y',
                     label: 'Project Priority',
                     data: [
         @Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Low)).Count(),
         @Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Medium)).Count(),
         @Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.High)).Count(),
-        @Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Urgent)).Count()
-                                                                                                                                        ],
+        @Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Urgent)).Count() ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
