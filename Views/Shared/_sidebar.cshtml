@@ -1,5 +1,4 @@
-﻿@model BugTracker.Models.ViewModels.DashboardViewModel
-
+﻿
 @using BugTracker.Services.Interfaces;
 @using Microsoft.AspNetCore.Identity;
 @using BugTracker.Models.Enums;
@@ -26,7 +25,10 @@
         <div class="dropdown">
             <span>Welcome,</span>
             <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>@bugTrackerUser.FullName</strong></a>
-            <span class="badge badge-primary"></span>
+            @if (User.IsInRole(nameof(Roles.Admin))) {
+                <span class="badge badge-primary">Admin</span>
+            }
+          
             <ul class="dropdown-menu dropdown-menu-right account">
                 <li><a asp-controller="Page" asp-action="Profile2"><i class="icon-user"></i>My Profile</a></li>
                 @* <li><a asp-controller="App" asp-action="Inbox"><i class="icon-envelope-open"></i>Messages</a></li>*@
