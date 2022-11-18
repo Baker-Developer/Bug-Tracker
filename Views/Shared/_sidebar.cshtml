@@ -1,5 +1,4 @@
-﻿
-@using BugTracker.Services.Interfaces;
+﻿@using BugTracker.Services.Interfaces;
 @using Microsoft.AspNetCore.Identity;
 @using BugTracker.Models.Enums;
 @inject UserManager<BugTrackerUser> UserManager
@@ -26,7 +25,7 @@
             <span>Welcome,</span>
             <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>@bugTrackerUser.FullName</strong></a>
             @if (User.IsInRole(nameof(Roles.Admin))) {
-                <span class="badge badge-primary">Admin</span>
+                <span class="badge badge-default">Admin</span>
             }
           
             <ul class="dropdown-menu dropdown-menu-right account">
