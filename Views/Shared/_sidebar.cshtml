@@ -27,7 +27,19 @@
             @if (User.IsInRole(nameof(Roles.Admin))) {
                 <span class="badge badge-default">Admin</span>
             }
-          
+            @if (User.IsInRole(nameof(Roles.ProjectManager)))
+            {
+                <span class="badge badge-default">Project Manager</span>
+            }
+             @if (User.IsInRole(nameof(Roles.Developer)))
+            {
+                <span class="badge badge-default">Developer</span>
+            }
+             @if (User.IsInRole(nameof(Roles.Submitter)))
+            {
+                <span class="badge badge-default">Submitter</span>
+            }
+
             <ul class="dropdown-menu dropdown-menu-right account">
                 <li><a asp-controller="Page" asp-action="Profile2"><i class="icon-user"></i>My Profile</a></li>
                 @* <li><a asp-controller="App" asp-action="Inbox"><i class="icon-envelope-open"></i>Messages</a></li>*@
