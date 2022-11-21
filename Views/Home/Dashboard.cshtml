@@ -75,33 +75,11 @@
 
 </div>
 
-@*<div class="row clearfix">
-    <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="card">
-            <div class="header">
-                <h2>Wrok Report</h2>
-                <ul class="header-dropdown">
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="javascript:void(0);">Action</a></li>
-                            <li><a href="javascript:void(0);">Another Action</a></li>
-                            <li><a href="javascript:void(0);">Something else</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div class="body">
-                <div id="m_area_chart" class="m-b-20" style="height: 250px;"></div>
-            </div>
-        </div>
-    </div>
-</div>*@
 
 <div class="row clearfix">
 
 
-    <div class="col-lg-6 col-md-6 col-sm-12">
+  @*  <div class="col-lg-6 col-md-6 col-sm-12">
         <div class="card">
             <div class="header">
                 <h2>Work In Progress Chart</h2>
@@ -118,6 +96,21 @@
             </div>
             <div class="body">
                 <div id="m_area_chart" class="m-b-20" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>*@
+
+    
+    <div class="col-lg-6 col-md-6 col-sm-12 mb-1">
+        <div class="card">
+            <div class="header">
+                <h2>###<small>###</small></h2>
+            </div>
+
+            <!-- ChartJS: Pie/Doughnut -->
+            <div class="col-md-12">
+                <!--  Chart.js Canvas Tag -->
+                <canvas width="400" height="400" style="display: inline-block; width: 300px; height: 300px; vertical-align: top; " id="myChart"></canvas>
             </div>
         </div>
     </div>
@@ -663,17 +656,18 @@
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
 
                                                                                                                                 ],
+                   
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)'
+                        "hsla(280, 70%, 50%, 0.5)",
+                        "hsla(220, 70%, 50%, 0.5)",
+                        "hsla(160, 70%, 50%, 0.5)",
+                        "hsla(100, 70%, 50%, 0.5)"
                     ],
+                    borderWidth: 0,
+                    hoverBackgroundColor: "hsla(235, 12%, 27%, 0.5)",
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
+                        "rgba(211, 164, 36,1)"
+                      
                     ]
                 }
             ]
@@ -800,6 +794,7 @@
                 }
             }
         });
+   
 
     </script>
 
