@@ -6,6 +6,7 @@
 
 @inject UserManager<BugTrackerUser> UserManager
 @inject IBugTrackerRolesService RolesService;
+
 @{
     ViewData["Title"] = "Project";
     ViewData["MainMenu"] = "Dashboard";
@@ -298,7 +299,7 @@
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
 
-                                                                                                                                                ],
+                                                                                                                                                        ],
 
                     backgroundColor: [
                         "hsla(280, 70%, 50%, 0.5)",
@@ -354,7 +355,7 @@
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
-                                                                                                                                                        ],
+                                                                                                                                                                ],
                     backgroundColor: [
                         "hsla(220, 70%, 50%, 0.5)",
                         "hsla(160, 70%, 50%, 0.5)",
@@ -424,53 +425,53 @@
 
 
 
-                        //var ctx = document.getElementById("myChart");
-                        //var myChart = new Chart(ctx, {
-                        //    type: 'bar',
-                        //    data: {
-                        //        labels: [
-                        //            '@nameof(BugTrackerProjectPriority.Low)',
-                        //            '@nameof(BugTrackerProjectPriority.Medium)',
-                        //            '@nameof(BugTrackerProjectPriority.High)',
-                        //            '@nameof(BugTrackerProjectPriority.Urgent)'
-                        //        ],
-                        //        datasets: [{
-                        //            axis: 'y',
-                        //            label: 'Project Priority',
-                        //            data: [
-                        //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Low)).Count(),
-                        //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Medium)).Count(),
-                        //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.High)).Count(),
-                        //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Urgent)).Count() ],
-                        //            backgroundColor: [
-                        //                'rgba(255, 99, 132, 0.2)',
-                        //                'rgba(54, 162, 235, 0.2)',
-                        //                'rgba(255, 206, 86, 0.2)',
-                        //                'rgba(255, 159, 64, 0.2)'
-                        //            ],
-                        //            borderColor: [
-                        //                'rgba(255,99,132,1)',
-                        //                'rgba(54, 162, 235, 1)',
-                        //                'rgba(255, 206, 86, 1)',
-                        //                'rgba(255, 159, 64, 1)'
-                        //            ],
-                        //            borderWidth: 2
+                                //var ctx = document.getElementById("myChart");
+                                //var myChart = new Chart(ctx, {
+                                //    type: 'bar',
+                                //    data: {
+                                //        labels: [
+                                //            '@nameof(BugTrackerProjectPriority.Low)',
+                                //            '@nameof(BugTrackerProjectPriority.Medium)',
+                                //            '@nameof(BugTrackerProjectPriority.High)',
+                                //            '@nameof(BugTrackerProjectPriority.Urgent)'
+                                //        ],
+                                //        datasets: [{
+                                //            axis: 'y',
+                                //            label: 'Project Priority',
+                                //            data: [
+                                //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Low)).Count(),
+                                //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Medium)).Count(),
+                                //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.High)).Count(),
+                                //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Urgent)).Count() ],
+                                //            backgroundColor: [
+                                //                'rgba(255, 99, 132, 0.2)',
+                                //                'rgba(54, 162, 235, 0.2)',
+                                //                'rgba(255, 206, 86, 0.2)',
+                                //                'rgba(255, 159, 64, 0.2)'
+                                //            ],
+                                //            borderColor: [
+                                //                'rgba(255,99,132,1)',
+                                //                'rgba(54, 162, 235, 1)',
+                                //                'rgba(255, 206, 86, 1)',
+                                //                'rgba(255, 159, 64, 1)'
+                                //            ],
+                                //            borderWidth: 2
 
-                        //        }]
-                        //    },
-                        //    options: {
-                        //        responsive: false,
-                        //        indexAxis: 'y',
+                                //        }]
+                                //    },
+                                //    options: {
+                                //        responsive: false,
+                                //        indexAxis: 'y',
 
-                        //        scales: {
-                        //            x: {
-                        //                grid: {
-                        //                    display: false
-                        //                }
-                        //            }
-                        //        }
-                        //    }
-                        //});
+                                //        scales: {
+                                //            x: {
+                                //                grid: {
+                                //                    display: false
+                                //                }
+                                //            }
+                                //        }
+                                //    }
+                                //});
 
 
     </script>
