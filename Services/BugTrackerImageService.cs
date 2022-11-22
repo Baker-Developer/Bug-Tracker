@@ -35,7 +35,7 @@ namespace BugTracker.Services
 
         public async Task<byte[]> EncodeImageAsync(string fileName)
         {
-            var file = $"{Directory.GetCurrentDirectory()}/wwwroot/img/{fileName}";
+            var file = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{fileName}";
 
             return await File.ReadAllBytesAsync(file);
         }

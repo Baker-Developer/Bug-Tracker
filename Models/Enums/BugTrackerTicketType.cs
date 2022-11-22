@@ -5,7 +5,7 @@ namespace BugTracker.Models.Enums
 {
     public enum BugTrackerTicketType
     {
-       
+      
         NewDevelopment,
        
         WorkTask,

@@ -11,6 +11,10 @@
     BugTrackerUser bugTrackerUser = await UserManager.GetUserAsync(User);
 }
 
+@section VendorCSS {
+    <link rel="stylesheet" href="~/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css">
+    <link rel="stylesheet" href="~/vendor/jquery-datatable/dataTables.bootstrap4.min.css">
+}
 
 <div class="row">
     <div class="col-sm-12">
@@ -90,11 +94,11 @@
 
                                         @if (!item.Archived)
                                         {
-                                            <img src="~/img/logos/openDocument.png" width="50" height="50">
+                                            <img src="~/images/logos/openDocument.png" width="50" height="50">
                                         }
                                         else if (item.Archived)
                                         {
-                                            <img src="~/img/logos/archivedDocument.png" width="50" height="50">
+                                            <img src="~/images/logos/archivedDocument.png" width="50" height="50">
                                         }
                                     </td>
                                     @*           <td>
@@ -156,9 +160,19 @@
 
 
 @section Scripts {
-    <script type="text/javascript">
+
+
+    <script src="~/bundles/datatablescripts.bundle.js"></script>
+    <script src="~/js/pages/tables/jquery-datatable.js"></script>
+
+    <script src="~/vendor/jquery-knob/jquery.knob.min.js"></script>
+    <script src="~/bundles/mainscripts.bundle.js"></script>
+    <script src="~/js/pages/charts/jquery-knob.js"></script>
+
+    @*    <script type="text/javascript">
         $(document).ready(function () {
             $('#myTicketsTable').DataTable();
         });
-    </script>
+    </script>*@
+ 
 }
