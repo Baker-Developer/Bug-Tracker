@@ -1612,7 +1612,9 @@ body {
     -ms-overflow-style: none
 }
 
-
+    #loginWallpaper {
+        background-image: url(/images/logos/codeimage.jpg);
+    }
 
 
     body:before, body:after {
