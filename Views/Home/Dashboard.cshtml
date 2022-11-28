@@ -16,6 +16,12 @@
 
 
 @section VendorCSS {
+
+    <link rel="stylesheet" href="~/vendor/jquery-datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/jquery-datatable/fixedeader/dataTables.fixedcolumns.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/jquery-datatable/fixedeader/dataTables.fixedheader.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/sweetalert/sweetalert.css" />
+
     <link rel="stylesheet" href="~/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css">
     <link rel="stylesheet" href="~/vendor/jvectormap/jquery-jvectormap-2.0.3.min.css" />
     <link rel="stylesheet" href="~/vendor/morrisjs/morris.min.css" />
@@ -139,135 +145,1020 @@
 </div>
 
 <div class="row clearfix">
+
+
+
+
     <div class="col-lg-5 col-md-12">
-        <div class="card">
-            <div class="header">
-                <h2>Members</h2>
-            </div>
-            <div class="body">
-                <div class="table-responsive">
-                    <div id="" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label></div></div></div><div class="row">
-                            <div class="col-sm-12">
-                                <table class="table table-hover js-basic-example dataTable table-custom mb-0 no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
-                                    <thead class="thead-dark">
-                                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Avatar: activate to sort column descending" style="width: 44.5px;">Avatar</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 125.219px;">Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Projects: activate to sort column ascending" style="width: 55.5156px;">Projects</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 104.531px;">Role</th></tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1"><a href="/Home/MemberProfile?userId=0e6b406b-43a3-420c-98d4-b3bd22a44235"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Steve Appuser" alt="Default Avatar"></a></td>
-
-                                            <td>Steve Appuser</td>
-
-                                            <td>0</td>
-
-
-                                            <td><span class="badge badge-default">Admin</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 10 of 11 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-7 col-md-12">
         <div class="card">
             <div class="header">
                 <h2>Projects</h2>
             </div>
             <div class="body">
+                @*        <button id="addToTable" class="btn btn-primary m-b-15" type="button">
+                <i class="icon wb-plus" aria-hidden="true"></i> Add row
+                </button>*@
                 <div class="table-responsive">
-                    <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_1_length"><label>Show <select name="DataTables_Table_1_length" aria-controls="DataTables_Table_1" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_1"></label></div></div></div><div class="row">
-                            <div class="col-sm-12">
-                                <table class="table table-hover js-basic-example dataTable table-custom mb-0 no-footer" id="DataTables_Table_1" role="grid" aria-describedby="DataTables_Table_1_info">
-                                    <thead class="thead-dark">
-                                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Project: activate to sort column descending" style="width: 236.969px;">Project</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Start Date: activate to sort column ascending" style="width: 65.4531px;">Start Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="End Date: activate to sort column ascending" style="width: 65.4531px;">End Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Team: activate to sort column ascending" style="width: 35.5469px;">Team</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Ticket Count: activate to sort column ascending" style="width: 41.6406px;">Ticket Count</th></tr>
-                                    </thead>
-                                    <tbody>
+                    <table class="table table-bordered table-hover table-striped" cellspacing="0" id="addrowExample">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
+                            {
+                                <tr class="gradeA">
+                                    <td>
+                                        <a asp-action="Details" asp-controller="Tickets" asp-route-id="@project.Id">@project.Name</a>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success">@project.StartDate.ToString("MM,dd,yyyy")</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success">@project.EndDate.ToString("MM,dd,yyyy")</span>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id"> <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    </td>
+
+                                </tr>
+
+                            }
+                        </tbody>
 
 
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1">
-                                                <a href="/Projects/Details/2">Address Book</a>
-                                                <p class="text-muted">Project Manager: Demo ProjectManager</p>
+                        @*    <td>
+                        <ul class="list-unstyled team-info pb-0 mb-0">
+                        </ul>
+                        </td>
+                        <td>
+                        <strong>0</strong>
+                        </td>
+                        <td class="actions">
+                        <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                        data-toggle="tooltip" data-original-title="Save" hidden>
+                        <i class="icon-drawer" aria-hidden="true"></i></a>
+                        <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                        data-toggle="tooltip" data-original-title="Discard" hidden>
+                        <i class="icon-close" aria-hidden="true"></i></a>
+                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                        data-toggle="tooltip" data-original-title="Edit">
+                        <i class="icon-pencil" aria-hidden="true"></i></a>
+                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                        data-toggle="tooltip" data-original-title="Remove">
+                        <i class="icon-trash" aria-hidden="true"></i></a>
+                        </td>
 
-                                            </td>
-                                            <td><span class="badge badge-success">03/09/2022</span></td>
-                                            <td><span class="badge badge-danger">05/09/2022</span></td>
-                                            <td>
-                                                <ul class="list-unstyled team-info pb-0 mb-0">
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <strong>0</strong>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="DataTables_Table_1_info" role="status" aria-live="polite">Showing 1 to 2 of 2 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_1_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_1_previous"><a href="#" aria-controls="DataTables_Table_1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_1" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="DataTables_Table_1_next"><a href="#" aria-controls="DataTables_Table_1" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
-                    </div>
+
+
+                        </tbody>*@
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12">
+
+    <div class="col-lg-7 col-md-12">
         <div class="card">
             <div class="header">
                 <h2>Tickets</h2>
             </div>
             <div class="body">
+                @*        <button id="addToTable" class="btn btn-primary m-b-15" type="button">
+                <i class="icon wb-plus" aria-hidden="true"></i> Add row
+                </button>*@
                 <div class="table-responsive">
-                    <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_2_length"><label>Show <select name="DataTables_Table_2_length" aria-controls="DataTables_Table_2" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_2_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_2"></label></div></div></div><div class="row">
-                            <div class="col-sm-12">
-                                <table class="table table-hover js-basic-example dataTable table-custom mb-0 no-footer" id="DataTables_Table_2" role="grid" aria-describedby="DataTables_Table_2_info">
-                                    <thead class="thead-dark">
-                                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 117.422px;">Title</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Developer: activate to sort column ascending" style="width: 114.484px;">Developer</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 135.391px;">Status</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Priority: activate to sort column ascending" style="width: 89.4375px;">Priority</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 91.8438px;">Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 132.422px;">Action</th></tr>
-                                    </thead>
-                                    <tbody>
+                    <table class="table table-bordered table-hover table-striped" cellspacing="0" id="addrowExample">
+                        <thead>
+                            <tr>
+                                <th>Ticket Name</th>
+                                <th>Developers</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ticket in Model.Tickets.OrderByDescending(d => d.Created))
+                            {
+                                <tr>
+                                    <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><strong>@ticket.Title</strong></a> </td>
+                                    <td>
+                                        @if (ticket.DeveloperUserId != null)
+                                        {
+                                            @ticket.DeveloperUser?.FullName
+                                        }
+                                        else
+                                        {
 
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1">Blog Ticket 1</td>
-                                            <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/47">Assign Dev</a></td>
-                                            <td>
-                                                <span class="badge badge-primary">New</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-default">Low</span>
-                                            </td>
-                                            <td>11-09-2022</td>
-                                            <td>
-                                                <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/47"><i class="icon-eye"></i></a>
-                                                <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/47"><i class="icon-pencil"></i></a>
-                                                <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/47"><i class="fa fa-file-archive-o"></i></a>
-                                            </td>
+                                            if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                                            {
 
-                                        </tr>
+                                                <a class="btn btn-primary btn-sm" asp-action="UnassignedTickets" asp-controller="Tickets" asp-route-id="@ticket.Id">Assign Dev</a>
+                                            }
 
 
+                                        }
+                                    </td>
+                                    @if (ticket.TicketStatus.Name == "New")
+                                    {
+                                        <td><span class="btn btn-success btn-sm">@ticket.TicketStatus.Name </span></td>
+
+                                    }
+                                    else
+                                    {
+                                        <td><span class="btn btn-warning btn-sm">@ticket.TicketStatus.Name </span></td>
+                                    }
+                                    <td><span class="">@ticket.TicketPriority.Name </span></td>
+                                    <td>@ticket.Created.ToString("MM-dd-yyyy")</td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id">Details</a>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
 
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="DataTables_Table_2_info" role="status" aria-live="polite">Showing 1 to 10 of 16 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_2_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_2_previous"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="DataTables_Table_2_next"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
-                    </div>
+                        @*    <td>
+                        <ul class="list-unstyled team-info pb-0 mb-0">
+                        </ul>
+                        </td>
+                        <td>
+                        <strong>0</strong>
+                        </td>
+                        <td class="actions">
+                        <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                        data-toggle="tooltip" data-original-title="Save" hidden>
+                        <i class="icon-drawer" aria-hidden="true"></i></a>
+                        <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                        data-toggle="tooltip" data-original-title="Discard" hidden>
+                        <i class="icon-close" aria-hidden="true"></i></a>
+                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                        data-toggle="tooltip" data-original-title="Edit">
+                        <i class="icon-pencil" aria-hidden="true"></i></a>
+                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                        data-toggle="tooltip" data-original-title="Remove">
+                        <i class="icon-trash" aria-hidden="true"></i></a>
+                        </td>
+
+
+
+                        </tbody>*@
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
+@* <div class="col-lg-5 col-md-12">
+    <div class="card">
+    <div class="header">
+    <h2>Members</h2>
+    </div>
+    <div class="body">
+    <div class="table-responsive">
+    <div id="" class="dataTables_wrapper dt-bootstrap4 no-footer">
+    <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label></div></div></div><div class="row">
+    <div class="col-sm-12">
+    <table class="table table-hover js-basic-example dataTable table-custom mb-0 no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+    <thead class="thead-dark">
+    <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Avatar: activate to sort column descending" style="width: 44.5px;">Avatar</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 125.219px;">Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Projects: activate to sort column ascending" style="width: 55.5156px;">Projects</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 104.531px;">Role</th></tr>
+    </thead>
+    <tbody>
+    <tr role="row" class="odd">
+    <td class="sorting_1"><a href="/Home/MemberProfile?userId=0e6b406b-43a3-420c-98d4-b3bd22a44235"><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle" style="width:30px;height:30px;" title="Steve Appuser" alt="Default Avatar"></a></td>
+
+    <td>Steve Appuser</td>
+
+    <td>0</td>
+
+
+    <td><span class="badge badge-default">Admin</span></td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 10 of 11 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+
+@*   <div class="col-lg-7 col-md-12">
+    <div class="card">
+    <div class="header">
+    <h2>Projects</h2>
+    </div>
+    <div class="body">
+    <div class="table-responsive">
+    <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+    <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_1_length"><label>Show <select name="DataTables_Table_1_length" aria-controls="DataTables_Table_1" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_1"></label></div></div></div><div class="row">
+    <div class="col-sm-12">
+    <table class="table table-hover js-basic-example dataTable table-custom mb-0 no-footer" id="DataTables_Table_1" role="grid" aria-describedby="DataTables_Table_1_info">
+    <thead class="thead-dark">
+    <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Project: activate to sort column descending" style="width: 236.969px;">Project</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Start Date: activate to sort column ascending" style="width: 65.4531px;">Start Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="End Date: activate to sort column ascending" style="width: 65.4531px;">End Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Team: activate to sort column ascending" style="width: 35.5469px;">Team</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Ticket Count: activate to sort column ascending" style="width: 41.6406px;">Ticket Count</th></tr>
+    </thead>
+    <tbody>
+
+
+    <tr role="row" class="odd">
+    <td class="sorting_1">
+    <a href="/Projects/Details/2">Address Book</a>
+    <p class="text-muted">Project Manager: Demo ProjectManager</p>
+
+    </td>
+    <td><span class="badge badge-success">03/09/2022</span></td>
+    <td><span class="badge badge-danger">05/09/2022</span></td>
+    <td>
+    <ul class="list-unstyled team-info pb-0 mb-0">
+    </ul>
+    </td>
+    <td>
+    <strong>0</strong>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="DataTables_Table_1_info" role="status" aria-live="polite">Showing 1 to 2 of 2 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_1_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_1_previous"><a href="#" aria-controls="DataTables_Table_1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_1" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="DataTables_Table_1_next"><a href="#" aria-controls="DataTables_Table_1" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+
+
+
+@*<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+        <div class="header">
+            <h2>Add Row</h2>
+        </div>
+        <div class="body">
+            <button id="addToTable" class="btn btn-primary m-b-15" type="button">
+                <i class="icon wb-plus" aria-hidden="true"></i> Add row
+            </button>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped" cellspacing="0" id="">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr class="gradeA">
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Garrett Winters</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Ashton Cox</td>
+                            <td>Junior Technical Author</td>
+                            <td>San Francisco</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Cedric Kelly</td>
+                            <td>Senior Javascript Developer</td>
+                            <td>Edinburgh</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Airi Satou</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Brielle Williamson</td>
+                            <td>Integration Specialist</td>
+                            <td>New York</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Herrod Chandler</td>
+                            <td>Sales Assistant</td>
+                            <td>San Francisco</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Rhona Davidson</td>
+                            <td>Integration Specialist</td>
+                            <td>Tokyo</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Colleen Hurst</td>
+                            <td>Javascript Developer</td>
+                            <td>San Francisco</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Sonya Frost</td>
+                            <td>Software Engineer</td>
+                            <td>Edinburgh</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Jena Gaines</td>
+                            <td>Office Manager</td>
+                            <td>London</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Quinn Flynn</td>
+                            <td>Support Lead</td>
+                            <td>Edinburgh</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Charde Marshall</td>
+                            <td>Regional Director</td>
+                            <td>San Francisco</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Haley Kennedy</td>
+                            <td>Senior Marketing Designer</td>
+                            <td>London</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Tatyana Fitzpatrick</td>
+                            <td>Regional Director</td>
+                            <td>London</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Michael Silva</td>
+                            <td>Marketing Designer</td>
+                            <td>London</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Paul Byrd</td>
+                            <td>Chief Financial Officer (CFO)</td>
+                            <td>New York</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Gloria Little</td>
+                            <td>Systems Administrator</td>
+                            <td>New York</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Bradley Greer</td>
+                            <td>Software Engineer</td>
+                            <td>London</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Dai Rios</td>
+                            <td>Personnel Lead</td>
+                            <td>Edinburgh</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Jenette Caldwell</td>
+                            <td>Development Lead</td>
+                            <td>New York</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Yuri Berry</td>
+                            <td>Chief Marketing Officer (CMO)</td>
+                            <td>New York</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Caesar Vance</td>
+                            <td>Pre-Sales Support</td>
+                            <td>New York</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Doris Wilder</td>
+                            <td>Sales Assistant</td>
+                            <td>Sidney</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Angelica Ramos</td>
+                            <td>Chief Executive Officer (CEO)</td>
+                            <td>London</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Gavin Joyce</td>
+                            <td>Developer</td>
+                            <td>Edinburgh</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Jennifer Chang</td>
+                            <td>Regional Director</td>
+                            <td>Singapore</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Brenden Wagner</td>
+                            <td>Software Engineer</td>
+                            <td>San Francisco</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Fiona Green</td>
+                            <td>Chief Operating Officer (COO)</td>
+                            <td>San Francisco</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Shou Itou</td>
+                            <td>Regional Marketing</td>
+                            <td>Tokyo</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Michelle House</td>
+                            <td>Integration Specialist</td>
+                            <td>Sidney</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Suki Burks</td>
+                            <td>Developer</td>
+                            <td>London</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Prescott Bartlett</td>
+                            <td>Technical Author</td>
+                            <td>London</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Gavin Cortez</td>
+                            <td>Team Leader</td>
+                            <td>San Francisco</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeA">
+                            <td>Martena Mccray</td>
+                            <td>Post-Sales support</td>
+                            <td>Edinburgh</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-editing m-r-5 button-save"
+                                        data-toggle="tooltip" data-original-title="Save" hidden>
+                                    <i class="icon-drawer" aria-hidden="true"></i></a>
+                                    <button class="btn btn-sm btn-icon btn-pure btn-default on-editing button-discard"
+                                            data-toggle="tooltip" data-original-title="Discard" hidden>
+                                        <i class="icon-close" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-icon btn-pure btn-default on-default m-r-5 button-edit"
+                                                data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="icon-pencil" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-icon btn-pure btn-default on-default button-remove"
+                                                    data-toggle="tooltip" data-original-title="Remove">
+                                                <i class="icon-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+*@
+@* <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+    <div class="header">
+    <h2>Tickets</h2>
+    </div>
+    <div class="body">
+    <div class="table-responsive">
+    <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+    <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_2_length"><label>Show <select name="DataTables_Table_2_length" aria-controls="DataTables_Table_2" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_2_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_2"></label></div></div></div><div class="row">
+    <div class="col-sm-12">
+    <table class="table table-hover js-basic-example dataTable table-custom mb-0 no-footer" id="DataTables_Table_2" role="grid" aria-describedby="DataTables_Table_2_info">
+    <thead class="thead-dark">
+    <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 117.422px;">Title</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Developer: activate to sort column ascending" style="width: 114.484px;">Developer</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 135.391px;">Status</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Priority: activate to sort column ascending" style="width: 89.4375px;">Priority</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 91.8438px;">Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 132.422px;">Action</th></tr>
+    </thead>
+    <tbody>
+
+    <tr role="row" class="odd">
+    <td class="sorting_1">Blog Ticket 1</td>
+    <td><a class="btn btn-sm btn-info" href="/Tickets/AssignDeveloper/47">Assign Dev</a></td>
+    <td>
+    <span class="badge badge-primary">New</span>
+    </td>
+    <td>
+    <span class="badge badge-default">Low</span>
+    </td>
+    <td>11-09-2022</td>
+    <td>
+    <a class="btn btn-sm btn-outline-info" href="/Tickets/Details/47"><i class="icon-eye"></i></a>
+    <a class="btn btn-sm btn-outline-secondary" href="/Tickets/Edit/47"><i class="icon-pencil"></i></a>
+    <a class="btn btn-sm btn-outline-danger" href="/Tickets/Archive/47"><i class="fa fa-file-archive-o"></i></a>
+    </td>
+
+    </tr>
+
+
+
+
+    </tbody>
+    </table>
+    </div>
+    </div>
+    <div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="DataTables_Table_2_info" role="status" aria-live="polite">Showing 1 to 10 of 16 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_2_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_2_previous"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="DataTables_Table_2_next"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
 </div>
 
 
 
 
 @section Scripts {
+
+    <script src="~/bundles/datatablescripts.bundle.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.html5.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.print.min.js"></script>
+    <script src="~/vendor/sweetalert/sweetalert.min.js"></script> <!-- SweetAlert Plugin Js -->
+    <script src="~/js/pages/tables/jquery-datatable.js"></script>
+
+
     <script src="~/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
     <script src="~/bundles/morrisscripts.bundle.js"></script> <!-- Morris Plugin Js -->
     <script src="~/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
@@ -299,7 +1190,7 @@
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
 
-                                                                                                                                                        ],
+                                                                                                                                                                                ],
 
                     backgroundColor: [
                         "hsla(280, 70%, 50%, 0.5)",
@@ -355,7 +1246,7 @@
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
-                                                                                                                                                                ],
+                                                                                                                                                                                        ],
                     backgroundColor: [
                         "hsla(220, 70%, 50%, 0.5)",
                         "hsla(160, 70%, 50%, 0.5)",
@@ -425,53 +1316,53 @@
 
 
 
-                                //var ctx = document.getElementById("myChart");
-                                //var myChart = new Chart(ctx, {
-                                //    type: 'bar',
-                                //    data: {
-                                //        labels: [
-                                //            '@nameof(BugTrackerProjectPriority.Low)',
-                                //            '@nameof(BugTrackerProjectPriority.Medium)',
-                                //            '@nameof(BugTrackerProjectPriority.High)',
-                                //            '@nameof(BugTrackerProjectPriority.Urgent)'
-                                //        ],
-                                //        datasets: [{
-                                //            axis: 'y',
-                                //            label: 'Project Priority',
-                                //            data: [
-                                //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Low)).Count(),
-                                //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Medium)).Count(),
-                                //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.High)).Count(),
-                                //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Urgent)).Count() ],
-                                //            backgroundColor: [
-                                //                'rgba(255, 99, 132, 0.2)',
-                                //                'rgba(54, 162, 235, 0.2)',
-                                //                'rgba(255, 206, 86, 0.2)',
-                                //                'rgba(255, 159, 64, 0.2)'
-                                //            ],
-                                //            borderColor: [
-                                //                'rgba(255,99,132,1)',
-                                //                'rgba(54, 162, 235, 1)',
-                                //                'rgba(255, 206, 86, 1)',
-                                //                'rgba(255, 159, 64, 1)'
-                                //            ],
-                                //            borderWidth: 2
+                                                        //var ctx = document.getElementById("myChart");
+                                                        //var myChart = new Chart(ctx, {
+                                                        //    type: 'bar',
+                                                        //    data: {
+                                                        //        labels: [
+                                                        //            '@nameof(BugTrackerProjectPriority.Low)',
+                                                        //            '@nameof(BugTrackerProjectPriority.Medium)',
+                                                        //            '@nameof(BugTrackerProjectPriority.High)',
+                                                        //            '@nameof(BugTrackerProjectPriority.Urgent)'
+                                                        //        ],
+                                                        //        datasets: [{
+                                                        //            axis: 'y',
+                                                        //            label: 'Project Priority',
+                                                        //            data: [
+                                                        //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Low)).Count(),
+                                                        //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Medium)).Count(),
+                                                        //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.High)).Count(),
+                                                        //@Model.Projects.Where(p=> p.ProjectPriority.Name == nameof(BugTrackerProjectPriority.Urgent)).Count() ],
+                                                        //            backgroundColor: [
+                                                        //                'rgba(255, 99, 132, 0.2)',
+                                                        //                'rgba(54, 162, 235, 0.2)',
+                                                        //                'rgba(255, 206, 86, 0.2)',
+                                                        //                'rgba(255, 159, 64, 0.2)'
+                                                        //            ],
+                                                        //            borderColor: [
+                                                        //                'rgba(255,99,132,1)',
+                                                        //                'rgba(54, 162, 235, 1)',
+                                                        //                'rgba(255, 206, 86, 1)',
+                                                        //                'rgba(255, 159, 64, 1)'
+                                                        //            ],
+                                                        //            borderWidth: 2
 
-                                //        }]
-                                //    },
-                                //    options: {
-                                //        responsive: false,
-                                //        indexAxis: 'y',
+                                                        //        }]
+                                                        //    },
+                                                        //    options: {
+                                                        //        responsive: false,
+                                                        //        indexAxis: 'y',
 
-                                //        scales: {
-                                //            x: {
-                                //                grid: {
-                                //                    display: false
-                                //                }
-                                //            }
-                                //        }
-                                //    }
-                                //});
+                                                        //        scales: {
+                                                        //            x: {
+                                                        //                grid: {
+                                                        //                    display: false
+                                                        //                }
+                                                        //            }
+                                                        //        }
+                                                        //    }
+                                                        //});
 
 
     </script>
