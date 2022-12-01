@@ -27,13 +27,12 @@
 
         <div id="navbar-menu">
             <ul class="nav navbar-nav">
-                @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
-                {
-                       <li>
+
+                <li>
                     <a asp-controller="Tickets" asp-action="Create" class="btn btn-md btn-primary">New Ticket</a>
                 </li>
-                }
-             
+
+
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                         <i class="icon-bell"></i>
@@ -54,7 +53,7 @@
                                 </div>
                             </a>
                         </li>
-                       
+
                         <li class="footer"><a href="javascript:void(0);" class="more">See all notifications</a></li>
                     </ul>
                 </li>
@@ -62,18 +61,19 @@
                     <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown"><i class="icon-equalizer"></i></a>
                     <ul class="dropdown-menu user-menu menu-icon">
                         <li class="menu-heading">ACCOUNT SETTINGS</li>
-                        <li><a href="javascript:void(0);"><i class="icon-note"></i> <span>Basic</span></a></li>
-                        <li><a href="javascript:void(0);"><i class="icon-equalizer"></i> <span>Preferences</span></a></li>
-                        <li><a href="javascript:void(0);"><i class="icon-lock"></i> <span>Privacy</span></a></li>
+                        <li><a href="javascript:void(0);"><i class="icon-note"></i> <span>My Account</span></a></li>
+                        <li><a href="javascript:void(0);"><i class="icon-settings"></i> <span>Settings</span></a></li>
+                        <li><a asp-area="Identity" asp-page="/Account/Manage/Index"><i class="icon-equalizer"></i> <span>Preferences</span></a></li>
+                        @*<li><a href="javascript:void(0);"><i class="icon-lock"></i> <span>Privacy</span></a></li>
                         <li><a href="javascript:void(0);"><i class="icon-bell"></i> <span>Notifications</span></a></li>
-                        @* <li class="menu-heading">BILLING</li>
+                         <li class="menu-heading">BILLING</li>
                         <li><a href="javascript:void(0);"><i class="icon-credit-card"></i> <span>Payments</span></a></li>
                         <li><a href="javascript:void(0);"><i class="icon-printer"></i> <span>Invoices</span></a></li>
                         <li><a href="javascript:void(0);"><i class="icon-refresh"></i> <span>Renewals</span></a></li>*@
                     </ul>
                 </li>
                 <li>
-                       <a asp-controller="Home" asp-action="Index" class="icon-menu"><i class="icon-login"></i></a>
+                    <a asp-controller="Home" asp-action="Index" class="icon-menu"><i class="icon-login"></i></a>
                 </li>
             </ul>
         </div>

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BugTracker.Data;
 using BugTracker.Models;
 using Microsoft.AspNetCore.Authorization;
+using BugTracker.Services.Interfaces;
 
 namespace BugTracker.Controllers
 {
@@ -15,10 +16,12 @@ namespace BugTracker.Controllers
     public class InvitesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IBugTrackerInviteService _inviteUser;
 
-        public InvitesController(ApplicationDbContext context)
+        public InvitesController(ApplicationDbContext context, IBugTrackerInviteService inviteUser)
         {
             _context = context;
+            _inviteUser = inviteUser;
         }
 
         // GET: Invites
@@ -68,10 +71,11 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,InviteDate,JoinDate,CompanyToken,CompanyId,ProjectId,InvitorId,InviteeId,InviteeEmail,InviteeFirstName,InviteeLastName,IsValid")] Invite invite)
+        public async Task<IActionResult> Create([Bind("Id,InviteeEmail,InviteeFirstName,InviteeLastName")] Invite invite, BugTrackerUser user)
         {
             if (ModelState.IsValid)
             {
+                await _inviteUser.AcceptInviteAsync(invite.CompanyToken,user.Id, user.CompanyId);
                 _context.Add(invite);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

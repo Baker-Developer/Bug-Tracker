@@ -42,7 +42,7 @@
             }
 
             <ul class="dropdown-menu dropdown-menu-right account">
-                <li><a asp-controller="Page" asp-action="Profile2"><i class="icon-user"></i>My Profile</a></li>
+                <li><a asp-area="Identity" asp-page="/Account/Manage/Index"><i class="icon-user"></i>My Profile</a></li>
                 @* <li><a asp-controller="App" asp-action="Inbox"><i class="icon-envelope-open"></i>Messages</a></li>*@
                 <li><a href="javascript:void(0);"><i class="icon-settings"></i>Settings</a></li>
                 <li class="divider"></li>
@@ -79,7 +79,7 @@
             <nav id="left-sidebar-nav" class="sidebar-nav">
                 <ul id="main-menu" class="metismenu">
                     <li class="">
-                        <a asp-action="Dashboard" asp-controller="Home"><i class="icon-home"></i> <span>Dashboard</span></a>
+                        <a asp-action="Dashboard" asp-controller="Home">  <i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
                     @*   <li class="active">
                     <a href="#Dashboard" class="has-arrow"><i class="icon-home"></i> <span>Dashboard</span></a>
@@ -96,14 +96,14 @@
                     </ul>
                     </li>*@
                     <li>
-                        <a href="#App" class="has-arrow"><i class="icon-grid"></i> <span>Notification Inbox</span></a>
+                 @*       <a href="#App" class="has-arrow"><i class="icon-grid"></i> <span>Notification Inbox</span></a>
                         <ul>
-                            <li><a asp-controller="Invites" asp-action="Create">Invite Users</a></li>
-                            @*  <li><a asp-controller="Invites" asp-action="Create">Compose</a></li>*@
-                        </ul>
+                            <li><a asp-controller="Notifications" asp-action="Index">Notification Inbox</a></li>
+                        </ul>*@
+                        <a class="" asp-controller="Notifications" asp-action="Index">  <i class="icon-envelope"></i>  <span>Notification Inbox</span></a>
                     </li>
                     <li>
-                        <a href="#FileManager" class="has-arrow"><i class="icon-folder"></i> <span>Projects</span></a>
+                        <a href="#FileManager" class="has-arrow">     <i class="icon-puzzle"></i> <span>Projects</span></a>
                         <ul>
                             @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
                             {
@@ -129,7 +129,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#Blog" class="has-arrow"><i class="icon-globe"></i> <span>Tickets</span></a>
+                        <a href="#Blog" class="has-arrow">  <i class="icon-tag"></i> <span>Tickets</span></a>
                         <ul>
                             <li><a asp-controller="Tickets" asp-action="Create">New Ticket</a></li>
                             <li><a asp-controller="Tickets" asp-action="AllTickets">All Tickets</a></li>
@@ -152,8 +152,14 @@
                         <li>
                             <a href="#uiElements" class="has-arrow"><i class="icon-diamond"></i> <span>Admin</span></a>
                             <ul>
-                                <li><a asp-area="Identity" asp-page="/Account/Manage/Inde">User Profile</a></li>
-                                <li><a asp-controller="UserRoles" asp-action="ManageUserRoles"> Manage Role Assginment </a></li>
+                                <li><a asp-controller="Invites" asp-action="Create"> <i class="icon-user-follow"></i>Company Invite</a></li>
+                                <li><a asp-controller="UserRoles" asp-action="ManageUserRoles"> <i class="icon-user-follow"></i> Manage Roles</a></li>
+                                <li><a asp-controller="Projects" asp-action="UnassignedProjects">Assign Project Manager</a></li>
+                                <li><a asp-area="Identity" asp-page="/Account/Manage/Index">Manage Projects</a></li>
+                                <li><a asp-area="Identity" asp-page="/Account/Manage/Index">Assign Tickets</a></li>
+                                <li><a asp-area="Identity" asp-page="/Account/Manage/Index">Member Profiles</a></li>
+
+
                                 @*  <li><a asp-controller="UIElements" asp-action="Buttons">Buttons</a></li*@
 
                             </ul>
