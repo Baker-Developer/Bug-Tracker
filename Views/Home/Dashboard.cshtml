@@ -178,7 +178,8 @@
                         <tr>
                             <th scope="col">Avatar</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Projects</th>
+                            <th scope="col">Email</th>
+                         @*   <th scope="col">Projects</th>*@
                             <th scope="col">Role</th>
                         </tr>
                     </thead>
@@ -187,17 +188,20 @@
                         {
                             <tr class="gradeA">
                                 <td>
-                              @*      @if (bugTrackerUser?.AvatarFileData != null)
-                                    { }*@
-                                    <img class="rounded-circle user-photo" src="~/images/logos/openDocument.png" style="height:25px!important; width:25px!important;" alt="">
+                                    @*      @if (bugTrackerUser?.AvatarFileData != null)
+                                { }*@
+                                    <img class="rounded-circle user-photo" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" style="height:25px!important; width:25px!important;" alt="">
 
                                 </td>
                                 <td>
                                     <a class="">@member.FullName</a>
                                 </td>
                                 <td>
-                                    <a class="">@member</a>
+                                    <a class="">@member.Email</a>
                                 </td>
+                         @*       <td>
+                                    <a class="">@bugTrackerUser.Projects.Where().Count()</a>
+                                </td>*@
                                 <td>
                                     <span class="badge badge-outline-dark">Admin</span>
                                 </td>
@@ -223,7 +227,7 @@
                             <th scope="col">Projects Name</th>
                             <th scope="col">Start Date</th>
                             <th scope="col">End Date</th>
-                            <th scope="col">Ticket Count</th>
+                            @*<th scope="col">Ticket Count</th>*@
                             @*    <th scope="col">Action</th>*@
                         </tr>
                     </thead>
@@ -240,9 +244,9 @@
                                 <td>
                                     <span class="badge badge-danger">@project.EndDate.ToString("MM-dd-yyyy")</span>
                                 </td>
-                                <td>
+                      @*          <td>
                                     <span>@Model.Tickets.Count()</span>
-                                </td>
+                                </td>*@
                             </tr>
                         }
                     </tbody>
@@ -620,7 +624,7 @@
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
 
-                                                                                                                                                                                                                                ],
+                                                                                                                                                                                                                                        ],
 
                     backgroundColor: [
                         "hsla(280, 70%, 50%, 0.5)",
@@ -676,7 +680,7 @@
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
-                                                                                                                                                                                                                                        ],
+                                                                                                                                                                                                                                                ],
                     backgroundColor: [
                         "hsla(220, 70%, 50%, 0.5)",
                         "hsla(160, 70%, 50%, 0.5)",
