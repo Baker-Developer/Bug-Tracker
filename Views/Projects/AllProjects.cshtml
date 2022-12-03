@@ -11,9 +11,49 @@
 }
 
 
+@section VendorCSS {
+    <link rel="stylesheet" href="~/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css">
+    <link rel="stylesheet" href="~/vendor/jquery-datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/morrisjs/morris.css" />
+}
 
 
-<div class="row">
+<div class="row clearfix">
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="body text-center">
+                <div style="display:inline;width:125px;height:125px;"><canvas width="125" height="125"></canvas><input type="text" class="knob" value="86" data-width="125" data-height="125" data-thickness="0.25" data-fgcolor="#ff598f" style="width: 66px; height: 41px; position: absolute; vertical-align: middle; margin-top: 41px; margin-left: -95px; border: 0px; background: none; font: bold 25px Arial; text-align: center; color: rgb(255, 89, 143); padding: 0px; appearance: none;"></div>
+                <p class="text-muted m-b-0">BASIC EXAMPLES</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="body text-center">
+                <div style="display:inline;width:125px;height:125px;"><canvas width="125" height="125"></canvas><input type="text" class="knob" data-linecap="round" value="56" data-width="125" data-height="125" data-thickness="0.25" data-fgcolor="#64c8c0" style="width: 66px; height: 41px; position: absolute; vertical-align: middle; margin-top: 41px; margin-left: -95px; border: 0px; background: none; font: bold 25px Arial; text-align: center; color: rgb(100, 200, 192); padding: 0px; appearance: none;"></div>
+                <p class="text-muted m-b-0">ROUNDED CORNERS</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="body text-center">
+                <div style="display:inline;width:125px;height:125px;"><canvas width="125" height="125"></canvas><input type="text" class="knob" value="65" data-width="125" data-height="125" data-thickness="0.25" data-fgcolor="#cb8fe7" readonly="readonly" style="width: 66px; height: 41px; position: absolute; vertical-align: middle; margin-top: 41px; margin-left: -95px; border: 0px; background: none; font: bold 25px Arial; text-align: center; color: rgb(203, 143, 231); padding: 0px; appearance: none;"></div>
+                <p class="text-muted m-b-0">READ-ONLY</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="body text-center">
+                <div style="display:inline;width:125px;height:125px;"><canvas width="125" height="125"></canvas><input type="text" class="knob" data-skin="tron" value="100" data-width="125" data-height="125" data-thickness="0.2" data-anglearc="270" data-angleoffset="90" data-fgcolor="#fc967f" style="width: 66px; height: 41px; position: absolute; vertical-align: middle; margin-top: 41px; margin-left: -95px; border: 0px; background: none; font: bold 25px Arial; text-align: center; color: rgb(252, 150, 127); padding: 0px; appearance: none;"></div>
+                <p class="text-muted m-b-0">TRON STYLE</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
@@ -57,15 +97,15 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.ProjectPriority)
                                 </th>
-                                
+
                                 <th>
                                     @*@Html.DisplayNameFor(model => model.ImageContentType)*@
                                 </th>
-                            
-                             @*   <th>
-                                    @Html.DisplayNameFor(model => model.Company)
+
+                                @*   <th>
+                                @Html.DisplayNameFor(model => model.Company)
                                 </th>*@
-              
+
                             </tr>
                         </thead>
 
@@ -103,7 +143,7 @@
                                     <td>
                                         @if (!item.Archived)
                                         {
-                                            <img src="~/images/logos/openDocument.png" width="50" height="50"> 
+                                            <img src="~/images/logos/openDocument.png" width="50" height="50">
                                         }
                                         else if (item.Archived)
                                         {
@@ -112,14 +152,14 @@
 
 
                                     </td>
-                                   @* <td>
-                                        @Html.DisplayFor(modelItem => item.Company.Name)
-                                    </td>*@
+                                    @* <td>
+                                @Html.DisplayFor(modelItem => item.Company.Name)
+                                </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ProjectPriority.Name)
                                     </td>
                                     <td>
-                                     
+
                                         <a asp-action="Details" asp-route-id="@item.Id">Details</a>
 
 
@@ -145,7 +185,7 @@
                                         }
 
                                     </td>
-                                 
+
                                 </tr>
                             }
                     </table>
@@ -159,9 +199,8 @@
 
 
 @section Scripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#myTable').DataTable();
-        });
-    </script>
+
+    <script src="~/bundles/morrisscripts.bundle.js"></script>
+
+    <script src="~/js/pages/charts/morris.js"></script>
 }
