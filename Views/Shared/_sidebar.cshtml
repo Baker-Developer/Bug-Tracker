@@ -26,19 +26,19 @@
             <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>@bugTrackerUser.FullName</strong></a>
             @if (User.IsInRole(nameof(Roles.Admin)))
             {
-                <span class="badge badge-default">Admin</span>
+                <span class="badge badge-dark">Admin</span>
             }
             @if (User.IsInRole(nameof(Roles.ProjectManager)))
             {
-                <span class="badge badge-default">Project Manager</span>
+                <span class="badge badge-dark">Project Manager</span>
             }
             @if (User.IsInRole(nameof(Roles.Developer)))
             {
-                <span class="badge badge-default">Developer</span>
+                <span class="badge badge-dark">Developer</span>
             }
             @if (User.IsInRole(nameof(Roles.Submitter)))
             {
-                <span class="badge badge-default">Submitter</span>
+                <span class="badge badge-dark">Submitter</span>
             }
 
             <ul class="dropdown-menu dropdown-menu-right account">
@@ -79,7 +79,7 @@
             <nav id="left-sidebar-nav" class="sidebar-nav">
                 <ul id="main-menu" class="metismenu">
                     <li class="">
-                        <a asp-action="Dashboard" asp-controller="Home">  <i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                        <a asp-action="Dashboard" asp-controller="Home">  <i class="icon-speedometer"></i> <span>Dashboard</span></a>
                     </li>
                     @*   <li class="active">
                     <a href="#Dashboard" class="has-arrow"><i class="icon-home"></i> <span>Dashboard</span></a>
