@@ -179,7 +179,7 @@
                             <th scope="col">Avatar</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
-                         @*   <th scope="col">Projects</th>*@
+                            @*   <th scope="col">Projects</th>*@
                             <th scope="col">Role</th>
                         </tr>
                     </thead>
@@ -199,9 +199,9 @@
                                 <td>
                                     <a class="">@member.Email</a>
                                 </td>
-                         @*       <td>
-                                    <a class="">@bugTrackerUser.Projects.Where().Count()</a>
-                                </td>*@
+                                @*       <td>
+                            <a class="">@bugTrackerUser.Projects.Where().Count()</a>
+                            </td>*@
                                 <td>
                                     <span class="badge badge-outline-dark">Admin</span>
                                 </td>
@@ -244,9 +244,9 @@
                                 <td>
                                     <span class="badge badge-danger">@project.EndDate.ToString("MM-dd-yyyy")</span>
                                 </td>
-                      @*          <td>
-                                    <span>@Model.Tickets.Count()</span>
-                                </td>*@
+                                @*          <td>
+                            <span>@Model.Tickets.Count()</span>
+                            </td>*@
                             </tr>
                         }
                     </tbody>
@@ -624,7 +624,7 @@
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Resolved)).Count(),
         @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BugTrackerTicketStatus.Testing)).Count()
 
-                                                                                                                                                                                                                                        ],
+                                                                                                                                                                                                                                                ],
 
                     backgroundColor: [
                         "hsla(280, 70%, 50%, 0.5)",
@@ -680,7 +680,7 @@
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.ChangeRequest)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.Enhancement)).Count(),
         @Model.Tickets.Where(t=> t.TicketType.Name ==nameof(BugTrackerTicketType.GeneralTask)).Count()
-                                                                                                                                                                                                                                                ],
+                                                                                                                                                                                                                                                        ],
                     backgroundColor: [
                         "hsla(220, 70%, 50%, 0.5)",
                         "hsla(160, 70%, 50%, 0.5)",
