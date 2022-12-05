@@ -4,13 +4,33 @@
     ViewData["Title"] = "My Tickets";
 }
 
+@section VendorCSS {
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+    <link rel="stylesheet" href="~/vendor/jquery-datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/jquery-datatable/fixedeader/dataTables.fixedcolumns.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/jquery-datatable/fixedeader/dataTables.fixedheader.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/sweetalert/sweetalert.css" />
+
+    <link rel="stylesheet" href="~/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css">
+    <link rel="stylesheet" href="~/vendor/jvectormap/jquery-jvectormap-2.0.3.min.css" />
+    <link rel="stylesheet" href="~/vendor/morrisjs/morris.min.css" />
+    <link rel="stylesheet" href="~/vendor/nestable/jquery-nestable.css" />
+    <link rel="stylesheet" href="~/vendor/chartist/css/chartist.min.css">
+    <link rel="stylesheet" href="~/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css">
+
+}
+
+
 <h1>My Tickets</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
-<div class="table-responsive" style="overflow-y:auto;height:600px;">
+<div class="table-responsive">
     <table class="table" id="myTable">
     <thead>
         <tr>
@@ -104,11 +124,55 @@
     </tbody>
 </table>
 </div>
-@section scripts {
 
-    <script type="text/javascript">
+@section Scripts {
+
+
+
+    <script src="~/bundles/chartist.bundle.js"></script>
+    <script src="~/vendor/chartist/polar_area_chart.js"></script><!-- Polar Area Chart Js -->
+    <script src="~/js/pages/charts/chartjs.js"></script>
+
+    <script src="~/bundles/datatablescripts.bundle.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.html5.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.print.min.js"></script>
+    <script src="~/vendor/sweetalert/sweetalert.min.js"></script> <!-- SweetAlert Plugin Js -->
+    <script src="~/js/pages/tables/jquery-datatable.js"></script>
+
+    @*  DASHBOARD JS CODE*@
+    <script src="~/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
+    <script src="~/bundles/morrisscripts.bundle.js"></script> <!-- Morris Plugin Js -->
+    <script src="~/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
+    <script src="~/vendor/nestable/jquery.nestable.js"></script> <!-- Jquery Nestable -->
+
+    <script src="~/js/pages/ui/sortable-nestable.js"></script>
+    <script src="~/js/index6.js"></script>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+
+
+    <!-- *** Begin Chart JS Pie/Donut *** -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+
+    <script>
+
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
+
+
     </script>
+
+
+
 }
