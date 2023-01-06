@@ -200,7 +200,7 @@
                         </div>
                         <div class="body">
                             <div class="table-responsive" style="overflow-y:auto;height:600px;">
-                                <table class="table table-hover">
+                                <table class="table table-hover" id="myTable">
                                     <thead class="">
                                         <tr>
                                             @* Table header *@
@@ -244,15 +244,15 @@
                                                 <td><span class="">@ticket.TicketPriority.Name </span></td>
                                                 <td>@ticket.Created.ToString("MM-dd-yyyy")</td>
                                                 <td>
-                                                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id">Details</a>
+                                                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><i class="icon-eye" aria-hidden="true"></i></a>
                                                     @if (ticket.DeveloperUserId == bugTrackerUser.Id || ticket.OwnerUserId == bugTrackerUser.Id || (projectManager?.Id == bugTrackerUser.Id) || User.IsInRole(nameof(Roles.Admin)))
                                                     {
-                                                        <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-controller="Tickets" asp-route-id="@ticket.Id">Edit</a>
+                                                        <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-controller="Tickets" asp-route-id="@ticket.Id"><i class="icon-pencil" aria-hidden="true"></i></a>
                                                     }
 
                                                     @if (User.IsInRole("Admin") || (projectManager?.Id == bugTrackerUser.Id))
                                                     {
-                                                        <a class="btn btn-sm btn-outline-danger">Archive</a>
+                                                        <a class="btn btn-sm btn-outline-danger" asp-action="Archive" asp-controller="Tickets" asp-route-id="@ticket.Id"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>
                                                     }
                                                 </td>
                                             </tr>
@@ -267,3 +267,56 @@
         </div>
     </div>
 </div>
+
+
+@section Scripts {
+
+
+
+    <script src="~/bundles/chartist.bundle.js"></script>
+    <script src="~/vendor/chartist/polar_area_chart.js"></script><!-- Polar Area Chart Js -->
+    <script src="~/js/pages/charts/chartjs.js"></script>
+
+    <script src="~/bundles/datatablescripts.bundle.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.html5.min.js"></script>
+    <script src="~/vendor/jquery-datatable/buttons/buttons.print.min.js"></script>
+    <script src="~/vendor/sweetalert/sweetalert.min.js"></script> <!-- SweetAlert Plugin Js -->
+    <script src="~/js/pages/tables/jquery-datatable.js"></script>
+
+    @*  DASHBOARD JS CODE*@
+    <script src="~/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
+    <script src="~/bundles/morrisscripts.bundle.js"></script> <!-- Morris Plugin Js -->
+    <script src="~/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
+    <script src="~/vendor/nestable/jquery.nestable.js"></script> <!-- Jquery Nestable -->
+
+    <script src="~/js/pages/ui/sortable-nestable.js"></script>
+    <script src="~/js/index6.js"></script>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+
+
+    <!-- *** Begin Chart JS Pie/Donut *** -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+
+    </script>
+
+
+
+}
